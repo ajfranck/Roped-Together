@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MovementController : MonoBehaviour
+public class MovementController2 : MonoBehaviour
 {
 
-   
+
     // declare reference variables 
-    PlayerInput playerInput;
+    Player2Input playerInput;
     CharacterController characterController;
 
 
@@ -21,12 +21,12 @@ public class MovementController : MonoBehaviour
 
     void Awake()
     {
-        playerInput = new PlayerInput();
+        playerInput = new Player2Input();
         characterController = GetComponent<CharacterController>();
 
-         playerInput.CharacterController.Move.started += onMovementInput;
-         playerInput.CharacterController.Move.canceled += onMovementInput; 
-         playerInput.CharacterController.Move.performed += onMovementInput;
+        playerInput.CharacterController.Move.started += onMovementInput;
+        playerInput.CharacterController.Move.canceled += onMovementInput;
+        playerInput.CharacterController.Move.performed += onMovementInput;
 
 
         currentMovement.x = currentMovementInput.x;
@@ -41,7 +41,7 @@ public class MovementController : MonoBehaviour
         // this.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         characterController.Move(currentMovement * Time.deltaTime * 10f);
         Rotation();
-    } 
+    }
 
 
 
