@@ -7,13 +7,13 @@ public class Player2OldInput : MonoBehaviour
     public Rigidbody Player;
     public Vector3 playerVelocity = new Vector3(0f, 0f, 0f);
     public Vector3 Friction = new Vector3(0f, 0f, 0f);
-
-
+    public float FaceDirectionX = 0f;
+    public float FaceDirectionZ = 0f;
     public bool grounded = true;
     void Update()
     {
 
-        Move();
+       // Move();
         Rotate();
 
 
@@ -39,7 +39,38 @@ public class Player2OldInput : MonoBehaviour
 
     void Rotate()
     {
-        this.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
+
+        this.transform.rotation = Quaternion.Euler(new Vector3(FaceDirectionX, 0f, 0f));
+        Vector3 direction = new Vector3(0f, 0f, 0f);
+        if (Input.GetKey("w"))
+        {
+            FaceDirectionX = 0f;
+            Move();
+
+        }
+
+        if (Input.GetKey("s"))
+        {
+            FaceDirectionX = 180f;
+            Move();
+        }
+
+        if (Input.GetKey("a"))
+        {
+            FaceDirectionX = 90f;
+            Move();
+        }
+
+        if (Input.GetKey("d"))
+        {
+            FaceDirectionX = 180f;
+            Move();
+        }
+
+        if (grounded && Input.GetKeyDown("space"))
+        {
+
+        }
     }
 
 
@@ -47,36 +78,9 @@ public class Player2OldInput : MonoBehaviour
 
     void Move()
     {
-        Vector3 direction = new Vector3(0f, 0f, 0f);
-        if (Input.GetKey("w"))
-        {
-            Debug.Log(this.transform.forward);
-            Player.AddForce(this.transform.forward * 10f);
-        }
 
-        if (Input.GetKey("s"))
-        {
+        Player.AddForce(transform.forward * 10f);
 
-            direction = this.transform.forward.normalized;
-            Player.AddForce(direction * -10f);
-        }
-
-        if (Input.GetKey("a"))
-        {
-            direction = new Vector3(-1f, 0f, 0f);
-            direction = direction.normalized;
-            Player.AddForce(direction*10f);
-        }
-
-        if (Input.GetKey("d"))
-        {
-            Player.AddForce(10f, 0f, 0f);
-        }
-
-        if (grounded && Input.GetKeyDown("space"))
-        {
-            Player.AddForce(0f, 2000f, 0f);
-        }
     }
 
 
