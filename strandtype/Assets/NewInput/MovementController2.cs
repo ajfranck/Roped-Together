@@ -19,6 +19,9 @@ public class MovementController2 : MonoBehaviour
     float rotationFactor = 10f;
 
 
+    public float gravity = -9.8f;
+
+
     void Awake()
     {
         playerInput = new Player2Input();
@@ -41,6 +44,8 @@ public class MovementController2 : MonoBehaviour
         // this.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         characterController.Move(currentMovement * Time.deltaTime * 10f);
         Rotation();
+        Gravity();
+
     }
 
 
@@ -51,6 +56,22 @@ public class MovementController2 : MonoBehaviour
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
+    }
+
+
+    void Gravity()
+    {
+        if (characterController.isGrounded)
+        {
+            float groundedGravity = -.05f;
+            currentMovement.y = groundedGravity;
+        }
+
+        else
+        {
+            currentMovement.y += gravity;
+        }
+
     }
 
 
