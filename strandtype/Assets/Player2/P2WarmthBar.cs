@@ -12,6 +12,7 @@ public class P2WarmthBar : MonoBehaviour
 
     void Start()
     {
+        
         P2currentWarmth = P2MaxWarmth;
         P2HealthBar.P2SetWarmth(P2MaxWarmth);
     }
@@ -47,7 +48,6 @@ public class P2WarmthBar : MonoBehaviour
         {
             P2currentWarmth += .75f;
             P2HealthBar.P2SetWarmth(P2currentWarmth);
-            Debug.Log("runs");
         }
 
 

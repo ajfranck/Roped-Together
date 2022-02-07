@@ -5,13 +5,18 @@ using UnityEngine;
 public class WarmthBar : MonoBehaviour
 {
 
+    [SerializeField]
+    Light light;
+
     public float P1MaxWarmth = 100f;
     public float P1currentWarmth;
+    
 
     public P1HealthBar P1HealthBar;
 
     void Start()
     {
+        light.intensity = 4;
         P1currentWarmth = P1MaxWarmth;
         P1HealthBar.P1SetWarmth(P1MaxWarmth);
     }
@@ -19,9 +24,10 @@ public class WarmthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-      
+        if(P1currentWarmth > 0)
+        {
             loseWarmth(0.005f);
-       
+        }    
 
         if(P1currentWarmth <= 0)
         {
@@ -35,6 +41,7 @@ public class WarmthBar : MonoBehaviour
     {
         P1currentWarmth -= warmthLoss;
         P1HealthBar.P1SetWarmth(P1currentWarmth);
+        light.intensity -= 0.0002f;
 
     }
 
@@ -45,9 +52,15 @@ public class WarmthBar : MonoBehaviour
 
         if (other.gameObject.CompareTag("Fire") && P1currentWarmth <= P1MaxWarmth) 
         {
-            P1currentWarmth += .75f;
+            if(P1currentWarmth < 100)
+            {
+                P1currentWarmth += .75f;
+            }
+            if(light.intensity < 4)
+            {
+                light.intensity += 0.05f;
+            } 
             P1HealthBar.P1SetWarmth(P1currentWarmth);
-            Debug.Log("runs");
         }
 
 
