@@ -9,7 +9,8 @@ public class MovementController : MonoBehaviour
    
     // declare reference variables 
     PlayerInput playerInput;
-    CharacterController characterController;
+    CharacterController characterController; 
+    Animator animator;
 
 
     // variables to store player input 
@@ -24,6 +25,7 @@ public class MovementController : MonoBehaviour
     {
         playerInput = new PlayerInput();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
 
          playerInput.CharacterController.Move.started += onMovementInput;
          playerInput.CharacterController.Move.canceled += onMovementInput; 
@@ -39,13 +41,27 @@ public class MovementController : MonoBehaviour
     {
         // this.transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
         characterController.Move(currentMovement * Time.deltaTime * 10f);
-        Rotation();
 
+        handleAnimation();
+        Rotation();
         Gravity();
 
     } 
 
+    void handleAnimation()
+    {
+        bool isWalking = animator.GetBool("isWalking");
 
+        if (movementPressed && !isWalking)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else if (!movementPressed && isWalking)
+        {
+            animator.SetBool("isWalking", false);
+        }
+    }
+    
 
     void onMovementInput(InputAction.CallbackContext context)
     {
