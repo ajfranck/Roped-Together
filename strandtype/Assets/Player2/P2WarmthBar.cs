@@ -5,8 +5,8 @@ using UnityEngine;
 public class P2WarmthBar : MonoBehaviour
 {
 
-    public int P2MaxWarmth = 100;
-    public int P2currentWarmth;
+    public float P2MaxWarmth = 100;
+    public float P2currentWarmth;
 
     public P2HealthBar P2HealthBar;
 
@@ -19,10 +19,9 @@ public class P2WarmthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            P2loseWarmth(10);
-        }
+   
+        P2loseWarmth(.005f);
+     
 
         if(P2currentWarmth <= 0)
         {
@@ -32,10 +31,29 @@ public class P2WarmthBar : MonoBehaviour
         //add trigger collider here
     }
 
-    void P2loseWarmth(int P2warmthLoss)
+    void P2loseWarmth(float P2warmthLoss)
     {
         P2currentWarmth -= P2warmthLoss;
 
         P2HealthBar.P2SetWarmth(P2currentWarmth);
     }
+
+
+
+    private void OnTriggerStay(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Fire") && P2currentWarmth<=P2MaxWarmth)
+        {
+            P2currentWarmth += .75f;
+            P2HealthBar.P2SetWarmth(P2currentWarmth);
+            Debug.Log("runs");
+        }
+
+
+
+
+    }
+
+
 }
