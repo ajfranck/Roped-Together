@@ -39,7 +39,6 @@ public class P2WarmthBar : MonoBehaviour
     {
         P2currentWarmth -= P2warmthLoss;
         P2HealthBar.P2SetWarmth(P2currentWarmth);
-        P2light.intensity -= 0.0002f;
     }
 
 
@@ -53,10 +52,6 @@ public class P2WarmthBar : MonoBehaviour
             {
                 P2currentWarmth += .75f;
             }
-            if(P2light.intensity < 4)
-            {
-                P2light.intensity += 0.05f;
-            } 
             P2HealthBar.P2SetWarmth(P2currentWarmth);
         }
 
