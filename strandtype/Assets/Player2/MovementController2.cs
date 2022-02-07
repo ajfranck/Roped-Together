@@ -99,7 +99,6 @@ public class MovementController2 : MonoBehaviour
         positionToLook.y = currentMovement.y = 0f;
         positionToLook.z = currentMovement.z;
 
-        Debug.Log("PositionTolook: " + positionToLook);
 
         Quaternion currentRotation = transform.rotation; // character's current rotation
         if (movementPressed)
@@ -108,19 +107,10 @@ public class MovementController2 : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactor * Time.deltaTime);
 
         }
-        Debug.Log("rotation = " + this.transform.rotation);
 
 
     }
-
-
-
-
-
-
-
-
-
+    
 
     void OnEnable()
     {
