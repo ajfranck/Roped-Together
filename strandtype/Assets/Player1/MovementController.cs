@@ -22,11 +22,6 @@ public class MovementController : MonoBehaviour
     public float gravity = -9.8f;
     float groundedGravity = -.05f;
 
-    bool isJumpPressed = false;
-    float initialJumpVelocity;
-    float maxJumpHeight = 10f;
-    float maxJumpTime = 0.5f;
-    bool isJumping = false;
 
 
     void Awake()
@@ -38,14 +33,11 @@ public class MovementController : MonoBehaviour
         playerInput.CharacterController.Move.started += onMovementInput;
         playerInput.CharacterController.Move.canceled += onMovementInput;   
         playerInput.CharacterController.Move.performed += onMovementInput;
-        playerInput.CharacterController.Jump.started += onJump;
-        playerInput.CharacterController.Jump.canceled += onJump;
 
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
         
 
-        setupJumpVariables();
     }
 
 
@@ -57,31 +49,7 @@ public class MovementController : MonoBehaviour
         characterController.Move(currentMovement * Time.deltaTime * 10f);
 
         Gravity();
-        handleJump();
     } 
-
-
-    void setupJumpVariables()
-    {
-        float timeToApex = maxJumpTime / 2;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-    }
-
-    void handleJump()
-    {
-        if (!isJumping && characterController.isGrounded && isJumpPressed)
-        {
-            isJumping = true;
-            currentMovement.y = initialJumpVelocity;
-            
-        }
-    }
-
-    void onJump (InputAction.CallbackContext context)
-    {
-        isJumpPressed = context.ReadValueAsButton();
-    }
 
 
     void onMovementInput(InputAction.CallbackContext context)
