@@ -45,10 +45,10 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+         characterController.Move(currentMovement * Time.deltaTime * 10f);
         Rotation();
         handleAnimation();
-        characterController.Move(currentMovement * Time.deltaTime * 10f);
-
         Gravity();
     } 
 
@@ -64,14 +64,19 @@ public class MovementController : MonoBehaviour
 
     void Gravity()
     {
+
+
+        Debug.Log("Gravity runs");
         if (characterController.isGrounded)
         {
             currentMovement.y = groundedGravity;
         }
 
-        else
+        else  
         {
+          
             currentMovement.y += gravity;
+        
         }
 
     }
