@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class WarmthBar : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class WarmthBar : MonoBehaviour
     Light light;
 
     public float P1MaxWarmth = 100f;
-    public float P1currentWarmth;
-    
+    public float P1currentWarmth;  
 
+    bool isInteracting = false;
+    bool contactingFire = false;
+    
     public P1HealthBar P1HealthBar;
 
     void Start()
@@ -45,22 +48,32 @@ public class WarmthBar : MonoBehaviour
     }
 
 
-
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.gameObject.CompareTag("Fire") && P1currentWarmth <= P1MaxWarmth) 
+        if (other.gameObject.CompareTag("Fire")) 
         {
-            if(P1currentWarmth < 100)
+            contactingFire = true;
+            if(Input.GetKey(KeyCode.E))
+            {
+                isInteracting = true;
+                Debug.Log("interacting");
+            }
+            else
+            {
+                isInteracting = false;
+            }
+            if(P1currentWarmth <= P1MaxWarmth)
             {
                 P1currentWarmth += .75f;
             }
             P1HealthBar.P1SetWarmth(P1currentWarmth);
         }
-
-
-
-
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        contactingFire = false;
     }
 
 }
+

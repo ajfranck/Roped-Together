@@ -24,6 +24,7 @@ public class MovementController : MonoBehaviour
 
 
 
+
     void Awake()
     {
         playerInput = new PlayerInput();
