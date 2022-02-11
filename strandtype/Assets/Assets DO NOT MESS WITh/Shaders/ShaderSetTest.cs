@@ -8,7 +8,11 @@ public class ShaderSetTest : MonoBehaviour
     public Material testMaterial;
     public float transparencyRate = -0.01f;
     public float transparency = 1f;
+    public float minTransparency = 0.1f;
     public bool waiting;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,24 +23,18 @@ public class ShaderSetTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("space"))
-        {
-            Debug.Log("is pressed");
-            if (!waiting)
-            {
-                testMaterial.SetFloat("Vector1_1bf5ef6f67664d09acaa75b493636256", transparency);
-                StartCoroutine("Wait");
-            }
 
 
-        }
+        testMaterial.SetFloat("Vector1_1bf5ef6f67664d09acaa75b493636256", transparency);
 
-        
+    
+
 
 
 
         if (Input.GetKey("k"))
         {
+            transparency = 1f;
             testMaterial.SetFloat("Vector1_1bf5ef6f67664d09acaa75b493636256", 1f);
         }
     }
@@ -59,6 +57,19 @@ public class ShaderSetTest : MonoBehaviour
 
 
 
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("CameraBox"))
+        {
+            Debug.Log("HitBox Camera 1");
 
+            if (transparency >= minTransparency)
+            {
+                StartCoroutine("Wait");
+            }
+            
+        }
+
+    }
 
 }
