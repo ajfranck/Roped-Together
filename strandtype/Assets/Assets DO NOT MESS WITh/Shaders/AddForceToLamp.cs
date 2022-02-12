@@ -20,10 +20,17 @@ public class AddForceToLamp : MonoBehaviour
         {
             StartCoroutine("Swing");
         }
+
+        HandleSwing();
+
     }
 
 
+    void HandleSwing()
+    {
 
+    
+    }
 
     IEnumerator Swing()
     {
