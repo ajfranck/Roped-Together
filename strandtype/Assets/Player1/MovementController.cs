@@ -66,7 +66,7 @@ public class MovementController : MonoBehaviour
     {
 
 
-        Debug.Log("Gravity runs");
+       
         if (characterController.isGrounded)
         {
             currentMovement.y = groundedGravity;
