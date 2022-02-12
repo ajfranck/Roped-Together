@@ -32,7 +32,7 @@ public class ShaderSetTest : MonoBehaviour
     void Start()
     {
 
-        testMaterial.SetFloat("Vector1_1bf5ef6f67664d09acaa75b493636256", 1f);
+        testMaterial.SetFloat("Vector1_3890158690a54921b2fff7bec7240495", 1f);
     }
 
 
@@ -40,7 +40,7 @@ public class ShaderSetTest : MonoBehaviour
     {
        
 
-        testMaterial.SetFloat("Vector1_1bf5ef6f67664d09acaa75b493636256", transparency);
+        testMaterial.SetFloat("Vector1_3890158690a54921b2fff7bec7240495", transparency);
 
         if (PlayersIn>=1 && !waiting)
         {

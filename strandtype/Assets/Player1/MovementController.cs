@@ -48,10 +48,13 @@ public class MovementController : MonoBehaviour
 
          characterController.Move(currentMovement * Time.deltaTime * 10f);
         Rotation();
-        handleAnimation();
+        
         Gravity();
     } 
-
+    void FixedUpdate()
+    {
+        handleAnimation();
+    }
 
     void onMovementInput(InputAction.CallbackContext context)
     {
