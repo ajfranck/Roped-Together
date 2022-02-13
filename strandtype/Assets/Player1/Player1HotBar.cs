@@ -11,20 +11,6 @@ public class Player1HotBar : MonoBehaviour
     public List<Item> HotBar = new List<Item>();
 
 
-
-    void Start()
-    {
-       // HotBar.Add(TestItem);
-       // Debug.Log(HotBar[0]);
-       // Debug.Log(HotBar[0].name);
-      //  HotBar[0].CallFunction();
-    }
-
-
-
-
-
-
     void Update()
     {
         if (Input.GetKeyDown("1"))
