@@ -7,6 +7,7 @@ TagManager:
   - Fire
   - CameraBox
   - ClearBuildingCollider
+  - CubeItem
   layers:
   - Default
   - TransparentFX
