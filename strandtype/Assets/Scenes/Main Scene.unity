@@ -2284,7 +2284,6 @@ GameObject:
   - component: {fileID: 668705143}
   - component: {fileID: 668705142}
   - component: {fileID: 668705141}
-  - component: {fileID: 668705140}
   - component: {fileID: 668705144}
   m_Layer: 0
   m_Name: Player 2 Camera
@@ -2293,18 +2292,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &668705140
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668705139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &668705141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3284,7 +3271,6 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
-  - component: {fileID: 963194230}
   - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Player 1 Camera
@@ -3377,18 +3363,6 @@ MonoBehaviour:
   minZoom: 0
   maxZoom: 0
   zoomLimiter: 0
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5414,7 +5388,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TestItem: {fileID: 11400000, guid: afffb41aef2719e4e884c2d7a97c825d, type: 2}
   CubeItem: {fileID: 11400000, guid: 0588113da0597044b908d5b7c4102775, type: 2}
-  HotBar: []
+  HotBarList: []
+  pickedUp: 0
+  promptDisplayed: 0
+  itemNear: 
+  HotBarPosition: 0
 --- !u!1 &1230018814
 GameObject:
   m_ObjectHideFlags: 0
@@ -7492,7 +7470,6 @@ GameObject:
   - component: {fileID: 33665661848967734}
   - component: {fileID: 23020763452119554}
   - component: {fileID: 64219523702665126}
-  - component: {fileID: 1589773922265481}
   m_Layer: 0
   m_Name: tent 1
   m_TagString: Untagged
@@ -7500,18 +7477,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!114 &1589773922265481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1589773922265480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 439af6d5691256b46935096600ba8976, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4774823657705938
 Transform:
   m_ObjectHideFlags: 0
