@@ -15,7 +15,7 @@ public class HotBar : MonoBehaviour
 
     public string itemNear = "";
 
-    public int HotBarPosition = 0;
+    public static int HotBarPosition = 0;
 
 
 
@@ -30,7 +30,7 @@ public class HotBar : MonoBehaviour
         if (Input.GetKeyDown("1"))
         {
 
-            HotBarPosition = 0;
+            HotBars.HotBarPositionP1 = 0;
             
         }
 
@@ -39,20 +39,20 @@ public class HotBar : MonoBehaviour
         {
 
 
-            HotBarPosition = 1;
+            HotBars.HotBarPositionP1 = 1;
 
         }
 
 
         if (Input.GetKeyDown("3"))
         {
-            HotBarPosition = 2;
+            HotBars.HotBarPositionP1 = 2;
         }
 
 
         if (Input.GetKeyDown("4"))
         {
-            HotBarPosition = 3;
+            HotBars.HotBarPositionP1 = 3;
         }
 
 
@@ -60,13 +60,13 @@ public class HotBar : MonoBehaviour
         if (Input.GetKeyDown("u"))
         {
 
-            if (HotBarList[HotBarPosition] == null)
+            if (HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
             {
                 Debug.Log("Nothing in this hotbar position");
             }
             else
             {
-                HotBarList[HotBarPosition].CallFunction();
+                HotBars.HotBarListP1[HotBars.HotBarPositionP1].CallFunction();
             }
         }
 

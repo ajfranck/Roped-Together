@@ -1610,6 +1610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -9.8
+  AtFire: 1
 --- !u!143 &443523426
 CharacterController:
   m_ObjectHideFlags: 0
@@ -10922,7 +10923,6 @@ MonoBehaviour:
   pickedUp: 0
   promptDisplayed: 0
   itemNear: 
-  HotBarPosition: 0
 --- !u!1 &1230018814
 GameObject:
   m_ObjectHideFlags: 0
@@ -13812,6 +13812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8995809933703531383}
   - component: {fileID: 8995809933986087090}
+  - component: {fileID: 8995809933703501656}
   m_Layer: 0
   m_Name: Firepit
   m_TagString: Fire
@@ -13819,6 +13820,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8995809933703501656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995809933703501655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7633ff86ed72f3445b57270ceaa733d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackpackList: []
+  TestItem: {fileID: 11400000, guid: afffb41aef2719e4e884c2d7a97c825d, type: 2}
+  CubeItem: {fileID: 11400000, guid: 0588113da0597044b908d5b7c4102775, type: 2}
+  BackpackPosition: 0
 --- !u!4 &8995809933703531381
 Transform:
   m_ObjectHideFlags: 0

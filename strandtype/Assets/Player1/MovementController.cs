@@ -22,6 +22,8 @@ public class MovementController : MonoBehaviour
     public float gravity = -9.8f;
     float groundedGravity = -.05f;
 
+    public bool AtFire = false;
+
 
 
 
@@ -45,15 +47,18 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       // if(!AtFire){
          characterController.Move(currentMovement * Time.deltaTime * 10f);
         Rotation();
         
         Gravity();
+        //}
     } 
     void FixedUpdate()
-    {
+    {   
+        //if(!AtFire){        
         handleAnimation();
+        //}
     }
 
     void onMovementInput(InputAction.CallbackContext context)
