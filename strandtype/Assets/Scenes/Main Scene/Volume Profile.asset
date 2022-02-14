@@ -282,7 +282,7 @@ MonoBehaviour:
     showEyeDropper: 1
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
+    m_Value: {r: 0.22641504, g: 0.22641504, b: 0.22641504, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
@@ -311,10 +311,10 @@ MonoBehaviour:
     m_Value: 50
   meanFreePath:
     m_OverrideState: 1
-    m_Value: 8.28
+    m_Value: 6
     min: 1
   enableVolumetricFog:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   albedo:
     m_OverrideState: 0
