@@ -30,9 +30,16 @@ public class CameraController : MonoBehaviour
         {
             return;
         }
-
-        Move();
-        Zoom();
+        if(Input.GetKey(KeyCode.E))
+        {
+            return;
+        }
+        else
+        {
+            Move();
+            //Zoom();
+        }
+        
 
     }
 

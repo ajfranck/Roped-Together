@@ -9,6 +9,8 @@ public class WarmthBar : MonoBehaviour
     [SerializeField]
     Light light;
 
+    public Camera p1camera;
+
     public float P1MaxWarmth = 100f;
     public float P1currentWarmth;  
 
@@ -58,6 +60,8 @@ public class WarmthBar : MonoBehaviour
             {
                 isInteracting = true;
                 Debug.Log("interacting");
+                p1camera.transform.position = new Vector3(-20,5,-10);
+                //p1camera.transform.rotation = new Vector3(23,0,0);
             }
             else
             {
