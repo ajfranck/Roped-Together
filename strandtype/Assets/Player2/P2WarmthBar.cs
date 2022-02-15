@@ -7,8 +7,13 @@ public class P2WarmthBar : MonoBehaviour
     [SerializeField]
     Light P2light;
 
+    public GameObject p2Interact;
+
     public float P2MaxWarmth = 100;
     public float P2currentWarmth;
+
+    public bool p2isInteracting = false;
+    public bool p2contactingFire = false;
 
     public P2HealthBar P2HealthBar;
 
@@ -22,7 +27,6 @@ public class P2WarmthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-   
         if(P2currentWarmth > 0)
         {
             P2loseWarmth(0.005f);
@@ -45,20 +49,30 @@ public class P2WarmthBar : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-
         if (other.gameObject.CompareTag("Fire") && P2currentWarmth<=P2MaxWarmth)
-        {
-            if(P2currentWarmth < 100)
+        {   
+            if(!p2isInteracting)
+            {
+                p2Interact.SetActive(true);
+            }
+            p2contactingFire = true;
+            if(Input.GetKey(KeyCode.M))
+            {
+                p2isInteracting = true;
+                p2Interact.SetActive(false);
+            }
+            if(P2currentWarmth < P2MaxWarmth)
             {
                 P2currentWarmth += .75f;
             }
             P2HealthBar.P2SetWarmth(P2currentWarmth);
         }
-
-
-
-
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        p2Interact.SetActive(false);
+        p2contactingFire = false;
+        p2isInteracting = false;
+    }
 
 }

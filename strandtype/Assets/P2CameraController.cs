@@ -4,13 +4,13 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Camera))]
-public class CameraController : MonoBehaviour
+public class P2CameraController : MonoBehaviour
 {
     public Transform targets;
 
     public Vector3 offset;
     public float smoothTime = 0.5f;
-    public WarmthBar warmthbar;
+    public P2WarmthBar warmthbar;
     new Vector3 firePosition;
 
     private Vector3 velocity;
@@ -24,11 +24,11 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
 
-        if(warmthbar.isInteracting)
+        if(warmthbar.p2isInteracting)
         {
             Zoom();
         }
-        if(!warmthbar.isInteracting)
+        if(!warmthbar.p2isInteracting)
         {
             Move();
         }

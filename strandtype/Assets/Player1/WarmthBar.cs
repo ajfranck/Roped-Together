@@ -9,13 +9,13 @@ public class WarmthBar : MonoBehaviour
     [SerializeField]
     Light light;
 
-    public Camera p1camera;
+    public GameObject p1Interact;
 
     public float P1MaxWarmth = 100f;
     public float P1currentWarmth;  
 
-    bool isInteracting = false;
-    bool contactingFire = false;
+    public bool isInteracting = false;
+    public bool contactingFire = false;
     
     public P1HealthBar P1HealthBar;
 
@@ -55,17 +55,15 @@ public class WarmthBar : MonoBehaviour
 
         if (other.gameObject.CompareTag("Fire")) 
         {
+            if(!isInteracting)
+            {
+                p1Interact.SetActive(true);
+            }
             contactingFire = true;
             if(Input.GetKey(KeyCode.E))
             {
                 isInteracting = true;
-                Debug.Log("interacting");
-                p1camera.transform.position = new Vector3(-20,5,-10);
-                //p1camera.transform.rotation = new Vector3(23,0,0);
-            }
-            else
-            {
-                isInteracting = false;
+                p1Interact.SetActive(false);
             }
             if(P1currentWarmth <= P1MaxWarmth)
             {
@@ -76,7 +74,9 @@ public class WarmthBar : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        p1Interact.SetActive(false);
         contactingFire = false;
+        isInteracting = false;
     }
 
 }
