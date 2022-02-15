@@ -757,7 +757,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -0.9999995, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -1, z: 0}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -9993,6 +9993,8 @@ GameObject:
   - component: {fileID: 114530910}
   - component: {fileID: 1188898825}
   - component: {fileID: 1188898827}
+  - component: {fileID: 1188898833}
+  - component: {fileID: 1188898831}
   - component: {fileID: 1188898829}
   m_Layer: 0
   m_Name: Player2 Animated
@@ -10097,6 +10099,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1188898831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188898824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c8fdbf0226c2d44881afe07f596d5f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackpackPosition: 0
 --- !u!1 &1188898832
 GameObject:
   m_ObjectHideFlags: 0
@@ -10113,6 +10128,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1188898833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188898824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29129be1de112bd4c97dc9c466ea5007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestItem: {fileID: 11400000, guid: afffb41aef2719e4e884c2d7a97c825d, type: 2}
+  CubeItem: {fileID: 11400000, guid: 0588113da0597044b908d5b7c4102775, type: 2}
+  pickedUp: 0
+  promptDisplayed: 0
+  itemNear: 
 --- !u!1 &1188898834
 GameObject:
   m_ObjectHideFlags: 0
@@ -10836,6 +10868,7 @@ GameObject:
   - component: {fileID: 1230018809}
   - component: {fileID: 1230018811}
   - component: {fileID: 1230018813}
+  - component: {fileID: 1230018815}
   m_Layer: 2
   m_Name: Player1 Animated
   m_TagString: Player
@@ -10919,7 +10952,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TestItem: {fileID: 11400000, guid: afffb41aef2719e4e884c2d7a97c825d, type: 2}
   CubeItem: {fileID: 11400000, guid: 0588113da0597044b908d5b7c4102775, type: 2}
-  HotBarList: []
   pickedUp: 0
   promptDisplayed: 0
   itemNear: 
@@ -10939,6 +10971,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1230018815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230018808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7633ff86ed72f3445b57270ceaa733d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackpackPosition: 0
 --- !u!4 &1230439616
 Transform:
   m_ObjectHideFlags: 0
@@ -11640,7 +11685,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: -0.99999833, z: 0}
+  m_ConnectedAnchor: {x: 0, y: -0.99999857, z: 0}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -13832,9 +13877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7633ff86ed72f3445b57270ceaa733d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackpackList: []
-  TestItem: {fileID: 11400000, guid: afffb41aef2719e4e884c2d7a97c825d, type: 2}
-  CubeItem: {fileID: 11400000, guid: 0588113da0597044b908d5b7c4102775, type: 2}
   BackpackPosition: 0
 --- !u!4 &8995809933703531381
 Transform:
