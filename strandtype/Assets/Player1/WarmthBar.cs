@@ -9,13 +9,20 @@ public class WarmthBar : MonoBehaviour
     [SerializeField]
     Light light;
 
+    public GameObject p1Interact;
+
     public float P1MaxWarmth = 100f;
     public float P1currentWarmth;  
 
-    bool isInteracting = false;
-    bool contactingFire = false;
+    public bool isInteracting = false;
+    public bool contactingFire = false;
     
     public P1HealthBar P1HealthBar;
+
+    //all fires:
+    public bool fire1;
+    public bool fire2;
+    public bool fire3;
 
     void Start()
     {
@@ -51,17 +58,32 @@ public class WarmthBar : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.gameObject.CompareTag("Fire")) 
+        if (other.gameObject.tag.Contains("Fire")) 
         {
+            //check which fire:
+
+            if(other.gameObject.CompareTag("Fire1"))
+            {
+                fire1 = true;
+            }
+            else if(other.gameObject.CompareTag("Fire2"))
+            {
+                fire2 = true;
+            }
+            else if(other.gameObject.CompareTag("Fire3"))
+            {
+                fire3 = true;
+            }
+
+            if(!isInteracting)
+            {
+                p1Interact.SetActive(true);
+            }
             contactingFire = true;
             if(Input.GetKey(KeyCode.E))
             {
                 isInteracting = true;
-                Debug.Log("interacting");
-            }
-            else
-            {
-                isInteracting = false;
+                p1Interact.SetActive(false);
             }
             if(P1currentWarmth <= P1MaxWarmth)
             {
@@ -72,8 +94,9 @@ public class WarmthBar : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        p1Interact.SetActive(false);
         contactingFire = false;
+        isInteracting = false;
     }
 
 }
-
