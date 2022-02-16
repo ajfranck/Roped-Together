@@ -26,7 +26,7 @@ public class Backpack : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.gameObject.CompareTag("Fire"))
+        if (other.gameObject.CompareTag("Fire1"))
         {
             if(Input.GetKeyDown("d") && BackpackPosition<24){
                 BackpackPosition++;
@@ -44,11 +44,16 @@ public class Backpack : MonoBehaviour
                 BackpackPosition-=5;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
             }
-            if(Input.GetKeyDown("f")){
+            if(Input.GetKeyDown("f") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null){
                 StaticBackPack.BackpackList[BackpackPosition] = HotBars.HotBarListP1[HotBars.HotBarPositionP1];
                 HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
 
                 Debug.Log("Backpack at position " + BackpackPosition + "is: " + StaticBackPack.BackpackList[BackpackPosition]);
+            }
+            if(Input.GetKeyDown("g") && StaticBackPack.BackpackList[BackpackPosition] != null){
+                HotBars.HotBarListP1[HotBars.HotBarPositionP1] = StaticBackPack.BackpackList[BackpackPosition];
+                //StaticBackPack.BackpackList[BackpackPosition] = null;
+                Debug.Log("HotBar is:" + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
             }
         }
 
