@@ -10,6 +10,7 @@ public class WarmthBar : MonoBehaviour
     Light light;
 
     public GameObject p1Interact;
+    public GameObject p1Inventory;
 
     public float P1MaxWarmth = 100f;
     public float P1currentWarmth;  
@@ -34,6 +35,7 @@ public class WarmthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        
         if(P1currentWarmth > 0)
         {
             loseWarmth(0.005f);
@@ -61,7 +63,7 @@ public class WarmthBar : MonoBehaviour
         if (other.gameObject.tag.Contains("Fire")) 
         {
             //check which fire:
-
+            contactingFire = true;
             if(other.gameObject.CompareTag("Fire1"))
             {
                 fire1 = true;
@@ -74,12 +76,11 @@ public class WarmthBar : MonoBehaviour
             {
                 fire3 = true;
             }
-
             if(!isInteracting)
             {
                 p1Interact.SetActive(true);
             }
-            contactingFire = true;
+            
             if(Input.GetKey(KeyCode.E))
             {
                 isInteracting = true;
