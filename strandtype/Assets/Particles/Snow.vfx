@@ -17,10 +17,10 @@ MonoBehaviour:
   categories: []
   uiBounds:
     serializedVersion: 2
-    x: 519
+    x: 942
     y: -166
-    width: 857
-    height: 1567
+    width: 434
+    height: 1609
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,7 +179,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614580}
   - {fileID: 8926484042661614602}
   - {fileID: 8926484042661614634}
-  m_UIPosition: {x: 952, y: 71}
+  m_UIPosition: {x: 952, y: 113}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children:
   - {fileID: 8926484042661614596}
-  m_UIPosition: {x: 945, y: 747}
+  m_UIPosition: {x: 945, y: 789}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614589}
   - {fileID: 8926484042661614591}
   - {fileID: 8926484042661614629}
-  m_UIPosition: {x: 943, y: 946}
+  m_UIPosition: {x: 943, y: 988}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
@@ -1214,7 +1214,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":-0.008336640894412995,"value":0.13153934478759767,"inTangent":0.07738739252090454,"outTangent":0.07738739252090454,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.991668701171875,"value":0.20892715454101563,"inTangent":0.07738739252090454,"outTangent":0.07738739252090454,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":0.020830534398555757,"value":0.20700931549072267,"inTangent":-0.08943040668964386,"outTangent":-0.08943040668964386,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.9750081300735474,"value":0.12167682498693466,"inTangent":-0.08943040668964386,"outTangent":-0.08943040668964386,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Size
