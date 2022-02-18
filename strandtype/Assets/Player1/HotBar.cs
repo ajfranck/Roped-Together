@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class HotBar : MonoBehaviour
 {
 
@@ -17,11 +17,20 @@ public class HotBar : MonoBehaviour
 
     public static int HotBarPosition = 0;
 
+    public GameObject Image1;
+    public GameObject Image2;
+    public GameObject Image3;
+    public GameObject Image4;
+
+    public  List<GameObject> HotBarSpritesP1 = new List<GameObject>();
+    
+
 
 
     void Start()
     {
         ClearInventory();
+        
     }
 
 
@@ -107,6 +116,9 @@ public class HotBar : MonoBehaviour
                 HotBars.HotBarListP1[HotBars.HotBarPositionP1] = TestItem;
                 pickedUp = true;
                 Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
+               
+                HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = HotBars.HotBarListP1[HotBars.HotBarPositionP1].Artwork;
+
 
             }
         }
@@ -163,6 +175,8 @@ public class HotBar : MonoBehaviour
         for(int i = 0; i<4; i++)
         {
             HotBars.HotBarListP1.Add(null);
+            
+           
         }
     }
 

@@ -11,13 +11,13 @@ public static class HotBars
 
 
     public static List<Item> HotBarListP2 = new List<Item>();
-     public static int HotBarPositionP2 = 0;
+    public static int HotBarPositionP2 = 0;
 
 
-
+   
 
     
-    }
+}
 
 
 

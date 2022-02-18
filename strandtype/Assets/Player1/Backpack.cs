@@ -28,7 +28,7 @@ public class Backpack : MonoBehaviour
 
         if (other.gameObject.CompareTag("Fire1"))
         {
-            if(Input.GetKeyDown("d") && BackpackPosition<24){
+            if(Input.GetKeyDown("d") && BackpackPosition<11){
                 BackpackPosition++;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
             }
@@ -37,11 +37,11 @@ public class Backpack : MonoBehaviour
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
             }
             if(Input.GetKeyDown("s")){
-                BackpackPosition+=5;
+                BackpackPosition+=3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
             }
-            if(Input.GetKeyDown("w") && BackpackPosition > 4 ){
-                BackpackPosition-=5;
+            if(Input.GetKeyDown("w") && BackpackPosition > 2 ){
+                BackpackPosition-=3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
             }
             if(Input.GetKeyDown("f") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null){
@@ -64,7 +64,7 @@ public class Backpack : MonoBehaviour
 
     private void ClearInventory()
     {
-        for (int i = 0; i < 24; i++)
+        for (int i = 0; i < 11; i++)
         {
             StaticBackPack.BackpackList.Add(null);
         }
