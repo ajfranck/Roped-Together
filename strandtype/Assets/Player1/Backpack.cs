@@ -16,13 +16,13 @@ public class Backpack : MonoBehaviour
     public int BackpackPosition = 0;
 
 
-    void Start()
-    {
-        ClearInventory();
-    }
+   // void Start()
+    //{
+     //   ClearInventory();
+   // }
 
 
-
+    /*
     private void OnTriggerStay(Collider other)
     {
 
@@ -45,15 +45,10 @@ public class Backpack : MonoBehaviour
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
             }
             if(Input.GetKeyDown("f") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null){
-                StaticBackPack.BackpackList[BackpackPosition] = HotBars.HotBarListP1[HotBars.HotBarPositionP1];
-                HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
-
-                Debug.Log("Backpack at position " + BackpackPosition + "is: " + StaticBackPack.BackpackList[BackpackPosition]);
+                HotBarToBackpack();
             }
             if(Input.GetKeyDown("g") && StaticBackPack.BackpackList[BackpackPosition] != null){
-                HotBars.HotBarListP1[HotBars.HotBarPositionP1] = StaticBackPack.BackpackList[BackpackPosition];
-                //StaticBackPack.BackpackList[BackpackPosition] = null;
-                Debug.Log("HotBar is:" + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
+                BackpackToHotbar();
             }
         }
 
@@ -71,5 +66,21 @@ public class Backpack : MonoBehaviour
     }
 
 
+   private void HotBarToBackpack()
+    {
+        StaticBackPack.BackpackList[BackpackPosition] = HotBars.HotBarListP1[HotBars.HotBarPositionP1];
+        HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
 
+        Debug.Log("Backpack at position " + BackpackPosition + "is: " + StaticBackPack.BackpackList[BackpackPosition]);
+    }
+
+    private void BackpackToHotbar()
+    {
+        HotBars.HotBarListP1[HotBars.HotBarPositionP1] = StaticBackPack.BackpackList[BackpackPosition];
+        StaticBackPack.BackpackList[BackpackPosition] = null;
+        Debug.Log("HotBar is:" + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
+    }
+
+
+    */
 }

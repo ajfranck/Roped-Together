@@ -86,6 +86,12 @@ public class WarmthBar : MonoBehaviour
                 isInteracting = true;
                 p1Interact.SetActive(false);
             }
+
+            if (Input.GetKey("space"))
+            {
+                isInteracting = false;
+            }
+
             if(P1currentWarmth <= P1MaxWarmth)
             {
                 P1currentWarmth += .75f;
