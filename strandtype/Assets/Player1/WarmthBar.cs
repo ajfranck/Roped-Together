@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 public class WarmthBar : MonoBehaviour
 {
 
+    [SerializeField] private CanvasGroup RestIcon;
+
     [SerializeField]
     Light light;
 
@@ -62,7 +64,6 @@ public class WarmthBar : MonoBehaviour
 
         if (other.gameObject.tag.Contains("Fire")) 
         {
-            //check which fire:
             contactingFire = true;
             if(other.gameObject.CompareTag("Fire1"))
             {

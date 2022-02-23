@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class HotBar : MonoBehaviour
 {
 
+    [SerializeField] private CanvasGroup BackpackUI;
+
     public Item TestItem;
     public Item CubeItem;
 
@@ -41,6 +43,7 @@ public class HotBar : MonoBehaviour
 
     void Start()
     {
+        HideBackpack();
         ClearInventory();
 
     }
@@ -54,10 +57,23 @@ public class HotBar : MonoBehaviour
 
         if (warmthbar.isInteracting)
         {
-            HandleBackPack(); 
+            HandleBackPack();
+            if(BackpackUI.alpha < 1){
+                BackpackUI.alpha += Time.deltaTime;
+            }
+            
+        }
+        else{
+            if(BackpackUI.alpha >= 0){
+                BackpackUI.alpha -= Time.deltaTime;
+            }
         }
 
 
+    }
+
+    public void HideBackpack(){
+        BackpackUI.alpha = 0;
     }
 
 
