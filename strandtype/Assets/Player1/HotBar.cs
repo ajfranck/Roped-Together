@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class HotBar : MonoBehaviour
 {
 
@@ -21,7 +22,10 @@ public class HotBar : MonoBehaviour
 
     public WarmthBar warmthbar;
 
+    //UI SPRITES
     public GameObject BackPackSprite;
+    public GameObject DescriptionText;
+    public GameObject ImageSprite;
 
     
 
@@ -41,10 +45,16 @@ public class HotBar : MonoBehaviour
 
 
 
+    //
+
+
+
+  
     void Start()
     {
-        HideBackpack();
+       
         ClearInventory();
+        
 
     }
 
@@ -58,23 +68,36 @@ public class HotBar : MonoBehaviour
         if (warmthbar.isInteracting)
         {
             HandleBackPack();
-            if(BackpackUI.alpha < 1){
-                BackpackUI.alpha += Time.deltaTime;
-            }
-            
+            BackpackFadeIn();          
         }
+
         else{
-            if(BackpackUI.alpha >= 0){
-                BackpackUI.alpha -= Time.deltaTime;
-            }
+            BackpackFadeOut();
         }
 
 
     }
 
-    public void HideBackpack(){
-        BackpackUI.alpha = 0;
+
+
+    public void BackpackFadeIn()
+    {
+        if (BackpackUI.alpha < 1f)
+        {
+            BackpackUI.alpha += Time.deltaTime;
+        }
+
+
+
     }
+
+    public void BackpackFadeOut(){
+        if (BackpackUI.alpha >= 0f)
+        {
+            BackpackUI.alpha -= Time.deltaTime*2f;
+        }
+    }
+
 
 
 
@@ -88,24 +111,20 @@ public class HotBar : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
             
-           
-
-
-
-            if (other.gameObject.tag.Contains("CubeItem"))
+        if (other.gameObject.tag.Contains("CubeItem"))
+        {
+            
+            if (!promptDisplayed)
             {
-
-                if (!promptDisplayed)
-                {
-                    DisplayPrompt(CubeItem);
-                }
-
-                if (Input.GetKey("p") && !pickedUp)
-                {
-                    PickUpItem(CubeItem);
-                }
-
+                DisplayPrompt(CubeItem);
             }
+
+            if (Input.GetKey("p") && !pickedUp)
+            {
+                PickUpItem(CubeItem);
+            }
+
+        }
 
 
     }
@@ -117,7 +136,7 @@ public class HotBar : MonoBehaviour
             {
                 pickedUp = false;
                 promptDisplayed = false;
-                BackPackSprite.SetActive(false);
+               
             }
 
             if (other.gameObject.CompareTag("CubeItem"))
@@ -145,6 +164,7 @@ public class HotBar : MonoBehaviour
                  StaticBackPack.P2BackpackSpritesList = P2BackpackSpritesList;
                  Debug.Log(StaticBackPack.P1BackpackSpritesList[i]);
                  Debug.Log(StaticBackPack.P2BackpackSpritesList[i]);
+                 
                    
 
             }
@@ -156,7 +176,7 @@ public class HotBar : MonoBehaviour
 
         private void DisplayPrompt(Item TheItem)
         {
-            itemNear = CubeItem.name;
+            itemNear = TheItem.name;
 
             Debug.Log("pick up " + itemNear + "?");
 
@@ -177,16 +197,18 @@ public class HotBar : MonoBehaviour
 
         private void HotBarToBackpack()
         {
-            
+            //sets backpack to hotbar
             StaticBackPack.BackpackList[BackpackPosition] = HotBars.HotBarListP1[HotBars.HotBarPositionP1];
           
             
             Debug.Log("Backpack at position " + BackpackPosition + "is: " + StaticBackPack.BackpackList[BackpackPosition]);
 
+
+            //sets backpack sprites for P1 and P2 (they must be seperate because they are seperate sprites)
             StaticBackPack.P1BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = HotBars.HotBarListP1[HotBars.HotBarPositionP1].artwork;
+            StaticBackPack.P2BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = HotBars.HotBarListP1[HotBars.HotBarPositionP1].artwork;
 
-
-
+            //removes from hotbar
             HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
             HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = null;
 
@@ -196,29 +218,34 @@ public class HotBar : MonoBehaviour
 
         private void BackpackToHotbar()
         {
+            //adds to p1 hotbar.
             HotBars.HotBarListP1[HotBars.HotBarPositionP1] = StaticBackPack.BackpackList[BackpackPosition];
           
             Debug.Log("HotBar is:" + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
 
-
+            //adds sprite to P1 Hotbar.
             HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = StaticBackPack.BackpackList[BackpackPosition].artwork;
-      
+            
 
-
+            //removes from backpack
             StaticBackPack.BackpackList[BackpackPosition] = null;
+
+            //sets backpack sprites to null for both backpacks
             StaticBackPack.P1BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = null;
+            StaticBackPack.P2BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = null;
 
         }
 
 
         private void HandleBackPack()
         {
-            BackPackSprite.SetActive(true);
-
+            SelectItemBackpack();
+           
             if (Input.GetKeyDown("d") && BackpackPosition < 11)
             {
                 BackpackPosition++;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
+                
             }
             if (Input.GetKeyDown("a") && BackpackPosition > 0)
             {
@@ -249,8 +276,20 @@ public class HotBar : MonoBehaviour
             }
         }
 
+        private void SelectItemBackpack()
+        {
+            if (StaticBackPack.BackpackList[BackpackPosition] != null)
+            {
+                DescriptionText.GetComponent<TextMeshProUGUI>().text = StaticBackPack.BackpackList[BackpackPosition].description;
+            }
+            else {
+                DescriptionText.GetComponent<TextMeshProUGUI>().text = null;
+            }
+        }
 
-        private void HandleHotBar()
+
+
+    private void HandleHotBar()
         {
             if (Input.GetKeyDown("1"))
             {
@@ -302,6 +341,8 @@ public class HotBar : MonoBehaviour
 
         }
 
+
+   
 
 
 }

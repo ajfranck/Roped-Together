@@ -10,7 +10,7 @@ public class Item : ScriptableObject
     public string name;
     public string description;
     public Sprite artwork;
-
+    
 
 
     public UnityEvent TheFunction;
