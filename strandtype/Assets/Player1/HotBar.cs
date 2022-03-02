@@ -281,9 +281,11 @@ public class HotBar : MonoBehaviour
             if (StaticBackPack.BackpackList[BackpackPosition] != null)
             {
                 DescriptionText.GetComponent<TextMeshProUGUI>().text = StaticBackPack.BackpackList[BackpackPosition].description;
-            }
+                ImageSprite.GetComponent<Image>().sprite = StaticBackPack.BackpackList[BackpackPosition].image;
+        }
             else {
                 DescriptionText.GetComponent<TextMeshProUGUI>().text = null;
+                ImageSprite.GetComponent<Image>().sprite = null;
             }
         }
 
