@@ -38,6 +38,8 @@ public class HotBar : MonoBehaviour
     public List<GameObject> P1BackpackSpritesList = new List<GameObject>();
     public List<GameObject> P2BackpackSpritesList = new List<GameObject>();
 
+
+
     public string name;
 
 
