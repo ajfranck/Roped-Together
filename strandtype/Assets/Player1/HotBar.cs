@@ -26,14 +26,9 @@ public class HotBar : MonoBehaviour
     public GameObject BackPackSprite;
     public GameObject DescriptionText;
     public GameObject ImageSprite;
-
-    
-
-
-   
+    public GameObject p1Pickup;
 
     public List<GameObject> HotBarSpritesP1 = new List<GameObject>();
-
 
     public List<GameObject> P1BackpackSpritesList = new List<GameObject>();
     public List<GameObject> P2BackpackSpritesList = new List<GameObject>();
@@ -41,51 +36,41 @@ public class HotBar : MonoBehaviour
 
 
     public string name;
-
-
     public int BackpackPosition = 0;
-
-
-
-    //
-
-
 
   
     void Start()
     {
        
         ClearInventory();
-        
-
     }
-
 
     void Update()
     {
-
+        if(!promptDisplayed)
+        {
+            p1Pickup.SetActive(false);
+        }
         HandleHotBar();
-
-
         if (warmthbar.isInteracting)
         {
             HandleBackPack();
-            BackpackFadeIn();          
+            StartCoroutine(BackpackFadeIn());          
         }
 
         else{
-            BackpackFadeOut();
+            StartCoroutine(BackpackFadeOut());
         }
 
 
     }
 
-
-
-    public void BackpackFadeIn()
+    IEnumerator BackpackFadeIn()
     {
+        yield return new WaitForSeconds(0.7f);
         if (BackpackUI.alpha < 1f)
         {
+
             BackpackUI.alpha += Time.deltaTime;
         }
 
@@ -93,22 +78,14 @@ public class HotBar : MonoBehaviour
 
     }
 
-    public void BackpackFadeOut(){
-        if (BackpackUI.alpha >= 0f)
+    IEnumerator BackpackFadeOut()
+    {
+        yield return new WaitForSeconds(0.0001f);
+        if (BackpackUI.alpha > 0f)
         {
             BackpackUI.alpha -= Time.deltaTime*2f;
         }
     }
-
-
-
-
-
-
-
-
-
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -127,10 +104,7 @@ public class HotBar : MonoBehaviour
             }
 
         }
-
-
     }
-
         private void OnTriggerExit(Collider other)
         {
 
@@ -148,9 +122,6 @@ public class HotBar : MonoBehaviour
             }
 
         }
-
-
-
         private void ClearInventory()
         {
             for (int i = 0; i < 4; i++)
@@ -165,22 +136,18 @@ public class HotBar : MonoBehaviour
                  StaticBackPack.P1BackpackSpritesList = P1BackpackSpritesList;
                  StaticBackPack.P2BackpackSpritesList = P2BackpackSpritesList;
                  Debug.Log(StaticBackPack.P1BackpackSpritesList[i]);
-                 Debug.Log(StaticBackPack.P2BackpackSpritesList[i]);
-                 
-                   
+                 Debug.Log(StaticBackPack.P2BackpackSpritesList[i]);    
 
             }
 
         }
-
-
-
 
         private void DisplayPrompt(Item TheItem)
         {
             itemNear = TheItem.name;
 
             Debug.Log("pick up " + itemNear + "?");
+            p1Pickup.SetActive(true);
 
             promptDisplayed = true;
         }    
