@@ -18,7 +18,7 @@ public class HotBar : MonoBehaviour
 
     public string itemNear = "";
 
-    public static int HotBarPosition = 0;
+    public int HotBarPosition = 0;
 
     public WarmthBar warmthbar;
 
@@ -38,12 +38,14 @@ public class HotBar : MonoBehaviour
 
     public List<GameObject> P1BackpackSpritesList = new List<GameObject>();
 
+    public List<GameObject> HotBarBackgroundsListP1 = new List<GameObject>();
+
     public  List<GameObject> P1BackpackBackgroundsList = new List<GameObject>();
 
     public List<GameObject> P2BackpackSpritesList = new List<GameObject>();
 
 
-
+    int addAmount = 0;
     public string name;
     public int BackpackPosition = 0;
 
@@ -51,6 +53,7 @@ public class HotBar : MonoBehaviour
     void Start()
     {       
         ClearInventory();
+        BackgroundSelectHotBar(0);
     }
 
     void Update()
@@ -63,6 +66,7 @@ public class HotBar : MonoBehaviour
         if (warmthbar.isInteracting)
         {
             HandleBackPack();
+            BackgroundSelect(0);
             StartCoroutine(BackpackFadeIn());          
         }
 
@@ -136,6 +140,7 @@ public class HotBar : MonoBehaviour
             for (int i = 0; i < 4; i++)
             {
                 HotBars.HotBarListP1.Add(null);
+                HotBars.HotBarBackgroundsListP1.Add(null);
             }
 
             for (int i = 0; i < 11; i++)
@@ -144,9 +149,8 @@ public class HotBar : MonoBehaviour
                  StaticBackPack.P1BackpackBackgroundsList.Add(null);
 
                  StaticBackPack.P1BackpackSpritesList = P1BackpackSpritesList;
-
                  StaticBackPack.P1BackpackBackgroundsList = P1BackpackBackgroundsList;
-                    
+                 HotBars.HotBarBackgroundsListP1 = HotBarBackgroundsListP1;   
 
                     
                  StaticBackPack.P2BackpackSpritesList = P2BackpackSpritesList;
@@ -225,28 +229,32 @@ public class HotBar : MonoBehaviour
 
         private void HandleBackPack()
         {
+
             SelectItemBackpack();
-           
             if (Input.GetKeyDown("d") && BackpackPosition < 11)
             {
-                BackpackPosition++;
+                addAmount = 1;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
-                       
+                BackgroundSelect(addAmount);
             }
             if (Input.GetKeyDown("a") && BackpackPosition > 0)
             {
-                BackpackPosition--;
+                addAmount = -1;
+                //BackpackPosition--;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
+                BackgroundSelect(addAmount);
             }
-            if (Input.GetKeyDown("s"))
+            if (Input.GetKeyDown("s") && BackpackPosition<9)
             {
-                BackpackPosition += 3;
+                addAmount = 3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
+                BackgroundSelect(addAmount);
             }
             if (Input.GetKeyDown("w") && BackpackPosition > 2)
             {
-                BackpackPosition -= 3;
+                addAmount = -3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
+                BackgroundSelect(addAmount);
             }
 
 
@@ -268,34 +276,56 @@ public class HotBar : MonoBehaviour
             {
                 DescriptionText.GetComponent<TextMeshProUGUI>().text = StaticBackPack.BackpackList[BackpackPosition].description;
                 ImageSprite.GetComponent<Image>().sprite = StaticBackPack.BackpackList[BackpackPosition].image;
-                StaticBackPack.P1BackpackBackgroundsList[BackpackPosition].GetComponent<Image>().sprite = BackgroundImage.GetComponent<Image>().sprite;
+               
 
-        }
+            }
+           // StaticBackPack.P1BackpackBackgroundsList[BackpackPosition].SetActive(true);
+
             else {
                 DescriptionText.GetComponent<TextMeshProUGUI>().text = null;
                 ImageSprite.GetComponent<Image>().sprite = null;
-                StaticBackPack.P1BackpackBackgroundsList[BackpackPosition].GetComponent<Image>().sprite = null;
+               // StaticBackPack.P1BackpackBackgroundsList[BackpackPosition].SetActive(false);
             }
         }
 
 
+        private void BackgroundSelect(int amountToAdd)
+        {
+            int oldPosition = BackpackPosition;                     
+            StaticBackPack.P1BackpackBackgroundsList[oldPosition].SetActive(false);
+            Debug.Log("old backpack spot " + BackpackPosition);
+            BackpackPosition = oldPosition+amountToAdd;
+            Debug.Log("new backpack spot " + BackpackPosition);
+            StaticBackPack.P1BackpackBackgroundsList[BackpackPosition].SetActive(true);
+           
+        }
+        
+        private void BackgroundSelectHotBar(int position)
+        {
+            int oldPosition = HotBars.HotBarPositionP1;
+            HotBars.HotBarBackgroundsListP1[oldPosition].SetActive(false);
+            HotBars.HotBarPositionP1 = position;
+            HotBars.HotBarBackgroundsListP1[HotBars.HotBarPositionP1].SetActive(true);
+        }
+        
 
     private void HandleHotBar()
-        {
+    {
             if (Input.GetKeyDown("1"))
             {
 
-                HotBars.HotBarPositionP1 = 0;
+                HotBarPosition = 0;
+                BackgroundSelectHotBar(HotBarPosition);
                 Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
-
+                
             }
 
 
             if (Input.GetKeyDown("2"))
             {
 
-
-                HotBars.HotBarPositionP1 = 1;
+                HotBarPosition = 1;
+                BackgroundSelectHotBar(HotBarPosition);
                 Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
 
             }
@@ -303,14 +333,16 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKeyDown("3"))
             {
-                HotBars.HotBarPositionP1 = 2;
+                HotBarPosition = 2;
+                BackgroundSelectHotBar(HotBarPosition);
                 Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
             }
 
 
             if (Input.GetKeyDown("4"))
             {
-                HotBars.HotBarPositionP1 = 3;
+                HotBarPosition = 3;
+                BackgroundSelectHotBar(HotBarPosition);
                 Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
             }
 
@@ -330,7 +362,7 @@ public class HotBar : MonoBehaviour
             }
 
 
-        }
+    }
 
 
    
