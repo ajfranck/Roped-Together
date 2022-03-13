@@ -13,8 +13,12 @@ public class RopeOther : MonoBehaviour
 
 	public int Frequency = 10;
 	public GameObject pointObject;
+	public GameObject pinnedTo;
 	public LineRenderer lr;
 	public bool simulating = false;
+
+	Color c1 = Color.white;
+	Color c2 = new Color(1, 1, 1, 0);
 
 	public int solveIterations = 5;
 
@@ -28,6 +32,8 @@ public class RopeOther : MonoBehaviour
 		
     }
 
+
+	
 	void Update()
     {
         if (Input.GetKeyDown("r"))
@@ -50,16 +56,7 @@ public class RopeOther : MonoBehaviour
 			Simulate();
 		}
 		DrawSticks();
-		foreach(GameObject point in pointObjects)
-        {
-			if (i <10 )
-			{
-				point.transform.position = points[i].position;
-				Debug.Log("points: " + points[i]);
-				Debug.Log(" i = " + i);
-			}
-			i++;
-        }
+		
     }
 
 	private Vector3 GetDistance()
@@ -83,7 +80,7 @@ public class RopeOther : MonoBehaviour
 
 		int frequency = 10;
 
-		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = true };
+		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = true};
 		Debug.Log(OldPoint.position);
 		Vector3 GetDistanceBetweenPoints = GetDistance();
 		Vector3 toEnd = (endPosition.transform.position - startPosition.transform.position);
@@ -92,7 +89,7 @@ public class RopeOther : MonoBehaviour
 		GameObject OldPointObject;
 		GameObject NewPointObject;
 
-		OldPointObject = Instantiate(pointObject, OldPoint.prevPosition, toEndQuad);
+		OldPointObject = Instantiate(pointObject, new Vector3(0f, 0f, 0f) , toEndQuad);
 
 		Debug.Log("OldPoint" + OldPointObject.transform.position);
 
@@ -100,18 +97,24 @@ public class RopeOther : MonoBehaviour
 
 		points.Add(OldPoint);
 		pointObjects.Add(OldPointObject);
+
+		
+
 		for (int i = 1; i<frequency; i++)
         {
 			Debug.Log("runs");
 			Point NewPoint = new Point() { position = OldPoint.position+GetDistanceBetweenPoints, prevPosition = OldPoint.position + GetDistanceBetweenPoints };
 			points.Add(NewPoint);
 			sticks.Add(new Stick(OldPoint, NewPoint));
-		
-			NewPointObject = Instantiate(pointObject, NewPoint.position, new Quaternion(0f, 0f, 0f, 0f));
+
+			NewPointObject = Instantiate(pointObject, new Vector3(0f, 0f, 0f), toEndQuad);
 			pointObjects.Add(NewPointObject);
 			OldPoint = NewPoint;
+           
+		
 		}
-
+		points[points.Count-1].locked = true;
+		points[points.Count - 1].pinned = true;
     }
 
 
@@ -121,6 +124,8 @@ public class RopeOther : MonoBehaviour
 	{
 		public Vector3 position, prevPosition;
 		public bool locked;
+		public bool pinned;
+		
 	}
 
 
@@ -140,6 +145,7 @@ public class RopeOther : MonoBehaviour
 
 	void Simulate()
 	{
+		int c = 0;
 		foreach (Point p in points)
 		{
 			if (!p.locked)
@@ -149,6 +155,25 @@ public class RopeOther : MonoBehaviour
 				p.position += Vector3.down * gravity * Time.deltaTime * Time.deltaTime;
 				p.prevPosition = positionBeforeUpdate;
 			}
+
+			if (p.pinned)
+            {
+				p.position = pinnedTo.transform.position;
+            }
+
+            if (p.position.y < -11f)
+            {
+				p.position.y = -11f;
+            }
+
+            if (p.position.z > -1f)
+            {
+            	p.position.z = -1f;
+            }
+
+
+          
+			c++;
 		}
 
 		for (int i = 0; i < solveIterations; i++)
@@ -175,57 +200,54 @@ public class RopeOther : MonoBehaviour
 
 			}
 		}
+
 	}
 
 
 	void DrawSticks()
     {
-		GameObject New;
-		for (int i = 0; i < pointObjects.Count; i++)
+		Point New = new Point();
+		GameObject thePoint;
+		for (int i = 0; i < points.Count; i++)
 		{
 			//Debug.Log("POintlist count; " + PointList.Count);
-			GameObject old = pointObjects[i];
+			Point old = points[i];
+			thePoint = pointObjects[i];
 
-			if (i < pointObjects.Count - 1)
+			if (i < points.Count - 1)
 			{
-				New = pointObjects[i + 1];
+				New = points[i + 1];
 			}
             else
             {
-				New = endPosition;
+				New.position = endPosition.transform.position;
             }
 
 
-			lr = New.GetComponent<LineRenderer>();
-			lr.SetPosition(0, old.transform.position);
-			lr.SetPosition(1, New.transform.position);
+			lr = thePoint.GetComponent<LineRenderer>();
+			lr.SetPosition(0, old.position);
+			lr.SetPosition(1, New.position);
 
 			if (i == pointObjects.Count - 1)
 			{
-				lr.SetPosition(0, old.transform.position);
+				lr.SetPosition(0, old.position);
 				lr.SetPosition(0, endPosition.transform.position);
 			}
 			if (i == 0)
 			{
 				lr.SetPosition(0, startPosition.transform.position);
-				lr.SetPosition(0, pointObjects[0].transform.position);
+				lr.SetPosition(0, points[0].position);
 			}
+
+			lr.SetColors(c1, c2);
 
 		}
 	}
 
 
-	void OnTriggerEnter(Collider other)
-    {
-		for (int i = 0; i < pointObjects.Count; i++)
-		{
-			if (pointObjects[i].gameObject.CompareTag("Player"))
-			{
-				Debug.Log("Collides");
-				points[i].prevPosition += new Vector3(200f, 200f, 200f);
-			}
-		}
-    }
+
+	
+
 
 
 }

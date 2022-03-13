@@ -12,6 +12,7 @@ TagManager:
   - Fire2
   - Fire3
   - StartPoint
+  - wall
   layers:
   - Default
   - TransparentFX
