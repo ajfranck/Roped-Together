@@ -113,8 +113,11 @@ public class RopeOther : MonoBehaviour
            
 		
 		}
+
+		//points to pin or lock
+
 		points[points.Count-1].locked = true;
-		points[points.Count - 1].pinned = true;
+		//points[points.Count - 1].pinned = true;
     }
 
 
@@ -239,7 +242,6 @@ public class RopeOther : MonoBehaviour
 				lr.SetPosition(0, points[0].position);
 			}
 
-			lr.SetColors(c1, c2);
 
 		}
 	}
