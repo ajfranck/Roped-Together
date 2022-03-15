@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class RopeOther : MonoBehaviour
 {
+	[SerializeField]
+	public List<Point> points = new List<Point>();
+	[SerializeField]
+	public List<Stick> sticks = new List<Stick>();
 
-	protected List<Point> points = new List<Point>();
-	protected List<Stick> sticks = new List<Stick>();
+	[SerializeField]
+	public bool[] lockedPoints = new bool[10];
+	[SerializeField]
+	public GameObject[] pinnedList = new GameObject[10];
+
 	protected List<GameObject> pointObjects = new List<GameObject>();
 	public GameObject endPosition;
 	public GameObject startPosition;
 
 	public int Frequency = 10;
 	public GameObject pointObject;
-	public GameObject pinnedTo;
+	//public GameObject pinnedTo;
 	public LineRenderer lr;
 	public bool simulating = false;
 
@@ -30,6 +37,8 @@ public class RopeOther : MonoBehaviour
 	void Start()
     {
 		
+
+
     }
 
 
@@ -79,9 +88,11 @@ public class RopeOther : MonoBehaviour
     {
 
 		int frequency = 10;
+		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = false, pinnedTo = null};
 
-		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = true};
-		Debug.Log(OldPoint.position);
+		IsPinnedOrLocked(0, OldPoint);
+
+
 		Vector3 GetDistanceBetweenPoints = GetDistance();
 		Vector3 toEnd = (endPosition.transform.position - startPosition.transform.position);
 		Quaternion toEndQuad = Quaternion.Euler(toEnd);
@@ -103,35 +114,55 @@ public class RopeOther : MonoBehaviour
 		for (int i = 1; i<frequency; i++)
         {
 			Debug.Log("runs");
-			Point NewPoint = new Point() { position = OldPoint.position+GetDistanceBetweenPoints, prevPosition = OldPoint.position + GetDistanceBetweenPoints };
+			Point NewPoint = new Point() { position = OldPoint.position + GetDistanceBetweenPoints, prevPosition = OldPoint.position + GetDistanceBetweenPoints };
+
+
+			IsPinnedOrLocked(i, NewPoint);
+
+
 			points.Add(NewPoint);
 			sticks.Add(new Stick(OldPoint, NewPoint));
 
 			NewPointObject = Instantiate(pointObject, new Vector3(0f, 0f, 0f), toEndQuad);
 			pointObjects.Add(NewPointObject);
 			OldPoint = NewPoint;
-           
-		
+           		
 		}
 
 		//points to pin or lock
 
-		points[points.Count-1].locked = true;
+		//points[points.Count-1].locked = true;
 		//points[points.Count - 1].pinned = true;
     }
 
+    private void IsPinnedOrLocked(int i, Point point)
+    {
+        if (lockedPoints[i] != null)
+        {
+            point.locked = lockedPoints[i];
+
+        }
+
+        if (pinnedList[i] != null)
+        {
+            point.pinnedTo = pinnedList[i];
+        }
+    }
 
 
-
-	public class Point
+	[System.Serializable]
+	public  class Point
 	{
 		public Vector3 position, prevPosition;
+		[SerializeField]
 		public bool locked;
-		public bool pinned;
+		//public bool pinned;
+
+		public GameObject pinnedTo;
 		
 	}
 
-
+	[System.Serializable]
 	public class Stick
 	{
 		public Point pointA, pointB;
@@ -159,20 +190,11 @@ public class RopeOther : MonoBehaviour
 				p.prevPosition = positionBeforeUpdate;
 			}
 
-			if (p.pinned)
+			if (p.pinnedTo)
             {
-				p.position = pinnedTo.transform.position;
+				p.position = p.pinnedTo.transform.position;
             }
 
-            if (p.position.y < -11f)
-            {
-				p.position.y = -11f;
-            }
-
-            if (p.position.z > -1f)
-            {
-            	p.position.z = -1f;
-            }
 
 
           
