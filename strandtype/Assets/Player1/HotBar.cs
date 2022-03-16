@@ -32,6 +32,7 @@ public class HotBar : MonoBehaviour
 
     public GameObject p1Pickup;
 
+    public GameObject HotBarBackground; // second hotbar border that gets replaced with item image
 
 
     public List<GameObject> HotBarSpritesP1 = new List<GameObject>();
@@ -200,7 +201,7 @@ public class HotBar : MonoBehaviour
 
             //removes from hotbar
             HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
-            HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = null;
+            HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = HotBarBackground.GetComponent<Image>().sprite;
 
             
         }
