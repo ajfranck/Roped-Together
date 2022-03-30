@@ -7,4 +7,10 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene("Main Scene");
     }
+
+    public void QuitGame ()
+    {
+        Debug.Log("QUIT");
+        Application.Quit();
+    }
 }
