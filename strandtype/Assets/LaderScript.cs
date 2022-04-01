@@ -11,6 +11,9 @@ public class LaderScript : MonoBehaviour
     int laddermax = 5;
     int x = 0;
     int i = 0;
+    public Vector3 SpawnPosition;
+    Vector3 NewPosition;
+    public Quaternion OriginalRotation;
     void Start()
     {
     }
@@ -22,16 +25,14 @@ public class LaderScript : MonoBehaviour
         SpawnPosition.y = SpawnPosition.y + 3;
         return SpawnPosition;
     }
-    public void Stack(Vector3 OldSpawn, GameObject LadderStack)
+    public Vector3 StackFunction(Vector3 Spawn)
     {
-        for(x = 0; x < laddermax; x++)
-        {
-            Vector3 StackPosition = SpawnPosition;
-            //Vector3 LadderDirection = Ladder.transform.forward;
-            StackPosition.y = StackPosition.y + 3;
-            Instantiate(LadderSegment, StackPosition, Ladder.transform.rotation);
-        }
+        //Spawn = SpawnPosition;
+        Vector3 NewPosition = Spawn;
+        NewPosition.y = NewPosition.y + 1;
+        return NewPosition;
     }
+    //public 
 
 
 
@@ -39,18 +40,17 @@ public class LaderScript : MonoBehaviour
     {
         if(Input.GetKeyDown("space"))
         {
-        for(i = 0; i < 5; i++)
-        {
-            if(i == 0){
-            Vector3 SpawnPosition = PositionClass();
-            GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, this.transform.rotation);
-            }
-            else
-            {
-                Stack(SpawnPosition, Ladder);
-            }
-        }
-            
+                if(i == 0)
+                {
+                    SpawnPosition = PositionClass();
+                    GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, this.transform.rotation);
+                    i++;
+                }
+                else
+                {
+                    NewPosition = StackFunction(SpawnPosition);
+                    Instantiate(LadderSegment, NewPosition, this.transform.rotation);
+                }    
         }
 
 
