@@ -35,6 +35,8 @@ public class MovementController : MonoBehaviour
 
     public bool ClimbRope = false;
 
+    public bool falling = false;
+
 
 
     void Awake()
@@ -73,10 +75,20 @@ public class MovementController : MonoBehaviour
         {
             OnDisable();
         }
+
+
+        if (wallbar.isInteracting)
+        {
+            OnDisable();
+        }
+
         else
         {
             OnEnable();
         }
+
+        
+
     }
 
     void FixedUpdate()
@@ -105,7 +117,7 @@ public class MovementController : MonoBehaviour
     {
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x;
-        currentMovement.z = currentMovementInput.y;
+        currentMovement.z = currentMovementInput.y; 
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
     }
 
