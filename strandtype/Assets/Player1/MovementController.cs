@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
 public class MovementController : MonoBehaviour
 {
 
@@ -17,8 +19,9 @@ public class MovementController : MonoBehaviour
     Vector2 currentMovementInput;
 
     Vector3 currentMovement;
+
+    Vector3 ropeMovement;
     
-    Vector3
 
     bool movementPressed;
     float rotationFactor = 10f;
@@ -41,20 +44,11 @@ public class MovementController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-        //playerInput.CharacterController.Move.started += onMovementInput;
-        //playerInput.CharacterController.Move.canceled += onMovementInput;
-        //playerInput.CharacterController.Move.performed += onMovementInput;
-
-
-
-        //rope movement
-        playerInput.CharacterController.Move.started += RopeMove;
-        playerInput.CharacterController.Move.canceled += RopeMove;
-        playerInput.CharacterController.Move.performed += RopeMove;
-
+        playerInput.CharacterController.Move.started += onMovementInput;
+        playerInput.CharacterController.Move.canceled += onMovementInput;
+        playerInput.CharacterController.Move.performed += onMovementInput;
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
-
 
     }
 
@@ -62,31 +56,19 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
-        if (ClimbRope)
+        if (ClimbRope) 
         {
-
-
-            RopeRotation();
-            characterController.Move(rope * Time.deltaTime);
-
-        }
+            //RopeRotation();
+            characterController.Move(currentMovement * Time.deltaTime);
+        }    
+        
         else
         {
             characterController.Move(currentMovement * Time.deltaTime * 10f);
             Rotation();
             Gravity();
         }
-
-
-
-     
-
-       // Gravity();
         
-
         if (warmthbar.isInteracting)
         {
             OnDisable();
@@ -96,6 +78,7 @@ public class MovementController : MonoBehaviour
             OnEnable();
         }
     }
+
     void FixedUpdate()
     {
             
@@ -103,7 +86,22 @@ public class MovementController : MonoBehaviour
        
     }
 
-    void onMovementInput(InputAction.CallbackContext context)
+     void onMovementInput(InputAction.CallbackContext Context)
+     {
+        if (ClimbRope)
+        {
+            RopeMove(Context);
+        }
+
+        else 
+        {
+            DefaultMove(Context);
+        }
+     }
+     
+
+
+    void DefaultMove(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x;
@@ -111,12 +109,18 @@ public class MovementController : MonoBehaviour
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
     }
 
+    void RopeMove(InputAction.CallbackContext context)
+    {
+        Debug.Log("RopeMove runs");
+        currentMovementInput = context.ReadValue<Vector2>();
+        currentMovement.x = currentMovementInput.x;
+        currentMovement.y = currentMovementInput.y;
+        movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
+    }
+
 
     void Gravity()
     {
-
-
-
         if (characterController.isGrounded)
         {
             currentMovement.y = groundedGravity;
@@ -124,12 +128,10 @@ public class MovementController : MonoBehaviour
 
         else
         {
-
             currentMovement.y += gravity;
-
         }
-
     }
+
 
     void handleAnimation()
     {
@@ -152,8 +154,7 @@ public class MovementController : MonoBehaviour
 
         //telling it to look at the direction we are moving
         positionToLook.x = currentMovement.x;
-        // positionToLook.y = currentMovement.y = 0f;
-        positionToLook.y = currentMovement.y;
+        positionToLook.y = currentMovement.y = 0f;
         positionToLook.z = currentMovement.z;
 
 
@@ -164,8 +165,6 @@ public class MovementController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, rotationFactor * Time.deltaTime);
 
         }
-
-
     }
 
     void OnEnable()
@@ -181,13 +180,7 @@ public class MovementController : MonoBehaviour
 
 
 
-    void RopeMove(InputAction.CallbackContext context)
-    {
-        currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x;
-        currentMovement.y = currentMovementInput.y;
-        movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
-    }
+    
    
 
 
@@ -221,9 +214,10 @@ public class MovementController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Climbwall")) 
+        if (other.gameObject.CompareTag("wall")) 
         {
             ClimbRope = true;
+            currentMovement = new Vector3(0f, 0f, 0f);
         }
     }
 
