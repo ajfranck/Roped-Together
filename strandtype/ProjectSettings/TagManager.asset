@@ -13,6 +13,7 @@ TagManager:
   - Fire3
   - StartPoint
   - wall
+  - Ladder
   layers:
   - Default
   - TransparentFX

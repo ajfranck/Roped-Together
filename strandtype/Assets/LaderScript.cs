@@ -5,17 +5,21 @@ using System;
 
 public class LaderScript : MonoBehaviour
 {
+//GameObjects
     public GameObject LadderSegment;
-    public GameObject Player1;
+    private GameObject Parent;
+//NumericalValues
     float SpawnDistance = 2;
     int laddermax = 5;
     int x = 0;
     int i = 0;
+    int count = 0;
+//Vector3
     public Vector3 SpawnPosition;
     Vector3 NewPosition;
-    public Quaternion OriginalRotation;
     void Start()
     {
+        Parent = GameObject.FindGameObjectWithTag("ParentLadder");
     }
 
     public Vector3 PositionClass()
@@ -25,14 +29,12 @@ public class LaderScript : MonoBehaviour
         SpawnPosition.y = SpawnPosition.y + 3;
         return SpawnPosition;
     }
-    public Vector3 StackFunction(Vector3 Spawn)
+    public Vector3 StackFunction(Vector3 Spawn, int count)
     {
-        //Spawn = SpawnPosition;
         Vector3 NewPosition = Spawn;
-        NewPosition.y = NewPosition.y + 1;
+        NewPosition.y = NewPosition.y + count;
         return NewPosition;
     }
-    //public 
 
 
 
@@ -48,19 +50,10 @@ public class LaderScript : MonoBehaviour
                 }
                 else
                 {
-                    NewPosition = StackFunction(SpawnPosition);
+                    NewPosition = StackFunction(SpawnPosition, i);
                     Instantiate(LadderSegment, NewPosition, this.transform.rotation);
+                    i++;
                 }    
         }
-
-
-
-
     }
-
-
-  
-  
-
-
 }
