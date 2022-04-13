@@ -22,13 +22,17 @@ public class WarmthBar : MonoBehaviour
     
     public P1HealthBar P1HealthBar;
 
+
     //all fires:
     public bool fire1;
     public bool fire2;
     public bool fire3;
 
+    public int lastFire;
+
     void Start()
     {
+        LoadPlayer();
         light.intensity = 4;
         P1currentWarmth = P1MaxWarmth;
         P1HealthBar.P1SetWarmth(P1MaxWarmth);
@@ -68,14 +72,17 @@ public class WarmthBar : MonoBehaviour
             if(other.gameObject.CompareTag("Fire1"))
             {
                 fire1 = true;
+                lastFire = 1;
             }
             else if(other.gameObject.CompareTag("Fire2"))
             {
                 fire2 = true;
+                lastFire = 2;
             }
             else if(other.gameObject.CompareTag("Fire3"))
             {
                 fire3 = true;
+                lastFire = 3;
             }
             if(!isInteracting)
             {
@@ -98,6 +105,7 @@ public class WarmthBar : MonoBehaviour
                 P1currentWarmth += .75f;
             }
             P1HealthBar.P1SetWarmth(P1currentWarmth);
+            SavePlayer();
         }
     }
     private void OnTriggerExit(Collider other)
@@ -105,6 +113,26 @@ public class WarmthBar : MonoBehaviour
         p1Interact.SetActive(false);
         contactingFire = false;
         isInteracting = false;
+    }
+
+    public void SavePlayer()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+    public void LoadPlayer()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        lastFire = data.lastFire;
+        if(lastFire == 1)
+        {
+            Debug.Log("fire one");
+            transform.position = new Vector3(-13, -14, -39);
+        }
+        else if (lastFire == 2)
+        {
+            Debug.Log("fire two");
+        }
     }
 
 }
