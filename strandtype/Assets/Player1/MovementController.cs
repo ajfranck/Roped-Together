@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 public class MovementController : MonoBehaviour
 {
 
-
     // declare reference variables 
     PlayerInput playerInput;
     CharacterController characterController;
@@ -21,27 +20,26 @@ public class MovementController : MonoBehaviour
     Vector3 currentMovement;
 
     Vector3 ropeMovement;
-    
 
     bool movementPressed;
+
     float rotationFactor = 10f;
 
-    public float gravity = -9.8f;
     float groundedGravity = -.05f;
 
     public bool AtFire = false;
 
     public WarmthBar warmthbar;
+    public WallBar wallbar;
 
     public bool ClimbRope = false;
 
-    public bool falling = false;
 
 
 
     void Awake()
     {
-        
+
         playerInput = new PlayerInput();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -62,25 +60,32 @@ public class MovementController : MonoBehaviour
         {
             //RopeRotation();
             characterController.Move(currentMovement * Time.deltaTime);
+            Debug.Log("warmthbar? " + warmthbar.isInteracting);
+            Debug.Log("falling? " + wallbar.isFalling);    
+            
+            if (wallbar.isFalling)
+            {
+                Gravity(-.1f);
+            }
         }    
         
         else
         {
             characterController.Move(currentMovement * Time.deltaTime * 10f);
             Rotation();
-            Gravity();
+            Gravity(-9.8f);
         }
         
-        if (warmthbar.isInteracting)
+        if (warmthbar.isInteracting )
         {
             OnDisable();
         }
 
 
-        if (wallbar.isInteracting)
-        {
-            OnDisable();
-        }
+       // if (wallbar.isInteracting)
+        //{
+          //  OnDisable();
+        //}
 
         else
         {
@@ -92,10 +97,8 @@ public class MovementController : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
-            
-        handleAnimation();
-       
+    {           
+        handleAnimation();     
     }
 
      void onMovementInput(InputAction.CallbackContext Context)
@@ -128,10 +131,18 @@ public class MovementController : MonoBehaviour
         currentMovement.x = currentMovementInput.x;
         currentMovement.y = currentMovementInput.y;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
+     
+
+
+        if(Input.GetKey("s") && characterController.isGrounded)
+        {
+            ClimbRope = false;
+        }
+
     }
 
 
-    void Gravity()
+    void Gravity(float gravity)
     {
         if (characterController.isGrounded)
         {

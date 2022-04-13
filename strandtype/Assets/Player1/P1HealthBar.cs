@@ -31,7 +31,7 @@ public class P1HealthBar : MonoBehaviour
 
     public void P1SetStamina(float p1stamina)
     {
-        staminaSlider.value = p1stamina;
+        Debug.Log("P1 Stamina " + p1stamina);
     }
 
 }
