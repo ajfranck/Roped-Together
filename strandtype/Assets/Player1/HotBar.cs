@@ -138,7 +138,7 @@ public class HotBar : MonoBehaviour
 
         private void ClearInventory()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 HotBars.HotBarListP1.Add(null);
                 HotBars.HotBarBackgroundsListP1.Add(null);
@@ -222,8 +222,8 @@ public class HotBar : MonoBehaviour
             StaticBackPack.BackpackList[BackpackPosition] = null;
 
             //sets backpack sprites to null for both backpacks
-            StaticBackPack.P1BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = null;
-            StaticBackPack.P2BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = null;
+            StaticBackPack.P1BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = HotBarBackground.GetComponent<Image>().sprite;
+            StaticBackPack.P2BackpackSpritesList[BackpackPosition].GetComponent<Image>().sprite = HotBarBackground.GetComponent<Image>().sprite;
 
         }
 
@@ -329,22 +329,6 @@ public class HotBar : MonoBehaviour
                 BackgroundSelectHotBar(HotBarPosition);
                 Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
 
-            }
-
-
-            if (Input.GetKeyDown("3"))
-            {
-                HotBarPosition = 2;
-                BackgroundSelectHotBar(HotBarPosition);
-                Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
-            }
-
-
-            if (Input.GetKeyDown("4"))
-            {
-                HotBarPosition = 3;
-                BackgroundSelectHotBar(HotBarPosition);
-                Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1]);
             }
 
 
