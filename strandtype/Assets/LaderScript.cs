@@ -7,7 +7,7 @@ public class LaderScript : MonoBehaviour
 {
 //GameObjects
     public GameObject LadderSegment;
-    private GameObject Parent;
+    public GameObject LadderParent;
 //NumericalValues
     float SpawnDistance = 2;
     int laddermax = 5;
@@ -19,7 +19,7 @@ public class LaderScript : MonoBehaviour
     Vector3 NewPosition;
     void Start()
     {
-        Parent = GameObject.FindGameObjectWithTag("ParentLadder");
+        LadderParent = GameObject.FindGameObjectWithTag("ParentLadder");
     }
 
     public Vector3 PositionClass()
@@ -35,25 +35,30 @@ public class LaderScript : MonoBehaviour
         NewPosition.y = NewPosition.y + count;
         return NewPosition;
     }
-
-
-
     void Update()
     {
-        if(Input.GetKeyDown("space"))
+        if(i < 5)
         {
-                if(i == 0)
-                {
-                    SpawnPosition = PositionClass();
-                    GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, this.transform.rotation);
-                    i++;
-                }
-                else
-                {
-                    NewPosition = StackFunction(SpawnPosition, i);
-                    Instantiate(LadderSegment, NewPosition, this.transform.rotation);
-                    i++;
-                }    
+            if(Input.GetKeyDown("space"))
+            {
+                    if(i == 0)
+                    {
+                        SpawnPosition = PositionClass();
+                        LadderParent.transform.position = this.transform.position + this.transform.forward * SpawnDistance;
+                        GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, this.transform.rotation, LadderParent.transform);
+                        i++;
+                    }
+                    else
+                    {
+                        NewPosition = StackFunction(SpawnPosition, i);
+                        Instantiate(LadderSegment, NewPosition, this.transform.rotation, LadderParent.transform);
+                        i++;
+                    }    
+            }
+        }
+        else
+        {
+
         }
     }
 }
