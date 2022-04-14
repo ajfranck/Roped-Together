@@ -18,27 +18,35 @@ public class RopeOther : MonoBehaviour
 	public GameObject endPosition;
 	public GameObject startPosition;
 
+	public GameObject thePlayer;
+
 	public int Frequency = 10;
+
+
+
 	public GameObject pointObject;
 	//public GameObject pinnedTo;
 	public LineRenderer lr;
 	public bool simulating = false;
-
+	
 	Color c1 = Color.white;
 	Color c2 = new Color(1, 1, 1, 0);
 
 	public int solveIterations = 5;
 
+
+
 	public float gravity = 10f;
 	int[] order;
 	public bool constrainStickMinLength = true;
+
+	public bool HasOrigin;
+
 
 
 	void Start()
     {
 		
-
-
     }
 
 
@@ -47,7 +55,7 @@ public class RopeOther : MonoBehaviour
     {
         if (Input.GetKeyDown("r"))
         {
-			InstantiateSections();
+			InstantiateSections(Frequency);
         }
 
 		int i = 0;
@@ -68,10 +76,10 @@ public class RopeOther : MonoBehaviour
 		
     }
 
-	private Vector3 GetDistance()
+	private Vector3 GetDistance(int frequency)
 	{
 
-		float frequency = 10f;
+		//float frequency = 10f;
 
 	
 		float segmentLengthX = (endPosition.transform.position.x - startPosition.transform.position.x) / frequency;
@@ -82,18 +90,22 @@ public class RopeOther : MonoBehaviour
 		return segmentLength;
 	}
 
+	Vector3 GetPlayerPosition(GameObject player)
+    {
+		Vector3 thePosition = player.transform.position;
+		return thePosition;
+    }
 
-
-	private void InstantiateSections()
+	private void InstantiateSections(int frequency)
     {
 
-		int frequency = 10;
+		//int frequency = 10;
 		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = false, pinnedTo = null};
 
 		IsPinnedOrLocked(0, OldPoint);
 
 
-		Vector3 GetDistanceBetweenPoints = GetDistance();
+		Vector3 GetDistanceBetweenPoints = GetDistance(frequency);
 		Vector3 toEnd = (endPosition.transform.position - startPosition.transform.position);
 		Quaternion toEndQuad = Quaternion.Euler(toEnd);
 
@@ -107,9 +119,9 @@ public class RopeOther : MonoBehaviour
 		Debug.Log("runs 1 " + Frequency);
 
 		points.Add(OldPoint);
-		pointObjects.Add(OldPointObject);
 
 		
+		pointObjects.Add(OldPointObject);
 
 		for (int i = 1; i<frequency; i++)
         {
@@ -134,6 +146,9 @@ public class RopeOther : MonoBehaviour
 		//points[points.Count-1].locked = true;
 		//points[points.Count - 1].pinned = true;
     }
+
+
+
 
     private void IsPinnedOrLocked(int i, Point point)
     {
@@ -194,10 +209,10 @@ public class RopeOther : MonoBehaviour
             {
 				p.position = p.pinnedTo.transform.position;
             }
+			
+			
 
 
-
-          
 			c++;
 		}
 

@@ -142,6 +142,7 @@ public class MovementController : MonoBehaviour
     }
 
 
+
     void Gravity(float gravity)
     {
         if (characterController.isGrounded)
