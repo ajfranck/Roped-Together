@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class RopeOther : MonoBehaviour
 {
+
+	public WallBar wallbar;
+
+
 	[SerializeField]
 	public List<Point> points = new List<Point>();
 	[SerializeField]
@@ -13,6 +17,17 @@ public class RopeOther : MonoBehaviour
 	public bool[] lockedPoints = new bool[10];
 	[SerializeField]
 	public GameObject[] pinnedList = new GameObject[10];
+
+	[SerializeField]
+	public GameObject Belt1;
+
+	//[SerializeField]
+	//public GameObject Belt2;
+
+	//coiling, says which points to coil to belt one and two
+	public int whichToCoil1;
+	//public int whichToCoil2;
+
 
 	protected List<GameObject> pointObjects = new List<GameObject>();
 	public GameObject endPosition;
@@ -27,8 +42,10 @@ public class RopeOther : MonoBehaviour
 	public GameObject pointObject;
 	//public GameObject pinnedTo;
 	public LineRenderer lr;
+
 	public bool simulating = false;
-	
+	public bool Coil;
+
 	Color c1 = Color.white;
 	Color c2 = new Color(1, 1, 1, 0);
 
@@ -40,25 +57,37 @@ public class RopeOther : MonoBehaviour
 	int[] order;
 	public bool constrainStickMinLength = true;
 
-	public bool HasOrigin;
+	public bool HasOrigin = true;
 
 
+
+	[HideInInspector]
+	public Vector3 UnravelStartPosition;
+
+	
+	public int UnravelIndex;
+
+	public float UnravelDistanceLet;
 
 	void Start()
     {
-		
     }
 
-
-	
 	void Update()
     {
+		
         if (Input.GetKeyDown("r"))
         {
 			InstantiateSections(Frequency);
-        }
+			//UnravelIndex = points.Count-10;
 
-		int i = 0;
+			if (Coil)
+			{
+				CoilRope(whichToCoil1/*, whichToCoil2*/);
+				Coil = false;
+			}
+		}
+
         if (Input.GetKey("space"))
         {
 			simulating = true;
@@ -73,13 +102,102 @@ public class RopeOther : MonoBehaviour
 			Simulate();
 		}
 		DrawSticks();
-		
+
+        if (wallbar.ClimbRope)
+        {
+
+
+			if (!HasOrigin)
+			{
+				UnravelStartPosition = thePlayer.transform.position;
+				Debug.Log("UnravelStartPosition" + UnravelStartPosition);
+				HasOrigin = true;
+
+				//for (int i = points.Count - 10; i >= 0; i -= 10)
+				//{
+				//	Debug.Log("INDEX " + i);
+				//	Debug.Log("UNPINNING" + points[i].pinnedTo.name + "INDEX" + i);
+				//	pinnedList[i] = null;
+				//	points[i].pinnedTo = pinnedList[i];
+
+				//}
+
+			}
+			if (UnravelIndex > 0)
+			{
+				Unravel(whichToCoil1);
+			}
+
+			
+        }
+
+
+    }
+
+
+
+	void Unravel(int pinnedFrequency)
+    {
+		//float DistanceFromOrigin = thePlayer.transform.position - UnravelStartPosition;
+
+		float DistanceFromOrigin = GetDistanceFloat(thePlayer.transform.position, UnravelStartPosition);
+		Debug.Log("DistanceFromOrigin" + DistanceFromOrigin);
+
+        if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet)
+        {
+			Debug.Log("it thinks to unravel");
+			pinnedList[UnravelIndex] = null;
+			points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
+			Debug.Log("Unravel Index " + UnravelIndex);
+			UnravelIndex -= pinnedFrequency;
+			UnravelStartPosition = thePlayer.transform.position;
+        }
+	}
+
+	void FixedUpdate()
+    {
+		for (int i = 1; i < points.Count; i++)
+		{
+			IsPinnedOrLocked(i, points[i]);
+		}
+	}
+
+	float GetDistanceFloat(Vector3 end, Vector3 start)
+    {
+		Debug.Log("StartX " + start.y + "EndX " + end.y);
+		float xLength = end.x - start.x;
+		Debug.Log("Xlength " + xLength);
+		float yLength = end.y - start.y;
+		Debug.Log("Ylength " + yLength);
+		float zLength = end.z - start.z;
+		Debug.Log("Zlength " + zLength);
+		float theDistance = (Mathf.Sqrt((xLength * xLength) + (yLength * yLength) + (zLength * zLength)));
+		Debug.Log("getDistanceFloat" + theDistance);
+		return theDistance;
+	}
+
+	private void CoilRope(int pinnedFrequency/*, int lockedFrequency*/)
+    {
+
+		//bool belt = true;
+		for(int i = 0; i<Frequency; i += pinnedFrequency)
+        {
+			//if (belt)
+			//{
+				pinnedList[i] = Belt1;
+				//belt = false;
+			//}	
+
+			//else if (!belt)
+           // {
+			//	pinnedList[i] = Belt2;
+			//	belt = true;
+           // }
+        }
     }
 
 	private Vector3 GetDistance(int frequency)
 	{
-
-		//float frequency = 10f;
 
 	
 		float segmentLengthX = (endPosition.transform.position.x - startPosition.transform.position.x) / frequency;
@@ -99,7 +217,6 @@ public class RopeOther : MonoBehaviour
 	private void InstantiateSections(int frequency)
     {
 
-		//int frequency = 10;
 		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = false, pinnedTo = null};
 
 		IsPinnedOrLocked(0, OldPoint);
@@ -129,7 +246,7 @@ public class RopeOther : MonoBehaviour
 			Point NewPoint = new Point() { position = OldPoint.position + GetDistanceBetweenPoints, prevPosition = OldPoint.position + GetDistanceBetweenPoints };
 
 
-			IsPinnedOrLocked(i, NewPoint);
+			//IsPinnedOrLocked(i, NewPoint);
 
 
 			points.Add(NewPoint);
@@ -141,10 +258,6 @@ public class RopeOther : MonoBehaviour
            		
 		}
 
-		//points to pin or lock
-
-		//points[points.Count-1].locked = true;
-		//points[points.Count - 1].pinned = true;
     }
 
 
@@ -208,7 +321,8 @@ public class RopeOther : MonoBehaviour
 			if (p.pinnedTo)
             {
 				p.position = p.pinnedTo.transform.position;
-            }
+				p.prevPosition = p.pinnedTo.transform.position;
+			}
 			
 			
 
@@ -250,7 +364,6 @@ public class RopeOther : MonoBehaviour
 		GameObject thePoint;
 		for (int i = 0; i < points.Count; i++)
 		{
-			//Debug.Log("POintlist count; " + PointList.Count);
 			Point old = points[i];
 			thePoint = pointObjects[i];
 
@@ -258,26 +371,26 @@ public class RopeOther : MonoBehaviour
 			{
 				New = points[i + 1];
 			}
-            else
-            {
-				New.position = endPosition.transform.position;
-            }
+            //else
+            //{
+			//	New.position = endPosition.transform.position;
+           // }
 
 
 			lr = thePoint.GetComponent<LineRenderer>();
 			lr.SetPosition(0, old.position);
 			lr.SetPosition(1, New.position);
 
-			if (i == pointObjects.Count - 1)
-			{
-				lr.SetPosition(0, old.position);
-				lr.SetPosition(0, endPosition.transform.position);
-			}
-			if (i == 0)
-			{
-				lr.SetPosition(0, startPosition.transform.position);
-				lr.SetPosition(0, points[0].position);
-			}
+			//if (i == pointObjects.Count - 1)
+			//{
+				//lr.SetPosition(0, old.position);
+				//lr.SetPosition(0, endPosition.transform.position);
+			//}
+			//if (i == 0)
+			//{
+				//lr.SetPosition(0, startPosition.transform.position);
+				//lr.SetPosition(0, points[0].position);
+			//}
 
 
 		}
