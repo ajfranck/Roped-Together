@@ -8,6 +8,7 @@ public class LaderScript : MonoBehaviour
 //GameObjects
     public GameObject LadderSegment;
     public GameObject LadderParent;
+    Rigidbody LadderBody;
 //NumericalValues
     float SpawnDistance = 2;
     int laddermax = 5;
@@ -20,6 +21,7 @@ public class LaderScript : MonoBehaviour
     void Start()
     {
         LadderParent = GameObject.FindGameObjectWithTag("ParentLadder");
+        LadderBody = LadderParent.GetComponent<Rigidbody>();
     }
 
     public Vector3 PositionClass()
@@ -37,7 +39,7 @@ public class LaderScript : MonoBehaviour
     }
     void Update()
     {
-        if(i < 5)
+        if(i < 3)
         {
             if(Input.GetKeyDown("space"))
             {
@@ -58,6 +60,11 @@ public class LaderScript : MonoBehaviour
         }
         else
         {
+            if(Input.GetKeyDown("space"))
+            {            
+                LadderBody.AddForce(this.transform.forward * 5, ForceMode.Impulse);
+            }
+
 
         }
     }
