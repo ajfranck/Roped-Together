@@ -10,7 +10,8 @@ public class HotBar : MonoBehaviour
 
     public Item TestItem;
     public Item CubeItem;
-
+    
+    Animator animator;
 
 
     public bool pickedUp = false;
@@ -53,6 +54,7 @@ public class HotBar : MonoBehaviour
   
     void Start()
     {       
+        animator = gameObject.GetComponent<Animator>();
         ClearInventory();
         BackgroundSelectHotBar(0);
     }
@@ -113,7 +115,10 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKey("p") && !pickedUp)
             {
+                //MovementController.frozen = true;
+                animator.SetTrigger("Grab");
                 PickUpItem(CubeItem);
+                //MovementController.frozen = false;
             }
 
         }

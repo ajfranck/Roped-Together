@@ -52,6 +52,7 @@ public class MovementController : MonoBehaviour
     {
         // if(!AtFire){
         characterController.Move(currentMovement * Time.deltaTime * 7f);
+        
         Rotation();
 
         Gravity();
@@ -66,6 +67,7 @@ public class MovementController : MonoBehaviour
             OnEnable();
         }
     }
+
     void FixedUpdate()
     {
         //if(!AtFire){        
