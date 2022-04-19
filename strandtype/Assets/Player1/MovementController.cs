@@ -25,6 +25,7 @@ public class MovementController : MonoBehaviour
     public bool AtFire = false;
 
     public WarmthBar warmthbar;
+    public HotBar hotbar;
 
 
 
@@ -58,7 +59,7 @@ public class MovementController : MonoBehaviour
         Gravity();
         //}
 
-        if (warmthbar.isInteracting)
+        if (warmthbar.isInteracting || hotbar.isGrabbing)
         {
             OnDisable();
         }

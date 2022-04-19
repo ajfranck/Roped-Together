@@ -11,7 +11,8 @@ public class HotBar : MonoBehaviour
     public Item TestItem;
     public Item CubeItem;
     
-    Animator animator;
+    private Animator animator;
+    public bool isGrabbing = false;
 
 
     public bool pickedUp = false;
@@ -51,7 +52,7 @@ public class HotBar : MonoBehaviour
     public string name;
     public int BackpackPosition = 0;
 
-  
+    
     void Start()
     {       
         animator = gameObject.GetComponent<Animator>();
@@ -66,18 +67,17 @@ public class HotBar : MonoBehaviour
             p1Pickup.SetActive(false);
         }
         HandleHotBar();
+
         if (warmthbar.isInteracting)
         {
             HandleBackPack();
             BackgroundSelect(0);
             StartCoroutine(BackpackFadeIn());          
         }
-
-        else{
+        else
+        {
             StartCoroutine(BackpackFadeOut());
         }
-
-
     }
 
     IEnumerator BackpackFadeIn()
@@ -115,31 +115,39 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKey("p") && !pickedUp)
             {
-                //MovementController.frozen = true;
-                animator.SetTrigger("Grab");
-                PickUpItem(CubeItem);
-                //MovementController.frozen = false;
+                StartCoroutine(PickUp(CubeItem));
             }
 
         }
     }
-        private void OnTriggerExit(Collider other)
+
+    IEnumerator PickUp(Item item)
+    {
+        isGrabbing = true;
+        animator.SetTrigger("Grab");
+        yield return new WaitForSeconds(1.5f);
+        isGrabbing = false;
+        PickUpItem(item);
+    }
+
+
+    private void OnTriggerExit(Collider other)
         {
 
-            if (other.gameObject.CompareTag("Fire1"))
-            {
-                pickedUp = false;
-                promptDisplayed = false;
+        if (other.gameObject.CompareTag("Fire1"))
+        {
+            pickedUp = false;
+            promptDisplayed = false;
                
-            }
-
-            if (other.gameObject.CompareTag("CubeItem"))
-            {
-                pickedUp = false;
-                promptDisplayed = false;
-            }
-
         }
+
+        if (other.gameObject.CompareTag("CubeItem"))
+        {
+            pickedUp = false;
+            promptDisplayed = false;
+        }
+
+    }
 
         private void ClearInventory()
         {
