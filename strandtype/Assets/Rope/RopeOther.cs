@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class RopeOther : MonoBehaviour
 {
+
+	public WallBar wallbar;
+
+
 	[SerializeField]
 	public List<Point> points = new List<Point>();
 	[SerializeField]
@@ -14,43 +18,82 @@ public class RopeOther : MonoBehaviour
 	[SerializeField]
 	public GameObject[] pinnedList = new GameObject[10];
 
+	[SerializeField]
+	public GameObject Belt1;
+
+	[SerializeField]
+	public GameObject Belt2;
+
+	//coiling, says which points to coil to belt one and two
+	public int whichToCoil1;
+	public int whichToCoil2;
+
+
 	protected List<GameObject> pointObjects = new List<GameObject>();
 	public GameObject endPosition;
 	public GameObject startPosition;
 
+	public GameObject thePlayer;
+
 	public int Frequency = 10;
+
+
+
 	public GameObject pointObject;
 	//public GameObject pinnedTo;
 	public LineRenderer lr;
+
 	public bool simulating = false;
+	public bool Coil;
 
 	Color c1 = Color.white;
 	Color c2 = new Color(1, 1, 1, 0);
 
 	public int solveIterations = 5;
 
+
+
 	public float gravity = 10f;
 	int[] order;
 	public bool constrainStickMinLength = true;
 
+	public bool HasOrigin = true;
+
+
+
+	public GameObject UnravelStartObject;
+	public Vector3 UnravelStartPosition;
+
+	
+	public int UnravelIndex;
+
+	public float UnravelDistanceLet;
+
+	//what the total length of the rope should be
+	public float TotalRopeLength;
+	//what the total distance of rope unraveled should be. This should be >= the total rope length
+	public float TotalDistanceUnraveled;
+	
 
 	void Start()
     {
-		
-
-
     }
 
-
-	
 	void Update()
     {
+		
         if (Input.GetKeyDown("r"))
         {
-			InstantiateSections();
-        }
+			InstantiateSections(Frequency);
+			TotalRopeLength = Mathf.Abs(GetDistanceFloat(endPosition.transform.position, startPosition.transform.position));
 
-		int i = 0;
+			if (Coil)
+			{
+				CoilRope(whichToCoil1, whichToCoil2);
+				Coil = false;
+			}
+		}
+
         if (Input.GetKey("space"))
         {
 			simulating = true;
@@ -65,13 +108,87 @@ public class RopeOther : MonoBehaviour
 			Simulate();
 		}
 		DrawSticks();
-		
+
+        if (wallbar.ClimbRope)
+        {
+			if (!HasOrigin)
+			{
+				UnravelStartPosition = UnravelStartObject.transform.position;
+				Debug.Log("UnravelStartPosition" + UnravelStartPosition);
+				HasOrigin = true;
+			}
+			if (UnravelIndex > 0)
+			{
+				Unravel(whichToCoil1);
+			}		
+        }
     }
 
-	private Vector3 GetDistance()
+
+
+	void Unravel(int pinnedFrequency)
 	{
 
-		float frequency = 10f;
+		float DistanceFromOrigin = GetDistanceFloat(thePlayer.transform.position, UnravelStartPosition);
+		if (TotalDistanceUnraveled < TotalRopeLength)
+		{
+			pinnedList[UnravelIndex] = null;
+			points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
+			UnravelIndex -= pinnedFrequency;
+			UnravelStartPosition = thePlayer.transform.position;
+			Debug.Log("UNRAVELS!");
+			TotalDistanceUnraveled += DistanceFromOrigin;
+		}
+		if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet && pinnedList[UnravelIndex].name != "AnchorPointStart")
+        {
+			pinnedList[UnravelIndex] = null;
+			points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
+			UnravelIndex -= pinnedFrequency;
+			UnravelStartPosition = thePlayer.transform.position;
+			Debug.Log("UNRAVELS!");
+			TotalDistanceUnraveled += DistanceFromOrigin;
+		}
+	}
+
+	void FixedUpdate()
+    {
+		for (int i = 1; i < points.Count; i++)
+		{
+			IsPinnedOrLocked(i, points[i]);
+		}
+	}
+
+	float GetDistanceFloat(Vector3 end, Vector3 start)
+    {
+		float xLength = end.x - start.x;
+		float yLength = end.y - start.y;
+		float zLength = end.z - start.z;
+		float theDistance = (Mathf.Sqrt((xLength * xLength) + (yLength * yLength) + (zLength * zLength)));
+		return theDistance;
+	}
+
+	private void CoilRope(int pinnedFrequency, int lockedFrequency)
+    {
+
+		bool belt = true;
+		for(int i = 0; i<Frequency; i += pinnedFrequency)
+        {
+			if (belt)
+			{
+				pinnedList[i] = Belt1;
+				belt = false;
+			}	
+
+			else if (!belt)
+            {
+				pinnedList[i] = Belt2;
+				belt = true;
+            }
+        }
+    }
+
+	private Vector3 GetDistance(int frequency)
+	{
 
 	
 		float segmentLengthX = (endPosition.transform.position.x - startPosition.transform.position.x) / frequency;
@@ -83,17 +200,21 @@ public class RopeOther : MonoBehaviour
 	}
 
 
+	Vector3 GetPlayerPosition(GameObject player)
+    {
+		Vector3 thePosition = player.transform.position;
+		return thePosition;
+    }
 
-	private void InstantiateSections()
+	private void InstantiateSections(int frequency)
     {
 
-		int frequency = 10;
 		Point OldPoint = new Point() { position = startPosition.transform.position, prevPosition = startPosition.transform.position, locked = false, pinnedTo = null};
 
 		IsPinnedOrLocked(0, OldPoint);
 
 
-		Vector3 GetDistanceBetweenPoints = GetDistance();
+		Vector3 GetDistanceBetweenPoints = GetDistance(frequency);
 		Vector3 toEnd = (endPosition.transform.position - startPosition.transform.position);
 		Quaternion toEndQuad = Quaternion.Euler(toEnd);
 
@@ -102,22 +223,22 @@ public class RopeOther : MonoBehaviour
 
 		OldPointObject = Instantiate(pointObject, new Vector3(0f, 0f, 0f) , toEndQuad);
 
-		Debug.Log("OldPoint" + OldPointObject.transform.position);
+		//Debug.Log("OldPoint" + OldPointObject.transform.position);
 
-		Debug.Log("runs 1 " + Frequency);
+		//Debug.Log("runs 1 " + Frequency);
 
 		points.Add(OldPoint);
-		pointObjects.Add(OldPointObject);
 
 		
+		pointObjects.Add(OldPointObject);
 
 		for (int i = 1; i<frequency; i++)
         {
-			Debug.Log("runs");
+			//Debug.Log("runs");
 			Point NewPoint = new Point() { position = OldPoint.position + GetDistanceBetweenPoints, prevPosition = OldPoint.position + GetDistanceBetweenPoints };
 
 
-			IsPinnedOrLocked(i, NewPoint);
+			//IsPinnedOrLocked(i, NewPoint);
 
 
 			points.Add(NewPoint);
@@ -129,11 +250,10 @@ public class RopeOther : MonoBehaviour
            		
 		}
 
-		//points to pin or lock
-
-		//points[points.Count-1].locked = true;
-		//points[points.Count - 1].pinned = true;
     }
+
+
+
 
     private void IsPinnedOrLocked(int i, Point point)
     {
@@ -193,11 +313,12 @@ public class RopeOther : MonoBehaviour
 			if (p.pinnedTo)
             {
 				p.position = p.pinnedTo.transform.position;
-            }
+				p.prevPosition = p.pinnedTo.transform.position;
+			}
+			
+			
 
 
-
-          
 			c++;
 		}
 
@@ -235,7 +356,6 @@ public class RopeOther : MonoBehaviour
 		GameObject thePoint;
 		for (int i = 0; i < points.Count; i++)
 		{
-			//Debug.Log("POintlist count; " + PointList.Count);
 			Point old = points[i];
 			thePoint = pointObjects[i];
 
@@ -243,26 +363,26 @@ public class RopeOther : MonoBehaviour
 			{
 				New = points[i + 1];
 			}
-            else
-            {
-				New.position = endPosition.transform.position;
-            }
+            //else
+            //{
+			//	New.position = endPosition.transform.position;
+           // }
 
 
 			lr = thePoint.GetComponent<LineRenderer>();
 			lr.SetPosition(0, old.position);
 			lr.SetPosition(1, New.position);
 
-			if (i == pointObjects.Count - 1)
-			{
-				lr.SetPosition(0, old.position);
-				lr.SetPosition(0, endPosition.transform.position);
-			}
-			if (i == 0)
-			{
-				lr.SetPosition(0, startPosition.transform.position);
-				lr.SetPosition(0, points[0].position);
-			}
+			//if (i == pointObjects.Count - 1)
+			//{
+				//lr.SetPosition(0, old.position);
+				//lr.SetPosition(0, endPosition.transform.position);
+			//}
+			//if (i == 0)
+			//{
+				//lr.SetPosition(0, startPosition.transform.position);
+				//lr.SetPosition(0, points[0].position);
+			//}
 
 
 		}
