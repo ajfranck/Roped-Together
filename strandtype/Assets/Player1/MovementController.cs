@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 public class MovementController : MonoBehaviour
 {
 
-   
+
     // declare reference variables 
     PlayerInput playerInput;
-    CharacterController characterController; 
+    CharacterController characterController;
     Animator animator;
 
 
@@ -18,26 +18,32 @@ public class MovementController : MonoBehaviour
     Vector3 currentMovement;
     bool movementPressed;
     float rotationFactor = 10f;
-    
+
     public float gravity = -9.8f;
     float groundedGravity = -.05f;
+
+    public bool AtFire = false;
+
+    public WarmthBar warmthbar;
+    public HotBar hotbar;
 
 
 
 
     void Awake()
     {
+        
         playerInput = new PlayerInput();
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
         playerInput.CharacterController.Move.started += onMovementInput;
-        playerInput.CharacterController.Move.canceled += onMovementInput;   
+        playerInput.CharacterController.Move.canceled += onMovementInput;
         playerInput.CharacterController.Move.performed += onMovementInput;
 
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
-        
+
 
     }
 
@@ -45,15 +51,29 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-         characterController.Move(currentMovement * Time.deltaTime * 10f);
-        Rotation();
+        // if(!AtFire){
+        characterController.Move(currentMovement * Time.deltaTime * 7f);
         
+        Rotation();
+
         Gravity();
-    } 
+        //}
+
+        if (warmthbar.isInteracting || hotbar.isGrabbing)
+        {
+            OnDisable();
+        }
+        else
+        {
+            OnEnable();
+        }
+    }
+
     void FixedUpdate()
     {
+        //if(!AtFire){        
         handleAnimation();
+        //}
     }
 
     void onMovementInput(InputAction.CallbackContext context)
@@ -69,17 +89,17 @@ public class MovementController : MonoBehaviour
     {
 
 
-       
+
         if (characterController.isGrounded)
         {
             currentMovement.y = groundedGravity;
         }
 
-        else  
+        else
         {
-          
+
             currentMovement.y += gravity;
-        
+
         }
 
     }
@@ -97,7 +117,7 @@ public class MovementController : MonoBehaviour
             animator.SetBool("isWalking", false);
         }
     }
-    
+
 
     void Rotation()
     {
@@ -131,4 +151,6 @@ public class MovementController : MonoBehaviour
         playerInput.CharacterController.Disable();
     }
 
+
+   
 }

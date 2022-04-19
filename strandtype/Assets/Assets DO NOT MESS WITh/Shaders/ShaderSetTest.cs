@@ -10,7 +10,7 @@ public class ShaderSetTest : MonoBehaviour
    
 
     public Material testMaterial;
-    private float transparencyRate = -0.01f;
+    private float transparencyRate = -0.07f;
     public float transparency = 1f;
     public float minTransparency = 0.1f;
     public float maxTransparency = 1f;

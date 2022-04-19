@@ -11,6 +11,8 @@ public class Item : ScriptableObject
     public string description;
     public Sprite artwork;
 
+    public Sprite image;
+
 
     public UnityEvent TheFunction;
 
