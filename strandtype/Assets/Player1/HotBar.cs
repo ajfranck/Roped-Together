@@ -17,6 +17,7 @@ public class HotBar : MonoBehaviour
 
     public bool pickedUp = false;
     public bool promptDisplayed = false;
+    public bool hasGrabbed = false;
 
     public string itemNear = "";
 
@@ -33,6 +34,7 @@ public class HotBar : MonoBehaviour
     public GameObject BackgroundImage; //image that background list at position is set to when selected;
 
     public GameObject p1Pickup;
+    public GameObject p1Grab;
 
     public GameObject HotBarBackground; // second hotbar border that gets replaced with item image
 
@@ -62,10 +64,7 @@ public class HotBar : MonoBehaviour
 
     void Update()
     {
-        if(!promptDisplayed)
-        {
-            p1Pickup.SetActive(false);
-        }
+        
         HandleHotBar();
 
         if (warmthbar.isInteracting)
@@ -106,28 +105,34 @@ public class HotBar : MonoBehaviour
     {
             
         if (other.gameObject.tag.Contains("CubeItem"))
-        {
-            
-            if (!promptDisplayed)
+        {  
+
+            if (!promptDisplayed && !hasGrabbed)
             {
                 DisplayPrompt(CubeItem);
             }
 
             if (Input.GetKey("p") && !pickedUp)
             {
-                StartCoroutine(PickUp(CubeItem));
+                StartCoroutine(PickUp(CubeItem, other));
             }
 
         }
     }
 
-    IEnumerator PickUp(Item item)
+    IEnumerator PickUp(Item item, Collider other)
     {
+        hasGrabbed = true;
+        HidePrompt(CubeItem);
+        GrabPrompt();
         isGrabbing = true;
         animator.SetTrigger("Grab");
         yield return new WaitForSeconds(1.5f);
-        isGrabbing = false;
         PickUpItem(item);
+        other.gameObject.SetActive(false);
+        HideGrabPrompt();
+        HidePrompt(CubeItem);
+        isGrabbing = false;
     }
 
 
@@ -138,13 +143,13 @@ public class HotBar : MonoBehaviour
         {
             pickedUp = false;
             promptDisplayed = false;
-               
         }
 
         if (other.gameObject.CompareTag("CubeItem"))
         {
             pickedUp = false;
             promptDisplayed = false;
+            hasGrabbed = false;
         }
 
     }
@@ -179,13 +184,26 @@ public class HotBar : MonoBehaviour
 
         private void DisplayPrompt(Item TheItem)
         {
-            itemNear = TheItem.name;
-
-            Debug.Log("pick up " + itemNear + "?");
             p1Pickup.SetActive(true);
-
             promptDisplayed = true;
-        }    
+            itemNear = TheItem.name;
+            
+        }  
+        private void HidePrompt(Item TheItem)
+        {
+            p1Pickup.SetActive(false);
+            promptDisplayed = false;
+            itemNear = TheItem.name;  
+        }
+        private void GrabPrompt()
+        {
+            p1Grab.SetActive(true);      
+        }  
+        private void HideGrabPrompt()
+        {
+            p1Grab.SetActive(false); 
+        }
+
 
 
         private void PickUpItem(Item TheItem)

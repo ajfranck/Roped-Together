@@ -38,13 +38,15 @@ public class CameraController : MonoBehaviour
 
     void Zoom()
     {
+        // +0.7x, +4.39y, -4.5z for all fire positions
         if(warmthbar.fire1)
         {
+            // +0.7x, +4.39y, -4.5z
             firePosition = new Vector3(-14.5f,-10f,-44.5f);
         }
         else if(warmthbar.fire2)
         {
-
+            firePosition = new Vector3(-14.5f,-7.625f,-21.93f);
         }
         
         transform.position = Vector3.SmoothDamp(transform.position, firePosition, ref velocity, smoothTime);

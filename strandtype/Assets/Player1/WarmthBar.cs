@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class WarmthBar : MonoBehaviour
 {
 
-    [SerializeField] private CanvasGroup RestIcon;
-
     [SerializeField]
     Light light;
 
@@ -24,9 +22,9 @@ public class WarmthBar : MonoBehaviour
 
 
     //all fires:
-    public bool fire1;
-    public bool fire2;
-    public bool fire3;
+    public bool fire1 = false;
+    public bool fire2 = false;
+    public bool fire3 = false;
 
     public int lastFire;
 
@@ -113,6 +111,9 @@ public class WarmthBar : MonoBehaviour
         p1Interact.SetActive(false);
         contactingFire = false;
         isInteracting = false;
+        fire1 = false;
+        fire2 = false;
+        fire3 = false;
     }
 
     public void SavePlayer()
