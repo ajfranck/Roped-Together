@@ -51,7 +51,7 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         // if(!AtFire){
-        characterController.Move(currentMovement * Time.deltaTime * 10f);
+        characterController.Move(currentMovement * Time.deltaTime * 7f);
         Rotation();
 
         Gravity();
