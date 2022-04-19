@@ -147,6 +147,7 @@ public class HotBar : MonoBehaviour
 
         if (other.gameObject.CompareTag("CubeItem"))
         {
+            HidePrompt(CubeItem);
             pickedUp = false;
             promptDisplayed = false;
             hasGrabbed = false;
