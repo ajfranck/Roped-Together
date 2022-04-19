@@ -25,7 +25,7 @@ public class WallBar : MonoBehaviour
     {
         if (ClimbRope)
         {
-            loseStamina(0.1f);
+            //loseStamina(0.1f);
             Debug.Log("hoe");
             Debug.Log("Current Stamina is " + P1currentStamina);
 
