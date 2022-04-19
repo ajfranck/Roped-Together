@@ -26,17 +26,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa3b8214f75b354e9ba2caadd022259, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   quality:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 3
   focusMode:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   focusDistance:
     m_OverrideState: 1
-    m_Value: 9
+    m_Value: 15
     min: 0.1
   nearFocusStart:
     m_OverrideState: 0
@@ -56,30 +56,30 @@ MonoBehaviour:
     min: 0
   m_NearSampleCount:
     m_OverrideState: 0
-    m_Value: 5
+    m_Value: 6
     min: 3
     max: 8
   m_NearMaxBlur:
     m_OverrideState: 0
-    m_Value: 4
+    m_Value: 8
     min: 0
     max: 8
   m_FarSampleCount:
     m_OverrideState: 0
-    m_Value: 7
+    m_Value: 16
     min: 3
     max: 16
   m_FarMaxBlur:
     m_OverrideState: 0
-    m_Value: 8
+    m_Value: 9.16
     min: 0
     max: 16
   m_HighQualityFiltering:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   m_Resolution:
-    m_OverrideState: 0
-    m_Value: 2
+    m_OverrideState: 1
+    m_Value: 1
   m_PhysicallyBased:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
