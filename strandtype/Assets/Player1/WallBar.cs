@@ -10,8 +10,8 @@ public class WallBar : MonoBehaviour
 
     public P1HealthBar P1HealthBar;
 
-    public float P1currentStamina = 10f;
-    public float P1MaxStamina;
+    public float P1currentStamina = 100f;
+    public float P1MaxStamina = 100f;
     public bool isFalling = false;
 
     void Start()
@@ -25,15 +25,20 @@ public class WallBar : MonoBehaviour
     {
         if (ClimbRope)
         {
-            //loseStamina(0.1f);
+            loseStamina(0.1f);
             Debug.Log("hoe");
             Debug.Log("Current Stamina is " + P1currentStamina);
 
             if (P1currentStamina <= 0f)
             {
                 isFalling = true;
+                ClimbRope = false;
             }
-        }       
+        } 
+        else if (P1currentStamina < P1MaxStamina && !isFalling)
+        {
+            P1currentStamina += .075f;
+        }
     }
 
 
@@ -41,9 +46,8 @@ public class WallBar : MonoBehaviour
 
     void loseStamina(float staminaLoss)
     {
-        P1currentStamina -= staminaLoss*Time.deltaTime;
+        P1currentStamina -= staminaLoss * Time.deltaTime;
         P1HealthBar.P1SetStamina(P1currentStamina);
-
     }
 
 

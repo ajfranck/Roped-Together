@@ -28,10 +28,10 @@ public class P1HealthBar : MonoBehaviour
         staminaSlider.minValue = p1stamina;
     }
 
-
     public void P1SetStamina(float p1stamina)
     {
         Debug.Log("P1 Stamina " + p1stamina);
+        slider.value = p1stamina;
     }
 
 }
