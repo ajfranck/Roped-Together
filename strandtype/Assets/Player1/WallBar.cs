@@ -39,6 +39,9 @@ public class WallBar : MonoBehaviour
         {
             P1currentStamina += .075f;
         }
+
+
+        
     }
 
 
