@@ -22,7 +22,7 @@ public class MovementController : MonoBehaviour
 
     public Vector3 currentMovement;
 
-
+    public GameObject climbPrompt;
 
     Vector3 ropeMovement;
 
@@ -247,10 +247,21 @@ public class MovementController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("wall") && Input.GetKey("v"))
+        if (other.gameObject.CompareTag("wall"))// && Input.GetKey("v"))
         {
-            wallbar.ClimbRope = true;
+            climbPrompt.SetActive(true);
+            if(Input.GetKey("v"))
+            {
+                wallbar.ClimbRope = true;
+                climbPrompt.SetActive(false);
+            }
+            
         }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        climbPrompt.SetActive(false);
     }
 
 

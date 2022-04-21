@@ -130,7 +130,6 @@ public class HotBar : MonoBehaviour
             if (Input.GetKey("p") && !pickedUp)
             {
                 StartCoroutine(PickUp(RopeItem, other));
-
             }
         }
 
