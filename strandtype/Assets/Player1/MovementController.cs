@@ -38,7 +38,6 @@ public class MovementController : MonoBehaviour
     public WallBar wallbar;
     public HotBar hotbar;
 
-    public bool ClimbRope = false;
 
 
 
@@ -64,7 +63,7 @@ public class MovementController : MonoBehaviour
     {
         Debug.Log("grounded " + characterController.isGrounded);
         
-        if (ClimbRope) 
+        if (wallbar.ClimbRope) 
         {
              //RopeRotation();
 
@@ -115,7 +114,7 @@ public class MovementController : MonoBehaviour
 
     void onMovementInput(InputAction.CallbackContext Context)
     {
-        if (ClimbRope)
+        if (wallbar.ClimbRope)
         {
             RopeMove(Context);
         }
@@ -147,7 +146,7 @@ public class MovementController : MonoBehaviour
 
         if(Input.GetKey("s") && characterController.isGrounded)
         {
-            ClimbRope = false;
+            wallbar.ClimbRope = false;
         }
     }
 
@@ -246,18 +245,14 @@ public class MovementController : MonoBehaviour
     }
 
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("wall")) 
-
+        if (other.gameObject.CompareTag("wall") && Input.GetKey("v"))
         {
-
-            ClimbRope = true;
-            currentMovement = new Vector3(0f, 0f, 0f);
-
+            wallbar.ClimbRope = true;
         }
-
     }
+
 
 
 }

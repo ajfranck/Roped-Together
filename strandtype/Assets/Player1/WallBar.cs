@@ -38,7 +38,7 @@ public class WallBar : MonoBehaviour
         if (ClimbRope)
         {
             //GRIP LOSS LEVEL
-            if(movementController.currentMovement.magnitude == 0)
+            if (movementController.currentMovement.magnitude == 0)
             {
                 grip -= 0.5f;
             }
@@ -47,7 +47,7 @@ public class WallBar : MonoBehaviour
                 loseStamina(0.1f);
                 grip += 0.7f;
             }
-            
+
             Debug.Log("hoe");
             Debug.Log("Current Stamina is " + P1currentStamina);
 
@@ -56,19 +56,19 @@ public class WallBar : MonoBehaviour
                 isFalling = true;
                 ClimbRope = false;
             }
-        } 
+        }
         else // (movementController.characterController.isGrounded)
         {
             Debug.Log("adding stamina");
-            if (P1currentStamina < P1MaxStamina) addStamina(0.175f);
+            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded) addStamina(0.175f);
             grip = 100f;
         }
-        
+
         //else grip = 100f;
-        if(movementController.characterController.isGrounded) isFalling = false;
-        
-        if(grip > maxGrip) grip = maxGrip;
-        
+        if (movementController.characterController.isGrounded) isFalling = false;
+
+        if (grip > maxGrip) grip = maxGrip;
+
         if (grip == maxGrip) Gripper.SetActive(false);
         if (grip < maxGrip) Gripper.SetActive(true);
 
@@ -76,16 +76,16 @@ public class WallBar : MonoBehaviour
         GripBarFiller();
         ColorChanger();
 
-        
+
     }
 
     void GripBarFiller()
     {
-        gripBar.fillAmount = Mathf.Lerp(gripBar.fillAmount, grip/maxGrip, lerpSpeed); 
+        gripBar.fillAmount = Mathf.Lerp(gripBar.fillAmount, grip / maxGrip, lerpSpeed);
     }
     void ColorChanger()
     {
-        Color gripColor = Color.Lerp(Color.red, Color.green, (grip/maxGrip));
+        Color gripColor = Color.Lerp(Color.red, Color.green, (grip / maxGrip));
         gripBar.color = gripColor;
     }
 
@@ -105,12 +105,12 @@ public class WallBar : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("wall"))
-        {
-            //display a prompt to attach to the wall
-            ClimbRope = true;
-        }
-
+        /* if (other.gameObject.CompareTag("wall"))
+         {
+             //display a prompt to attach to the wall
+             ClimbRope = true;
+         }
+        */
         if (other.gameObject.CompareTag("AnchorIn"))
         {
             theAnchor = other.gameObject;
@@ -119,4 +119,13 @@ public class WallBar : MonoBehaviour
         }
     }
 
+
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("wall") && Input.GetKey("v"))
+        {
+            ClimbRope = true;
+        }
+    }
 }
