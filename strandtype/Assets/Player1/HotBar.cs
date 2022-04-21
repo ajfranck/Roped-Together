@@ -130,6 +130,7 @@ public class HotBar : MonoBehaviour
             if (Input.GetKey("p") && !pickedUp)
             {
                 StartCoroutine(PickUp(RopeItem, other));
+
             }
         }
 
@@ -145,7 +146,7 @@ public class HotBar : MonoBehaviour
         animator.SetTrigger("Grab");
         yield return new WaitForSeconds(1.5f);
         PickUpItem(item);
-        other.gameObject.SetActive(false);
+        //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);
         isGrabbing = false;

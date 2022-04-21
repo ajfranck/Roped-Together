@@ -14,6 +14,7 @@ TagManager:
   - StartPoint
   - wall
   - RopeItem
+  - AnchorIn
   layers:
   - Default
   - TransparentFX

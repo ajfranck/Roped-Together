@@ -6,6 +6,7 @@ public class WallBar : MonoBehaviour
 {
 
     public bool ClimbRope;
+    public bool toAnchor;
     // Start is called before the first frame update
 
     public P1HealthBar P1HealthBar;
@@ -13,6 +14,8 @@ public class WallBar : MonoBehaviour
     public float P1currentStamina = 100f;
     public float P1MaxStamina = 100f;
     public bool isFalling = false;
+
+    public GameObject theAnchor;
 
     void Start()
     {
@@ -25,7 +28,7 @@ public class WallBar : MonoBehaviour
     {
         if (ClimbRope)
         {
-            loseStamina(0.1f);
+           // loseStamina(0.1f);
             Debug.Log("hoe");
             Debug.Log("Current Stamina is " + P1currentStamina);
 
@@ -60,6 +63,13 @@ public class WallBar : MonoBehaviour
         if (other.gameObject.CompareTag("wall"))
         {
             ClimbRope = true;
+        }
+
+        if (other.gameObject.CompareTag("AnchorIn"))
+        {
+            theAnchor = other.gameObject;
+            Debug.Log("The anchor is: " + theAnchor);
+            toAnchor = true;
         }
     }
 

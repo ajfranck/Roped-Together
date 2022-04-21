@@ -19,7 +19,7 @@ public class ItemFuncitons : MonoBehaviour
 
     public void RopeItemFunction()
     {
-
+        
     }
   
 }

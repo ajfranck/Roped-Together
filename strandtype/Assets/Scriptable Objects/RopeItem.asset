@@ -19,9 +19,9 @@ MonoBehaviour:
   TheFunction:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5855052078713864019, guid: 0fb31852e245fb6499c219118dbfd2b6, type: 3}
-        m_TargetAssemblyTypeName: ItemFuncitons, Assembly-CSharp
-        m_MethodName: RopeItemFunction
+      - m_Target: {fileID: 2004378369931760485, guid: aee80afe6b7643c438b64e9e098ed520, type: 3}
+        m_TargetAssemblyTypeName: RopeOther, Assembly-CSharp
+        m_MethodName: PickedUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

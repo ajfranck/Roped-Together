@@ -61,18 +61,18 @@ public class P2HotBar : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown("u"))
-        {
+       // if (Input.GetKeyDown("u"))
+       // {
 
-            if (HotBars.HotBarListP2[HotBars.HotBarPositionP2] == null)
-            {
-                Debug.Log("P2 Nothing in this hotbar position");
-            }
-            else
-            {
-                HotBars.HotBarListP2[HotBars.HotBarPositionP2].CallFunction();
-            }
-        }
+          //  if (HotBars.HotBarListP2[HotBars.HotBarPositionP2] == null)
+           // {
+            //    Debug.Log("P2 Nothing in this hotbar position");
+         //   }
+         //   else
+         //   {
+           //     HotBars.HotBarListP2[HotBars.HotBarPositionP2].CallFunction();
+         //   }
+        //}
 
 
     }
