@@ -13,14 +13,14 @@ public class MovementController : MonoBehaviour
     // declare reference variables 
 
     PlayerInput playerInput;
-    CharacterController characterController;
+    public CharacterController characterController;
     Animator animator;
 
 
     // variables to store player input 
     Vector2 currentMovementInput;
 
-    Vector3 currentMovement;
+    public Vector3 currentMovement;
 
 
 
@@ -59,38 +59,24 @@ public class MovementController : MonoBehaviour
 
 
     }
-
-
     // Update is called once per frame
     void Update()
     {
-
+        Debug.Log("grounded " + characterController.isGrounded);
+        
         if (ClimbRope) 
-
         {
-
-            //RopeRotation();
+             //RopeRotation();
 
             characterController.Move(currentMovement * Time.deltaTime);
-
-            Debug.Log("warmthbar? " + warmthbar.isInteracting);
-
+            //Debug.Log("current movement " + currentMovement.magnitude);
+            //Debug.Log("vector3 " + Vector3.Zero);
             Debug.Log("falling? " + wallbar.isFalling);    
-
-            
-
             if (wallbar.isFalling)
-
             {
-
-                Gravity(-.1f);
-
+                Gravity(-.15f);
             }
-
         }    
-
-        
-
         else
 
         {
@@ -106,12 +92,8 @@ public class MovementController : MonoBehaviour
         if (warmthbar.isInteracting || hotbar.isGrabbing)
 
         {
-
             OnDisable();
-
         }
-
-
        // if (wallbar.isInteracting)
 
         //{
@@ -119,20 +101,11 @@ public class MovementController : MonoBehaviour
           //  OnDisable();
 
         //}
-
         else
-
         {
-
             OnEnable();
-
         }
-
-        
-
     }
-
-
 
     void FixedUpdate()
     {           
@@ -140,58 +113,31 @@ public class MovementController : MonoBehaviour
         handleAnimation();     
     }
 
-
-
-     void onMovementInput(InputAction.CallbackContext Context)
-
-     {
-
+    void onMovementInput(InputAction.CallbackContext Context)
+    {
         if (ClimbRope)
-
         {
-
             RopeMove(Context);
-
         }
-
-
-
         else 
-
         {
-
             DefaultMove(Context);
-
         }
-
-     }
-
-     
-
-
-
-
+    }
 
     void DefaultMove(InputAction.CallbackContext context)
 
     {
-
         currentMovementInput = context.ReadValue<Vector2>();
-
         currentMovement.x = currentMovementInput.x;
-
         currentMovement.z = currentMovementInput.y; 
-
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
     }
 
-
-
     void RopeMove(InputAction.CallbackContext context)
 
     {
-
         Debug.Log("RopeMove runs");
 
         currentMovementInput = context.ReadValue<Vector2>();
@@ -199,43 +145,25 @@ public class MovementController : MonoBehaviour
         currentMovement.y = currentMovementInput.y;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
-     
-
-
-
-
-
         if(Input.GetKey("s") && characterController.isGrounded)
-
         {
-
             ClimbRope = false;
-
         }
-
-
-
     }
-
-
 
     void Gravity(float gravity)
     {
-
         if (characterController.isGrounded)
         {
             currentMovement.y = groundedGravity;
         }
-
         else
-
         {
 
             currentMovement.y += gravity;
 
         }
     }
-
 
     void handleAnimation()
     {
@@ -283,14 +211,7 @@ public class MovementController : MonoBehaviour
         playerInput.CharacterController.Disable();
     }
 
-
-
-    
-   
-
-
     void RopeRotation()
-
     {
 
         Vector3 positionToLook;
@@ -315,7 +236,6 @@ public class MovementController : MonoBehaviour
         positionToLook.z = currentMovement.z;
         Debug.Log("PositionLook" + positionToLook.y);
 
-
         Quaternion currentRotation = transform.rotation; // character's current rotation
         if (movementPressed)
         {
@@ -327,15 +247,12 @@ public class MovementController : MonoBehaviour
 
 
     void OnTriggerEnter(Collider other)
-
     {
-
         if (other.gameObject.CompareTag("wall")) 
 
         {
 
             ClimbRope = true;
-
             currentMovement = new Vector3(0f, 0f, 0f);
 
         }

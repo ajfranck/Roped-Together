@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WallBar : MonoBehaviour
 {
@@ -11,14 +12,21 @@ public class WallBar : MonoBehaviour
 
     public P1HealthBar P1HealthBar;
 
-    public float P1currentStamina = 100f;
-    public float P1MaxStamina = 100f;
+    public float P1currentStamina = 1f;
+    public float P1MaxStamina;
     public bool isFalling = false;
 
     public GameObject theAnchor;
+    public MovementController movementController;
+
+    public GameObject Gripper;
+    public Image gripBar;
+    float grip, maxGrip = 100;
+    float lerpSpeed;
 
     void Start()
     {
+        grip = maxGrip;
         Debug.Log("Start current stamina " + P1currentStamina);
     }
 
@@ -26,33 +34,70 @@ public class WallBar : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("ClimbRope " + ClimbRope);
         if (ClimbRope)
         {
-           // loseStamina(0.1f);
+            //GRIP LOSS LEVEL
+            if(movementController.currentMovement.magnitude == 0)
+            {
+                grip -= 0.5f;
+            }
+            else
+            {
+                loseStamina(0.1f);
+                grip += 0.7f;
+            }
+            
             Debug.Log("hoe");
             Debug.Log("Current Stamina is " + P1currentStamina);
 
-            if (P1currentStamina <= 0f)
+            if (P1currentStamina <= 0f || grip <= 0f)
             {
                 isFalling = true;
                 ClimbRope = false;
             }
         } 
-        else if (P1currentStamina < P1MaxStamina && !isFalling)
+        else // (movementController.characterController.isGrounded)
         {
-            P1currentStamina += .075f;
+            Debug.Log("adding stamina");
+            if (P1currentStamina < P1MaxStamina) addStamina(0.175f);
+            grip = 100f;
         }
+        
+        //else grip = 100f;
+        if(movementController.characterController.isGrounded) isFalling = false;
+        
+        if(grip > maxGrip) grip = maxGrip;
+        
+        if (grip == maxGrip) Gripper.SetActive(false);
+        if (grip < maxGrip) Gripper.SetActive(true);
 
+        lerpSpeed = 3f * Time.deltaTime;
+        GripBarFiller();
+        ColorChanger();
 
         
     }
 
-
+    void GripBarFiller()
+    {
+        gripBar.fillAmount = Mathf.Lerp(gripBar.fillAmount, grip/maxGrip, lerpSpeed); 
+    }
+    void ColorChanger()
+    {
+        Color gripColor = Color.Lerp(Color.red, Color.green, (grip/maxGrip));
+        gripBar.color = gripColor;
+    }
 
 
     void loseStamina(float staminaLoss)
     {
         P1currentStamina -= staminaLoss * Time.deltaTime;
+        P1HealthBar.P1SetStamina(P1currentStamina);
+    }
+    void addStamina(float staminaGain)
+    {
+        P1currentStamina += staminaGain * Time.deltaTime;
         P1HealthBar.P1SetStamina(P1currentStamina);
     }
 
@@ -62,6 +107,7 @@ public class WallBar : MonoBehaviour
     {
         if (other.gameObject.CompareTag("wall"))
         {
+            //display a prompt to attach to the wall
             ClimbRope = true;
         }
 
