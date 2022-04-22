@@ -250,7 +250,7 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("wall"))// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
-            if(Input.GetKey("e "))
+            if(Input.GetKey("e"))
             {
                 wallbar.ClimbRope = true;
                 climbPrompt.SetActive(false);

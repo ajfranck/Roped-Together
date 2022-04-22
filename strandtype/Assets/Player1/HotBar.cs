@@ -144,7 +144,11 @@ public class HotBar : MonoBehaviour
         isGrabbing = true;
         animator.SetTrigger("Grab");
         yield return new WaitForSeconds(1.5f);
-        if(item == RopeItem) ropeOther.PickedUp();
+        if(item == RopeItem) 
+        {
+            ropeOther.PickedUp();
+            PickUpItem(item);
+        }
         else PickUpItem(item);
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
