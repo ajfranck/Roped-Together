@@ -85,11 +85,23 @@ public class RopeOther : MonoBehaviour
 
 	void Start()
 	{
+		// added to auto do on start
+		InstantiateSections(Frequency);
+		TotalRopeLength = Mathf.Abs(GetDistanceFloat(endPosition.transform.position, startPosition.transform.position));
+
+		if (Coil)
+		{
+			CoilRope(whichToCoil1, whichToCoil2, InitialCoil1, InitialCoil2);
+			Coil = false;
+		}
+		simulating = true;
+
+		///
 	}
 
 	void Update()
 	{
-		
+		//this can be auto done in the start function
 		if (Input.GetKeyDown("r"))
 		{
 			InstantiateSections(Frequency);
@@ -108,6 +120,8 @@ public class RopeOther : MonoBehaviour
 			simulating = true;
 			Debug.Log("simulating = " + simulating);
 		}
+
+
 		if (Input.GetKeyDown("y"))
 		{
 			simulating = false;
@@ -276,7 +290,7 @@ public class RopeOther : MonoBehaviour
 
 	}
 
-	private void PickedUp()
+	public void PickedUp()  //was private void had to remove for pickup
 	{
 		CoilRope(whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
 
@@ -421,10 +435,9 @@ public class RopeOther : MonoBehaviour
 	{
 		if (other.gameObject.tag.Contains("Player"))
 		{
-			if (Input.GetKey("p"))
+			if (Input.GetKey("e"))
 			{
-				Debug.Log("hello");
-				PickedUp();
+				//PickedUp();
 			}
 			
 		}

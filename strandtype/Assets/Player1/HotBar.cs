@@ -15,6 +15,8 @@ public class HotBar : MonoBehaviour
     private Animator animator;
     public bool isGrabbing = false;
 
+    public RopeOther ropeOther;
+
 
     public bool pickedUp = false;
     public bool promptDisplayed = false;
@@ -113,7 +115,7 @@ public class HotBar : MonoBehaviour
                 DisplayPrompt(CubeItem);
             }
 
-            if (Input.GetKey("p") && !pickedUp)
+            if (Input.GetKey("e") && !pickedUp)
             {
                 StartCoroutine(PickUp(CubeItem, other));
             }
@@ -127,13 +129,11 @@ public class HotBar : MonoBehaviour
                 DisplayPrompt(RopeItem);
             }
 
-            if (Input.GetKey("p") && !pickedUp)
+            if (Input.GetKey("e") && !pickedUp)
             {
                 StartCoroutine(PickUp(RopeItem, other));
             }
         }
-
-
     }
 
     IEnumerator PickUp(Item item, Collider other)
@@ -144,7 +144,8 @@ public class HotBar : MonoBehaviour
         isGrabbing = true;
         animator.SetTrigger("Grab");
         yield return new WaitForSeconds(1.5f);
-        PickUpItem(item);
+        if(item == RopeItem) ropeOther.PickedUp();
+        else PickUpItem(item);
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);

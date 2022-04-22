@@ -73,7 +73,7 @@ public class MovementController : MonoBehaviour
             Debug.Log("falling? " + wallbar.isFalling);    
             if (wallbar.isFalling)
             {
-                Gravity(-.15f);
+                Gravity(-.05f);
             }
         }    
         else
@@ -250,12 +250,12 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("wall"))// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
-            if(Input.GetKey("v"))
+            if(Input.GetKey("e "))
             {
                 wallbar.ClimbRope = true;
                 climbPrompt.SetActive(false);
             }
-            
+            if(wallbar.ClimbRope) climbPrompt.SetActive(false);
         }
     }
 
