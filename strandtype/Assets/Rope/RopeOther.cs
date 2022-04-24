@@ -91,7 +91,7 @@ public class RopeOther : MonoBehaviour
 
 		if (Coil)
 		{
-			CoilRope(whichToCoil1, whichToCoil2, InitialCoil1, InitialCoil2);
+			CoilRope(0, whichToCoil1, whichToCoil2, InitialCoil1, InitialCoil2);
 			Coil = false;
 		}
 		simulating = true;
@@ -109,7 +109,7 @@ public class RopeOther : MonoBehaviour
 
 			if (Coil)
 			{
-				CoilRope(whichToCoil1, whichToCoil2, InitialCoil1, InitialCoil2);
+				CoilRope(0, whichToCoil1, whichToCoil2, InitialCoil1, InitialCoil2);
 				Coil = false;
 			}
 		}
@@ -132,32 +132,53 @@ public class RopeOther : MonoBehaviour
 		}
 		DrawSticks();
 
+
+
 		if (wallbar.ClimbRope)
 		{
-			/*if (!HasOrigin)
-			{
-				UnravelStartPosition = UnravelStartObject.transform.position;
-				Debug.Log("UnravelStartPosition" + UnravelStartPosition);
-				HasOrigin = true;
-			}
-			*/
+			Debug.Log("Unravel Index" + points[UnravelIndex].position);
 			if (UnravelIndex > 0)
 			{
-				
+
 				Unravel(whichToCoil1);
 			}
 
-            if (wallbar.toAnchor)
-            {
-				Debug.Log("should" + UnravelIndex);
-				Debug.Log("should Rope other anchor" + wallbar.theAnchor);
-				Debug.Log("should wallbar bool" + wallbar.toAnchor);
+			if (wallbar.toAnchor)
+			{
 				pinnedList[UnravelIndex] = wallbar.theAnchor;
 				points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
 				wallbar.toAnchor = false;
 				UnravelStartPosition = wallbar.theAnchor.transform.position;
 			}
 
+		}
+
+		else if (wallbar.isFalling)
+		{
+			Debug.Log("FALLING " + wallbar.isFalling);
+			wallbar.P1currentStamina = 1f;
+			int c = 0;
+			foreach (Point p in points)
+			{
+				if (pinnedList[c] != null && !pinnedList[c].name.Contains("AnchorPoint"))
+				{  
+						pinnedList[c] = null;
+						p.pinnedTo = pinnedList[c];				
+				}
+				c++;
+			}			
+			thePlayer.transform.position = points[UnravelIndex].position;
+			//UnravelStartPosition = wallbar.theAnchor.transform.position;
+
+			
+			
+
+
+		}
+        if (wallbar.fallCoil)
+        {
+			CoilRope(0, whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
+			wallbar.fallCoil = false;
 		}
 	}
 
@@ -170,7 +191,7 @@ public class RopeOther : MonoBehaviour
 
 		if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet)
 		{
-			if (pinnedList[UnravelIndex].name.Contains("AnchorPointStart"))
+			if (pinnedList[UnravelIndex] != null && pinnedList[UnravelIndex].name.Contains("AnchorPointStart"))
 			{
 				UnravelIndex -= pinnedFrequency;
 				Debug.Log("UNRAVELS -=");
@@ -204,13 +225,18 @@ public class RopeOther : MonoBehaviour
 		return theDistance;
 	}
 
-	private void CoilRope(int pinnedFrequency, int lockedFrequency, GameObject Belt1, GameObject Belt2)
+	private void CoilRope(int startingPoint, int pinnedFrequency, int lockedFrequency, GameObject Belt1, GameObject Belt2)
 	{
 
 		bool belt = true;
-		Debug.Log("Poggers" + Belt1 + " " + Belt2);
-		for (int i = 0; i < Frequency; i += pinnedFrequency)
+		for (int i = startingPoint; i < Frequency; i += pinnedFrequency)
 		{
+			if (wallbar.fallCoil)
+			{
+				Debug.Log("starting point" + startingPoint);
+				Debug.Log("starting point i" + i);
+				UnravelIndex = 90;
+			}
 			if (belt)
 			{
 				pinnedList[i] = Belt1;
@@ -290,9 +316,9 @@ public class RopeOther : MonoBehaviour
 
 	}
 
-	public void PickedUp()  //was private void had to remove for pickup
+	private void PickedUp()  //was private void had to remove for pickup
 	{
-		CoilRope(whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
+		CoilRope(0, whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
 
 	}
 
@@ -437,9 +463,8 @@ public class RopeOther : MonoBehaviour
 		{
 			if (Input.GetKey("e"))
 			{
-				//PickedUp();
-			}
-			
+				PickedUp();
+			}		
 		}
 	}
 }

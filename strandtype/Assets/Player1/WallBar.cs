@@ -16,30 +16,37 @@ public class WallBar : MonoBehaviour
     public float P1MaxStamina;
     public bool isFalling = false;
 
-    public GameObject theAnchor;
     public MovementController movementController;
 
     public GameObject Gripper;
     public Image gripBar;
-    float grip, maxGrip = 100;
+    float grip, maxGrip = 100f;
     float lerpSpeed;
+    public bool fallCoil = false;
+    public LineRenderer ropeLines;
+    public GameObject theAnchor;
 
     void Start()
     {
         grip = maxGrip;
         Debug.Log("Start current stamina " + P1currentStamina);
+        theAnchor = this.gameObject;
     }
 
     // Update is called once per frame
 
     void Update()
     {
+
+        Debug.Log("Grip " + grip);
+        Debug.Log("Grip movement" + movementController.currentMovement.magnitude);
         Debug.Log("ClimbRope " + ClimbRope);
         if (ClimbRope)
         {
             //GRIP LOSS LEVEL
-            if (movementController.currentMovement.magnitude == 0)
+            if (movementController.currentMovement.magnitude < 1f)
             {
+                Debug.Log("Grip minusing");
                 grip -= 0.5f;
             }
             else
@@ -47,9 +54,6 @@ public class WallBar : MonoBehaviour
                 loseStamina(0.1f);
                 grip += 0.7f;
             }
-
-            Debug.Log("hoe");
-            Debug.Log("Current Stamina is " + P1currentStamina);
 
             if (P1currentStamina <= 0f || grip <= 0f)
             {
@@ -113,7 +117,11 @@ public class WallBar : MonoBehaviour
         */
         if (other.gameObject.CompareTag("AnchorIn"))
         {
+            GameObject OldAnchor = theAnchor;
+            ropeLines = theAnchor.GetComponent<LineRenderer>();
             theAnchor = other.gameObject;
+            ropeLines.SetPosition(0, OldAnchor.transform.position);
+            ropeLines.SetPosition(1, theAnchor.transform.position);
             Debug.Log("The anchor is: " + theAnchor);
             toAnchor = true;
         }

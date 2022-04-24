@@ -15,7 +15,6 @@ public class HotBar : MonoBehaviour
     private Animator animator;
     public bool isGrabbing = false;
 
-    public RopeOther ropeOther;
 
 
     public bool pickedUp = false;
@@ -144,12 +143,7 @@ public class HotBar : MonoBehaviour
         isGrabbing = true;
         animator.SetTrigger("Grab");
         yield return new WaitForSeconds(1.5f);
-        if(item == RopeItem) 
-        {
-            ropeOther.PickedUp();
-            PickUpItem(item);
-        }
-        else PickUpItem(item);
+        PickUpItem(item);
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);

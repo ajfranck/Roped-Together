@@ -62,7 +62,9 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         Debug.Log("grounded " + characterController.isGrounded);
-        
+
+       
+
         if (wallbar.ClimbRope) 
         {
              //RopeRotation();
@@ -70,22 +72,32 @@ public class MovementController : MonoBehaviour
             characterController.Move(currentMovement * Time.deltaTime);
             //Debug.Log("current movement " + currentMovement.magnitude);
             //Debug.Log("vector3 " + Vector3.Zero);
-            Debug.Log("falling? " + wallbar.isFalling);    
-            if (wallbar.isFalling)
-            {
-                Gravity(-.05f);
-            }
+           // Debug.Log("falling? " + wallbar.isFalling);    
+            
         }    
-        else
 
+
+
+        else
         {
 
-            characterController.Move(currentMovement * Time.deltaTime * 10f);
 
-            Rotation();
 
-            Gravity(-9.8f);
 
+            // if (wallbar.isFalling)
+            //   {
+            //   Gravity();
+            // }
+
+            //  else
+            // {
+            if (!wallbar.isFalling)
+            {
+                Gravity(-9.8f);
+                characterController.Move(currentMovement * Time.deltaTime * 10f);
+                Rotation();
+            }
+           // }
         }
         
         if (warmthbar.isInteracting || hotbar.isGrabbing)
@@ -250,10 +262,16 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("wall"))// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
-            if(Input.GetKey("e"))
+            if(Input.GetKey("e") && !wallbar.ClimbRope)
             {
+                if (wallbar.isFalling) 
+                {
+                    wallbar.fallCoil = true;
+                }               
                 wallbar.ClimbRope = true;
                 climbPrompt.SetActive(false);
+                currentMovement = new Vector3(0f, 0f, 0f);
+                wallbar.isFalling = false;
             }
             if(wallbar.ClimbRope) climbPrompt.SetActive(false);
         }
