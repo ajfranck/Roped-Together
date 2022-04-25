@@ -15,6 +15,7 @@ TagManager:
   - wall
   - RopeItem
   - AnchorIn
+  - Rock
   layers:
   - Default
   - TransparentFX

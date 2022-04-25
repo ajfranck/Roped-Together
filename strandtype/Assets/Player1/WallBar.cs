@@ -11,6 +11,7 @@ public class WallBar : MonoBehaviour
     // Start is called before the first frame update
 
     public P1HealthBar P1HealthBar;
+    public Mining mining;
 
     public float P1currentStamina = 1f;
     public float P1MaxStamina;
@@ -51,7 +52,7 @@ public class WallBar : MonoBehaviour
             }
             else
             {
-                loseStamina(0.1f);
+                loseStamina(1f);
                 grip += 0.7f;
             }
 
@@ -64,7 +65,7 @@ public class WallBar : MonoBehaviour
         else // (movementController.characterController.isGrounded)
         {
             Debug.Log("adding stamina");
-            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded) addStamina(0.175f);
+            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded && !mining.isMining) addStamina(0.175f);
             grip = 100f;
         }
 
@@ -94,12 +95,12 @@ public class WallBar : MonoBehaviour
     }
 
 
-    void loseStamina(float staminaLoss)
+    public void loseStamina(float staminaLoss)
     {
         P1currentStamina -= staminaLoss * Time.deltaTime;
         P1HealthBar.P1SetStamina(P1currentStamina);
     }
-    void addStamina(float staminaGain)
+    public void addStamina(float staminaGain)
     {
         P1currentStamina += staminaGain * Time.deltaTime;
         P1HealthBar.P1SetStamina(P1currentStamina);

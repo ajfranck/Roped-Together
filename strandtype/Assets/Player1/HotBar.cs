@@ -212,7 +212,7 @@ public class HotBar : MonoBehaviour
             promptDisplayed = true;
             itemNear = TheItem.name;
             
-        }  
+        } 
         private void HidePrompt(Item TheItem)
         {
             p1Pickup.SetActive(false);
