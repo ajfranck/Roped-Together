@@ -26,6 +26,10 @@ public class WallBar : MonoBehaviour
     public LineRenderer ropeLines;
     public GameObject theAnchor;
 
+    public GameObject ConnectorObject;
+
+    
+
     void Start()
     {
         grip = maxGrip;
@@ -105,6 +109,22 @@ public class WallBar : MonoBehaviour
         P1HealthBar.P1SetStamina(P1currentStamina);
     }
 
+    void GenerateObjectBetweenAnchors(GameObject end, GameObject start)
+    {
+        Vector3 theDistance = GetDistance(start, end);
+        GameObject theConnector = Instantiate(ConnectorObject);
+        theConnector.transform.localScale = new Vector3(1f, theDistance.y, 1f);
+    }
+
+    private Vector3 GetDistance(GameObject end, GameObject start)
+    {
+
+        float segmentLengthX = (end.transform.position.x - start.transform.position.x);
+        float segmentLengthY = (end.transform.position.y - start.transform.position.y);
+        float segmentLengthZ = (end.transform.position.z - start.transform.position.z);
+        Vector3 segmentLength = new Vector3(segmentLengthX, segmentLengthY, segmentLengthZ);
+        return segmentLength;
+    }
 
 
     void OnTriggerEnter(Collider other)
@@ -124,6 +144,7 @@ public class WallBar : MonoBehaviour
             ropeLines.SetPosition(1, theAnchor.transform.position);
             Debug.Log("The anchor is: " + theAnchor);
             toAnchor = true;
+            GenerateObjectBetweenAnchors(theAnchor, OldAnchor);
         }
     }
 
