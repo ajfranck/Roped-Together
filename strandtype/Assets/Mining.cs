@@ -89,7 +89,7 @@ public class Mining : MonoBehaviour
 
             if(fracturedObject != null)
             {
-                fractObj = Instantiate(fracturedObject) as GameObject;
+                fractObj = Instantiate(fracturedObject, originalObject.transform.position, originalObject.transform.rotation) as GameObject;
 
                 foreach (Transform t in fractObj.transform)
                 {
