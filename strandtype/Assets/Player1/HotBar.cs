@@ -388,7 +388,7 @@ public class HotBar : MonoBehaviour
 
 
 
-            if (Input.GetKeyDown("u"))
+            if (Input.GetKeyDown("e"))
             {
 
                 if (HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)

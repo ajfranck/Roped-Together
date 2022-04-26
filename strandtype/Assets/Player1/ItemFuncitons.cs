@@ -25,21 +25,29 @@ public class ItemFuncitons : MonoBehaviour
 
 
     ////////////////////////////////////////////////////////////
+    /*
     bool promptDisplayed = false;
-    public bool isMining = false;
     bool hasMined = false;
     public bool miningPossible = false;
-    public Vector3 sizeChange = new Vector3(100f, 100f, 100f);
+    public Vector3 sizeChange = new Vector3(10f, 10f, 10f);
+    public Vector3 minSize = new Vector3(0f, 0f, 0f);
 
     public GameObject p1Mine;
     public GameObject p1Mining;
+    */
 
-    public void PickaxeItemFunction(Animator animator, Collider other)
+    public void PickaxeItemFunction()
     {
-        StartCoroutine(POGMINE(other.gameObject, animator));
+        Debug.Log("running pickaxe functgion");
+        /*
+        if(other.transform.localScale.x > minSize.x) 
+        {
+            StartCoroutine(POGMINE(other.gameObject, animator, isMining));
+        }
+        */
     }
-
-    IEnumerator POGMINE(GameObject other, Animator animator)
+    /*
+    IEnumerator POGMINE(GameObject other, Animator animator, bool isMining)
     {
         HidePrompt();
         MiningPrompt();
@@ -47,7 +55,7 @@ public class ItemFuncitons : MonoBehaviour
         animator.SetTrigger("Mining");
         //play particle, reduce size of rock
         yield return new WaitForSeconds(1.5f);
-        other.transform.localScale = other.gameObject.transform.localScale - sizeChange;
+        other.transform.localScale -= sizeChange;
 
         HideMiningPrompt();
         isMining = false;
@@ -71,5 +79,6 @@ public class ItemFuncitons : MonoBehaviour
     {
         p1Mining.SetActive(false);
     }
+    */
     /////////////////////////////////////////////////////////////////
 }
