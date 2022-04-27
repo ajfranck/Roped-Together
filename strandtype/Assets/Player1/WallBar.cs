@@ -28,7 +28,7 @@ public class WallBar : MonoBehaviour
 
     public GameObject ConnectorObject;
 
-    
+
 
     void Start()
     {
@@ -55,7 +55,7 @@ public class WallBar : MonoBehaviour
             }
             else
             {
-                loseStamina(0.1f);
+                //loseStamina(0.1f);
                 grip += 0.7f;
             }
 
@@ -109,32 +109,20 @@ public class WallBar : MonoBehaviour
         P1HealthBar.P1SetStamina(P1currentStamina);
     }
 
-    void GenerateObjectBetweenAnchors(GameObject end, GameObject start)
+  
+    void GenerateMesh(GameObject Anchor)
     {
-        Vector3 theDistance = GetDistance(start, end);
-        GameObject theConnector = Instantiate(ConnectorObject);
-        theConnector.transform.localScale = new Vector3(1f, theDistance.y, 1f);
-    }
-
-    private Vector3 GetDistance(GameObject end, GameObject start)
-    {
-
-        float segmentLengthX = (end.transform.position.x - start.transform.position.x);
-        float segmentLengthY = (end.transform.position.y - start.transform.position.y);
-        float segmentLengthZ = (end.transform.position.z - start.transform.position.z);
-        Vector3 segmentLength = new Vector3(segmentLengthX, segmentLengthY, segmentLengthZ);
-        return segmentLength;
+        MeshCollider meshCollider = Anchor.AddComponent<MeshCollider>();
+        Mesh mesh = new Mesh();
+        ropeLines.BakeMesh(mesh, true);
+        meshCollider.sharedMesh = mesh;
+        meshCollider.convex = true;
+        meshCollider.isTrigger = true;
     }
 
 
     void OnTriggerEnter(Collider other)
     {
-        /* if (other.gameObject.CompareTag("wall"))
-         {
-             //display a prompt to attach to the wall
-             ClimbRope = true;
-         }
-        */
         if (other.gameObject.CompareTag("AnchorIn"))
         {
             GameObject OldAnchor = theAnchor;
@@ -142,11 +130,16 @@ public class WallBar : MonoBehaviour
             theAnchor = other.gameObject;
             ropeLines.SetPosition(0, OldAnchor.transform.position);
             ropeLines.SetPosition(1, theAnchor.transform.position);
+
+
+            GenerateMesh(theAnchor);
             Debug.Log("The anchor is: " + theAnchor);
             toAnchor = true;
-            GenerateObjectBetweenAnchors(theAnchor, OldAnchor);
+           // GenerateObjectBetweenAnchors(theAnchor, OldAnchor);
         }
     }
+
+
 
 
 
@@ -158,3 +151,5 @@ public class WallBar : MonoBehaviour
         }
     }
 }
+
+
