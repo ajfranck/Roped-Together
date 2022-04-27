@@ -14,6 +14,7 @@ public class Mining : MonoBehaviour
 
     public GameObject p1Mine;
     public GameObject p1Mining;
+    public GameObject pickaxe;
 
     public GameObject fracturedObject;
     public float explosionMinForce = 1;
@@ -23,20 +24,21 @@ public class Mining : MonoBehaviour
     private GameObject fractObj;
 
     public WallBar wallbar;
+    public HotBar Hotbar;
     public ItemFuncitons itemFuncs;
 
     public Animator animator;
 
     void Update()
     {
-        Debug.Log("using pickaxe is " + itemFuncs.usingPickaxe);
         if (isMining) wallbar.loseStamina(0.3f);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag.Contains("Rock"))
+        if (other.gameObject.tag.Contains("Rock") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "PickaxeItem")
         {
+            miningPossible = true;
             //display prompt to mine
             if (!promptDisplayed && !isMining && other.transform.localScale.x > minSize.x)
             {
@@ -44,7 +46,6 @@ public class Mining : MonoBehaviour
             }
             if (Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x)
             {   
-                //itemFuncs.PickaxeItemFunction(animator, other, isMining);
                 //reference item funcs, pass thru other and animator
                 StartCoroutine(POGMINE(other.gameObject));
 
@@ -56,6 +57,7 @@ public class Mining : MonoBehaviour
         if(other.gameObject.tag.Contains("Rock"))
         {
             HidePrompt();
+            miningPossible = false;
         }
     }
     
@@ -64,21 +66,22 @@ public class Mining : MonoBehaviour
         HidePrompt();
         MiningPrompt();
         isMining = true;
+        pickaxe.SetActive(true);
         animator.SetTrigger("Mining");
         //play particle, reduce size of rock
         yield return new WaitForSeconds(0.9f);
-        //animator.SetTrigger("Mining");
-        //yield return new WaitForSeconds(1.2f);
+        if(other.transform.localScale.x >= 300)
+        {
+            animator.SetTrigger("Mining");
+            yield return new WaitForSeconds(0.9f);
+        }
 
         Explode(other);
-        //other.transform.localScale -= sizeChange;
-        //Instantiate(destroyedVersion, other.transform.position, other.transform.rotation);
-        //other.SetActive(false);
 
+        pickaxe.SetActive(false);
         HideMiningPrompt();
         isMining = false;
         hasMined = true;
-        itemFuncs.usingPickaxe = false;
     }
 
     void Explode(GameObject originalObject)
@@ -90,6 +93,7 @@ public class Mining : MonoBehaviour
             if(fracturedObject != null)
             {
                 fractObj = Instantiate(fracturedObject, originalObject.transform.position, originalObject.transform.rotation) as GameObject;
+                fractObj.transform.localScale = new Vector3(originalObject.transform.localScale.x / 100, originalObject.transform.localScale.y / 100, originalObject.transform.localScale.z / 100);
 
                 foreach (Transform t in fractObj.transform)
                 {
@@ -101,7 +105,7 @@ public class Mining : MonoBehaviour
                     StartCoroutine(Shrink(t,2));
                 }
 
-                Destroy(fractObj, 7.3f);
+                Destroy(fractObj, 8f);
             }
         }
     }
