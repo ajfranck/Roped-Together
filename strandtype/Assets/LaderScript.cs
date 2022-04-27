@@ -15,9 +15,9 @@ public class LaderScript : MonoBehaviour
     int x = 0;
     int i = 0;
     int count = 0;
-    int MaxLength = 5;
+    int MaxLength = 8;
 //Bool
-    bool SpacePressed = false;
+    bool FPressed = false;
 //Vector3
     public Vector3 SpawnPosition;
     Vector3 NewPosition;
@@ -63,19 +63,20 @@ public class LaderScript : MonoBehaviour
         }
         else
         {
-            if(Input.GetKeyDown("space") && x == 0 && SpacePressed == false)
+            if(Input.GetKeyDown("f") && x == 0 && FPressed == false)
             {
-                SpacePressed = true;
-                LadderBody.AddTorque(this.transform.right * 7);
+                LadderBody.isKinematic = false;
+                FPressed = true;
+                LadderBody.AddTorque(this.transform.right * (MaxLength * 20));
                 x++;
             }
-            if(x==1 && Input.GetKeyDown("space") && SpacePressed == false)
+            if(x==1 && Input.GetKeyDown("f") && FPressed == false)
             {
                 LadderBody.isKinematic = true;
             }
             else
             {
-                SpacePressed = false;
+                FPressed = false;
             }
         }
     }

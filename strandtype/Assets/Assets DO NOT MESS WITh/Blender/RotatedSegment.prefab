@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4759519344317965659}
   - component: {fileID: 6768980475613252962}
+  - component: {fileID: -1177566859640680346}
   m_Layer: 0
   m_Name: RotatedSegment
   m_TagString: Ladder
@@ -127,6 +128,19 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.39, y: 1.28, z: 0.22}
+  m_Center: {x: 0, y: -1.79, z: -0.54}
+--- !u!65 &-1177566859640680346
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5280159456886030305}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.39, y: 2, z: 0.22}
   m_Center: {x: 0, y: -1.79, z: -0.54}
 --- !u!1 &7424603999995045286
 GameObject:
