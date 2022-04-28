@@ -31,6 +31,7 @@ public class MovementController : MonoBehaviour
     float rotationFactor = 10f;
 
     float groundedGravity = -.05f;
+    public float gravity = -9.8f;
 
     public bool AtFire = false;
 
@@ -76,10 +77,7 @@ public class MovementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("grounded " + characterController.isGrounded);
-
-       
-
+        Debug.Log("current gravity is " );
         if (wallbar.ClimbRope) 
         {
              //RopeRotation();
@@ -90,15 +88,8 @@ public class MovementController : MonoBehaviour
            // Debug.Log("falling? " + wallbar.isFalling);    
             
         }    
-
-
-
         else
         {
-
-
-
-
             // if (wallbar.isFalling)
             //   {
             //   Gravity();
@@ -114,19 +105,11 @@ public class MovementController : MonoBehaviour
             }
            // }
         }
-        
         if (warmthbar.isInteracting || hotbar.isGrabbing)
 
         {
             OnDisable();
         }
-       // if (wallbar.isInteracting)
-
-        //{
-
-          //  OnDisable();
-
-        //}
         else
         {
             OnEnable();
