@@ -7,6 +7,7 @@ public class WallBar : MonoBehaviour
 {
 
     public bool ClimbRope;
+    public bool FollowRope;
     public bool toAnchor;
     // Start is called before the first frame update
 
@@ -27,14 +28,15 @@ public class WallBar : MonoBehaviour
     public GameObject theAnchor;
 
     public GameObject ConnectorObject;
-
+    public bool dontAnchor;
+    public List<Anchor> anchors = new List<Anchor>();
 
 
     void Start()
     {
         grip = maxGrip;
         Debug.Log("Start current stamina " + P1currentStamina);
-        theAnchor = this.gameObject;
+       // theAnchor = this.gameObject;
     }
 
     // Update is called once per frame
@@ -55,7 +57,7 @@ public class WallBar : MonoBehaviour
             }
             else
             {
-                //loseStamina(0.1f);
+                loseStamina(0.1f);
                 grip += 0.7f;
             }
 
@@ -65,12 +67,32 @@ public class WallBar : MonoBehaviour
                 ClimbRope = false;
             }
         }
+
         else // (movementController.characterController.isGrounded)
         {
             Debug.Log("adding stamina");
-            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded) addStamina(0.175f);
+
+            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded)
+            {
+                addStamina(0.175f);
+            }
             grip = 100f;
         }
+
+
+        if (FollowRope)
+        {
+            loseStamina(0.05f);
+            
+            if(P1currentStamina <= 0f)
+            {
+                isFalling = true;
+            }
+        }
+
+
+
+       
 
         //else grip = 100f;
         if (movementController.characterController.isGrounded) isFalling = false;
@@ -120,22 +142,48 @@ public class WallBar : MonoBehaviour
         meshCollider.isTrigger = true;
     }
 
+    [System.Serializable]
+    public class Anchor
+    {
+        public GameObject AnchorObject;
+        public bool hasBeenPinned;
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("AnchorIn"))
         {
-            GameObject OldAnchor = theAnchor;
-            ropeLines = theAnchor.GetComponent<LineRenderer>();
-            theAnchor = other.gameObject;
-            ropeLines.SetPosition(0, OldAnchor.transform.position);
-            ropeLines.SetPosition(1, theAnchor.transform.position);
+            foreach(Anchor anchor in anchors)
+            {
+                if (other.gameObject.name == anchor.AnchorObject.name)
+                {
+                    dontAnchor = true;
+                    Debug.Log("DONT ANCHOR");
+                }
+            }
 
-
-            GenerateMesh(theAnchor);
-            Debug.Log("The anchor is: " + theAnchor);
-            toAnchor = true;
-           // GenerateObjectBetweenAnchors(theAnchor, OldAnchor);
+            if (!dontAnchor) {
+                if (theAnchor == null)
+                {
+                    theAnchor = other.gameObject;
+                    toAnchor = true;
+                }
+                else
+                {
+                    GameObject OldAnchor = theAnchor;
+                    ropeLines = theAnchor.GetComponent<LineRenderer>();
+                    theAnchor = other.gameObject;
+                    //ropeLines.SetPosition(0, OldAnchor.transform.position);
+                   // ropeLines.SetPosition(1, theAnchor.transform.position);
+                    Debug.Log("The anchor is: " + theAnchor);
+                    toAnchor = true;
+                }
+                Anchor an = new Anchor() { AnchorObject = other.gameObject, hasBeenPinned = true };
+                anchors.Add (an);
+                // GenerateMesh(theAnchor);
+            }
+            dontAnchor = false;
         }
     }
 
