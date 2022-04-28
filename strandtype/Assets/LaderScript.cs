@@ -18,9 +18,11 @@ public class LaderScript : MonoBehaviour
     int MaxLength = 8;
 //Bool
     bool FPressed = false;
+    bool isWaiting = false;
 //Vector3
     public Vector3 SpawnPosition;
     Vector3 NewPosition;
+
     void Start()
     {
         LadderParent = GameObject.FindGameObjectWithTag("ParentLadder");
@@ -44,8 +46,9 @@ public class LaderScript : MonoBehaviour
     {
         if(i < MaxLength)
         {
-            if(Input.GetKeyDown("space"))
-            {
+            if(Input.GetKey("space") && isWaiting == false)
+            {   
+                    isWaiting = true;
                     if(i == 0)
                     {
                         SpawnPosition = PositionClass();
@@ -59,12 +62,14 @@ public class LaderScript : MonoBehaviour
                         Instantiate(LadderSegment, NewPosition, this.transform.rotation, LadderParent.transform);
                         i++;
                     }    
+                    StartCoroutine(Waiter());
             }
         }
         else
         {
             if(Input.GetKeyDown("f") && x == 0 && FPressed == false)
             {
+                LadderBody.useGravity = true;
                 LadderBody.isKinematic = false;
                 FPressed = true;
                 LadderBody.AddTorque(this.transform.right * (MaxLength * 20));
@@ -79,5 +84,13 @@ public class LaderScript : MonoBehaviour
                 FPressed = false;
             }
         }
+
+        //if(LadderBody.useGravity) //StartCoroutine(BeginDestruction());
+    }
+
+    IEnumerator Waiter()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isWaiting = false;
     }
 }

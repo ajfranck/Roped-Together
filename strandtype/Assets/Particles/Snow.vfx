@@ -20,7 +20,7 @@ MonoBehaviour:
     x: 822
     y: -166
     width: 545
-    height: 1609
+    height: 1629
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,7 +55,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Color, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"r":0.2121751606464386,"g":0.23195435106754304,"b":0.30188679695129397,"a":0.1411764770746231}'
+      m_SerializableObject: '{"r":0.12766999006271363,"g":0.13872182369232179,"b":0.17924529314041139,"a":0.0784313753247261}'
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -166,7 +166,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1500
+      m_SerializableObject: 5000
     m_Space: 2147483647
   m_Property:
     name: Rate
