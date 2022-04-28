@@ -16,6 +16,8 @@ TagManager:
   - RopeItem
   - AnchorIn
   - Rock
+  - Ladder
+  - ParentLadder
   layers:
   - Default
   - TransparentFX

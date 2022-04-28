@@ -38,7 +38,21 @@ public class MovementController : MonoBehaviour
     public WallBar wallbar;
     public HotBar hotbar;
 
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Ladder"))
+        {
+            characterController.slopeLimit = 90f;
+        }
 
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag("Ladder"))
+        {
+            characterController.slopeLimit = 45f;
+        }
+    }
 
 
 
