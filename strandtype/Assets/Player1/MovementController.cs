@@ -52,6 +52,7 @@ public class MovementController : MonoBehaviour
         {
             characterController.slopeLimit = 45f;
         }
+        climbPrompt.SetActive(false);
     }
 
 
@@ -289,11 +290,6 @@ public class MovementController : MonoBehaviour
             }
             if(wallbar.ClimbRope) climbPrompt.SetActive(false);
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        climbPrompt.SetActive(false);
     }
 
 
