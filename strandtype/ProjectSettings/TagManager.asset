@@ -18,6 +18,7 @@ TagManager:
   - Rock
   - Ladder
   - ParentLadder
+  - WarmthBowl
   layers:
   - Default
   - TransparentFX
