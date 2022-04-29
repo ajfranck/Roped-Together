@@ -7,6 +7,7 @@ public class WallBar : MonoBehaviour
 {
 
     public bool ClimbRope;
+    public bool FollowRope;
     public bool toAnchor;
     // Start is called before the first frame update
 
@@ -27,11 +28,16 @@ public class WallBar : MonoBehaviour
     public LineRenderer ropeLines;
     public GameObject theAnchor;
 
+    public GameObject ConnectorObject;
+    public bool dontAnchor;
+    public List<Anchor> anchors = new List<Anchor>();
+
+
     void Start()
     {
         grip = maxGrip;
         Debug.Log("Start current stamina " + P1currentStamina);
-        theAnchor = this.gameObject;
+       // theAnchor = this.gameObject;
     }
 
     // Update is called once per frame
@@ -62,12 +68,28 @@ public class WallBar : MonoBehaviour
                 ClimbRope = false;
             }
         }
+
         else // (movementController.characterController.isGrounded)
         {
             Debug.Log("adding stamina");
             if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded && !mining.isMining) addStamina(0.175f);
             grip = 100f;
         }
+
+
+        if (FollowRope)
+        {
+            loseStamina(0.05f);
+            
+            if(P1currentStamina <= 0f)
+            {
+                isFalling = true;
+            }
+        }
+
+
+
+       
 
         //else grip = 100f;
         if (movementController.characterController.isGrounded) isFalling = false;
@@ -106,27 +128,63 @@ public class WallBar : MonoBehaviour
         P1HealthBar.P1SetStamina(P1currentStamina);
     }
 
+  
+    void GenerateMesh(GameObject Anchor)
+    {
+        MeshCollider meshCollider = Anchor.AddComponent<MeshCollider>();
+        Mesh mesh = new Mesh();
+        ropeLines.BakeMesh(mesh, true);
+        meshCollider.sharedMesh = mesh;
+        meshCollider.convex = true;
+        meshCollider.isTrigger = true;
+    }
+
+    [System.Serializable]
+    public class Anchor
+    {
+        public GameObject AnchorObject;
+        public bool hasBeenPinned;
+    }
 
 
     void OnTriggerEnter(Collider other)
     {
-        /* if (other.gameObject.CompareTag("wall"))
-         {
-             //display a prompt to attach to the wall
-             ClimbRope = true;
-         }
-        */
         if (other.gameObject.CompareTag("AnchorIn"))
         {
-            GameObject OldAnchor = theAnchor;
-            ropeLines = theAnchor.GetComponent<LineRenderer>();
-            theAnchor = other.gameObject;
-            ropeLines.SetPosition(0, OldAnchor.transform.position);
-            ropeLines.SetPosition(1, theAnchor.transform.position);
-            Debug.Log("The anchor is: " + theAnchor);
-            toAnchor = true;
+            foreach(Anchor anchor in anchors)
+            {
+                if (other.gameObject.name == anchor.AnchorObject.name)
+                {
+                    dontAnchor = true;
+                    Debug.Log("DONT ANCHOR");
+                }
+            }
+
+            if (!dontAnchor) {
+                if (theAnchor == null)
+                {
+                    theAnchor = other.gameObject;
+                    toAnchor = true;
+                }
+                else
+                {
+                    GameObject OldAnchor = theAnchor;
+                    ropeLines = theAnchor.GetComponent<LineRenderer>();
+                    theAnchor = other.gameObject;
+                    //ropeLines.SetPosition(0, OldAnchor.transform.position);
+                   // ropeLines.SetPosition(1, theAnchor.transform.position);
+                    Debug.Log("The anchor is: " + theAnchor);
+                    toAnchor = true;
+                }
+                Anchor an = new Anchor() { AnchorObject = other.gameObject, hasBeenPinned = true };
+                anchors.Add (an);
+                // GenerateMesh(theAnchor);
+            }
+            dontAnchor = false;
         }
     }
+
+
 
 
 
@@ -138,3 +196,5 @@ public class WallBar : MonoBehaviour
         }
     }
 }
+
+

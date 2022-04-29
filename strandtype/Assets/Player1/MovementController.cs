@@ -80,30 +80,16 @@ public class MovementController : MonoBehaviour
         Debug.Log("current gravity is " );
         if (wallbar.ClimbRope) 
         {
-             //RopeRotation();
-
             characterController.Move(currentMovement * Time.deltaTime);
-            //Debug.Log("current movement " + currentMovement.magnitude);
-            //Debug.Log("vector3 " + Vector3.Zero);
-           // Debug.Log("falling? " + wallbar.isFalling);    
-            
         }    
         else
         {
-            // if (wallbar.isFalling)
-            //   {
-            //   Gravity();
-            // }
-
-            //  else
-            // {
             if (!wallbar.isFalling)
             {
                 Gravity(-9.8f);
                 characterController.Move(currentMovement * Time.deltaTime * 10f);
                 Rotation();
             }
-           // }
         }
         if (warmthbar.isInteracting || hotbar.isGrabbing)
 
