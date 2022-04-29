@@ -58,7 +58,7 @@ public class WallBar : MonoBehaviour
             }
             else
             {
-                loseStamina(1f);
+                loseStamina(.1f);
                 grip += 0.7f;
             }
 
