@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 827493709495522414}
   m_Layer: 0
   m_Name: bowl warmth
-  m_TagString: Untagged
+  m_TagString: WarmthBowl
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
