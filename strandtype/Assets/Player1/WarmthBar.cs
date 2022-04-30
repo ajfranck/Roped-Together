@@ -20,6 +20,8 @@ public class WarmthBar : MonoBehaviour
     
     public P1HealthBar P1HealthBar;
 
+    public MovementController movementController;
+
 
     //all fires:
     public bool fire1 = false;
@@ -127,8 +129,10 @@ public class WarmthBar : MonoBehaviour
         lastFire = data.lastFire;
         if(lastFire == 1)
         {
+            if(movementController.isPlayer1) transform.position = new Vector3(-13, -12, -41);
+            else transform.position = new Vector3(-13, -12, -39);
             Debug.Log("fire one");
-            transform.position = new Vector3(-13, -14, -39);
+            
         }
         else if (lastFire == 2)
         {

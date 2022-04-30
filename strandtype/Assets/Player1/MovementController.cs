@@ -7,12 +7,11 @@ using UnityEngine.InputSystem;
 
 public class MovementController : MonoBehaviour
 {
-
-
-
     // declare reference variables 
 
     PlayerInput playerInput;
+    Player2Input player2Input;
+
     public CharacterController characterController;
     Animator animator;
 
@@ -39,6 +38,8 @@ public class MovementController : MonoBehaviour
     public WallBar wallbar;
     public HotBar hotbar;
 
+    public bool isPlayer1;
+
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Ladder"))
@@ -61,15 +62,29 @@ public class MovementController : MonoBehaviour
     void Awake()
     {
 
-        playerInput = new PlayerInput();
-        characterController = GetComponent<CharacterController>();
+        if(isPlayer1) playerInput = new PlayerInput();
+        else player2Input = new Player2Input();
+        
+        //characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-        playerInput.CharacterController.Move.started += onMovementInput;
-        playerInput.CharacterController.Move.canceled += onMovementInput;
-        playerInput.CharacterController.Move.performed += onMovementInput;
-        currentMovement.x = currentMovementInput.x;
-        currentMovement.z = currentMovementInput.y;
+        if(isPlayer1)
+        {
+            playerInput.CharacterController.Move.started += onMovementInput;
+            playerInput.CharacterController.Move.canceled += onMovementInput;
+            playerInput.CharacterController.Move.performed += onMovementInput;
+            currentMovement.x = currentMovementInput.x;
+            currentMovement.z = currentMovementInput.y;
+        }
+        else
+        {
+            player2Input.CharacterController.Move.started += onMovementInput;
+            player2Input.CharacterController.Move.canceled += onMovementInput;
+            player2Input.CharacterController.Move.performed += onMovementInput;
+            currentMovement.x = currentMovementInput.x;
+            currentMovement.z = currentMovementInput.y;
+        }
+        
 
 
 
@@ -121,17 +136,14 @@ public class MovementController : MonoBehaviour
     }
 
     void DefaultMove(InputAction.CallbackContext context)
-
     {
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y; 
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
-
     }
 
     void RopeMove(InputAction.CallbackContext context)
-
     {
         Debug.Log("RopeMove runs");
 
@@ -197,13 +209,16 @@ public class MovementController : MonoBehaviour
 
     void OnEnable()
     {
-        playerInput.CharacterController.Enable();
+        if(isPlayer1) playerInput.CharacterController.Enable();
+        else player2Input.CharacterController.Enable();
+        
     }
 
 
     void OnDisable()
     {
-        playerInput.CharacterController.Disable();
+        if(isPlayer1) playerInput.CharacterController.Disable();
+        else player2Input.CharacterController.Disable();
     }
 
     void RopeRotation()

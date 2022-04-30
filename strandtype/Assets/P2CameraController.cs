@@ -10,7 +10,7 @@ public class P2CameraController : MonoBehaviour
 
     public Vector3 offset;
     public float smoothTime = 0.5f;
-    public P2WarmthBar warmthbar;
+    public WarmthBar warmthbar;
     new Vector3 firePosition;
 
     private Vector3 velocity;
@@ -24,11 +24,11 @@ public class P2CameraController : MonoBehaviour
     void LateUpdate()
     {
 
-        if(warmthbar.p2isInteracting)
+        if(warmthbar.isInteracting)
         {
             Zoom();
         }
-        if(!warmthbar.p2isInteracting)
+        if(!warmthbar.isInteracting)
         {
             Move();
         }
