@@ -261,8 +261,10 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("wallLeader"))// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
+            Debug.Log("wallbar. climbrope is " + wallbar.ClimbRope);
             if(Input.GetKey("e") && !wallbar.ClimbRope)
             {
+                Debug.Log("wallLeader");
                 if (wallbar.isFalling) 
                 {
                     wallbar.fallCoil = true;
@@ -271,9 +273,9 @@ public class MovementController : MonoBehaviour
                 climbPrompt.SetActive(false);
                 currentMovement = new Vector3(0f, 0f, 0f);
                 wallbar.isFalling = false;
+                other.gameObject.SetActive(false);
             }
-            if(wallbar.ClimbRope) climbPrompt.SetActive(false);
-            other.gameObject.SetActive(false);
+            if(wallbar.ClimbRope) climbPrompt.SetActive(false);        
         }
 
         if (other.gameObject.CompareTag("wallFollower"))

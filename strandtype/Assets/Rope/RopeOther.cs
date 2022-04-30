@@ -136,38 +136,40 @@ public class RopeOther : MonoBehaviour
 	void HandleFollowing()
     {
 		//Debug.Log("wallbar follower name " = wallbarFollower);
-		 wallbarFollower.FollowRope = true;
-         if (wallbarFollower.FollowRope)
+		// wallbarFollower.FollowRope = true;
+         if (wallbarFollower.FollowRope && wallbar.theAnchor != null)
          {
+			//Debug.Log("wallbar the anchor" + wallbar.theAnchor); 
 			RecoilOnFollow();
          }
     }
 
 
 	void RecoilOnFollow()
-    {
-		if (wallbar.anchors[RecoilAnchorIndex].AnchorObject != null)
+	{
+		if (wallbar.anchors[RecoilAnchorIndex-1].AnchorObject != null)
 		{
-			GameObject anchorToRecoil = wallbar.anchors[RecoilAnchorIndex].AnchorObject;
-			followerDistanceFromAnchor = GetDistanceFloat(theFollower.transform.position, anchorToRecoil.transform.position);
-			if (followerDistanceFromAnchor <= UnravelDistanceLet)
-			{
-				if (recoilBelt)
-				{
-					pinnedList[RecoilIndex] = P2TheBelt1; // need a reference to each players belt automatically!
-					RecoilIndex -= whichToCoil1;
-					recoilBelt = false;
-				}
+			//pinnedList[RecoilIndex - 1] = P2TheBelt1;
+			//GameObject anchorToRecoil = wallbar.anchors[RecoilAnchorIndex-1].AnchorObject;
+			//followerDistanceFromAnchor = GetDistanceFloat(theFollower.transform.position, anchorToRecoil.transform.position);
+			//if (followerDistanceFromAnchor <= UnravelDistanceLet)
+			//{
+			//	if (recoilBelt)
+			//	{
+			//		pinnedList[RecoilIndex-1] = P2TheBelt1; // need a reference to each players belt automatically!
+				//	RecoilIndex -= whichToCoil1;
+				//	recoilBelt = false;
+			//	}
 
-				else if (!recoilBelt)
-				{
-					pinnedList[RecoilIndex] = P2TheBelt2; ;
-					RecoilIndex -= whichToCoil1;
-					recoilBelt = true;
-				}
-			}
+			//	else if (!recoilBelt)
+				//{
+				//	pinnedList[RecoilIndex-1] = P2TheBelt2; ;
+				//	RecoilIndex -= whichToCoil1;
+				//	recoilBelt = true;
+				//}
+			//}
 		}
-
+		
 	}
 
 
