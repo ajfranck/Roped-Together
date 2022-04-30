@@ -129,8 +129,8 @@ public class WarmthBar : MonoBehaviour
         lastFire = data.lastFire;
         if(lastFire == 1)
         {
-            if(movementController.isPlayer1) transform.position = new Vector3(-13, -12, -41);
-            else transform.position = new Vector3(-13, -12, -39);
+            if(movementController.isPlayer1) transform.position = new Vector3(-15, 5, -13);
+            else transform.position = new Vector3(30, -1, -14);
             Debug.Log("fire one");
             
         }
