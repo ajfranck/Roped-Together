@@ -7,7 +7,7 @@ public class WallBar : MonoBehaviour
 {
 
     public bool ClimbRope;
-    public bool FollowRope;
+    public bool FollowRope = false;
     public bool toAnchor;
     // Start is called before the first frame update
 
@@ -28,6 +28,7 @@ public class WallBar : MonoBehaviour
     public LineRenderer ropeLines;
     public GameObject theAnchor;
 
+    public int RecoilAnchorIndex;
     public GameObject ConnectorObject;
     public bool dontAnchor;
     public List<Anchor> anchors = new List<Anchor>();
@@ -58,7 +59,7 @@ public class WallBar : MonoBehaviour
             }
             else
             {
-                loseStamina(.1f);
+              //  loseStamina(.1f);
                 grip += 0.7f;
             }
 
@@ -151,36 +152,41 @@ public class WallBar : MonoBehaviour
     {
         if (other.gameObject.CompareTag("AnchorIn"))
         {
-            foreach(Anchor anchor in anchors)
+            if (ClimbRope)
             {
-                if (other.gameObject.name == anchor.AnchorObject.name)
+                foreach (Anchor anchor in anchors)
                 {
-                    dontAnchor = true;
-                    Debug.Log("DONT ANCHOR");
+                    if (other.gameObject.name == anchor.AnchorObject.name)
+                    {
+                        dontAnchor = true;
+                        Debug.Log("DONT ANCHOR");
+                    }
                 }
+
+                if (!dontAnchor)
+                {
+                    if (theAnchor == null)
+                    {
+                        theAnchor = other.gameObject;
+                        toAnchor = true;
+                    }
+                    else
+                    {
+                        GameObject OldAnchor = theAnchor;
+                        ropeLines = theAnchor.GetComponent<LineRenderer>();
+                        theAnchor = other.gameObject;
+                        //ropeLines.SetPosition(0, OldAnchor.transform.position);
+                        // ropeLines.SetPosition(1, theAnchor.transform.position);
+                        Debug.Log("The anchor is: " + theAnchor);
+                        toAnchor = true;
+                    }
+                    Anchor an = new Anchor() { AnchorObject = other.gameObject, hasBeenPinned = true };
+                    anchors.Add(an);
+                    // GenerateMesh(theAnchor);
+                }
+                dontAnchor = false;
             }
 
-            if (!dontAnchor) {
-                if (theAnchor == null)
-                {
-                    theAnchor = other.gameObject;
-                    toAnchor = true;
-                }
-                else
-                {
-                    GameObject OldAnchor = theAnchor;
-                    ropeLines = theAnchor.GetComponent<LineRenderer>();
-                    theAnchor = other.gameObject;
-                    //ropeLines.SetPosition(0, OldAnchor.transform.position);
-                   // ropeLines.SetPosition(1, theAnchor.transform.position);
-                    Debug.Log("The anchor is: " + theAnchor);
-                    toAnchor = true;
-                }
-                Anchor an = new Anchor() { AnchorObject = other.gameObject, hasBeenPinned = true };
-                anchors.Add (an);
-                // GenerateMesh(theAnchor);
-            }
-            dontAnchor = false;
         }
     }
 
@@ -190,10 +196,13 @@ public class WallBar : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("wall") && Input.GetKey("v"))
+        if (other.gameObject.CompareTag("wallLeader") && Input.GetKey("v"))
         {
             ClimbRope = true;
+            
         }
+
+
     }
 }
 

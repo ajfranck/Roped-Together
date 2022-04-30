@@ -243,7 +243,7 @@ public class MovementController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("wall"))// && Input.GetKey("v"))
+        if (other.gameObject.CompareTag("wallLeader"))// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
             if(Input.GetKey("e") && !wallbar.ClimbRope)
@@ -258,9 +258,17 @@ public class MovementController : MonoBehaviour
                 wallbar.isFalling = false;
             }
             if(wallbar.ClimbRope) climbPrompt.SetActive(false);
+            other.gameObject.SetActive(false);
         }
+
+        if (other.gameObject.CompareTag("wallFollower"))
+        {
+            climbPrompt.SetActive(true);
+            if (Input.GetKey("e") && !wallbar.ClimbRope)
+            {
+                wallbar.FollowRope = true;
+            }
+        }
+        if (wallbar.ClimbRope) climbPrompt.SetActive(false);
     }
-
-
-
 }

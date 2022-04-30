@@ -7,6 +7,7 @@ public class RopeOther : MonoBehaviour
 
 	public WallBar wallbar;
 
+	public WallBar wallbarFollower;
 
 	[SerializeField]
 	public List<Point> points = new List<Point>();
@@ -29,6 +30,15 @@ public class RopeOther : MonoBehaviour
 
 
 	[SerializeField]
+	public GameObject P2TheBelt1;
+
+	[SerializeField]
+	public GameObject P2TheBelt2;
+
+
+
+
+	[SerializeField]
 	public GameObject InitialCoil1;
 
 	[SerializeField]
@@ -43,7 +53,8 @@ public class RopeOther : MonoBehaviour
 	public GameObject endPosition;
 	public GameObject startPosition;
 
-	public GameObject thePlayer;
+	public GameObject theLeader;
+	public GameObject theFollower;
 	
 
 	public int Frequency = 10;
@@ -74,8 +85,12 @@ public class RopeOther : MonoBehaviour
 
 	public GameObject UnravelStartObject;
 	public Vector3 UnravelStartPosition;
-	public int UnravelIndex;
+	public int UnravelIndex; 
+	public int RecoilIndex;
+	public int RecoilAnchorIndex;
 	public float UnravelDistanceLet;
+	public float distanceFromAnchor;
+	public float followerDistanceFromAnchor;
 
 	//what the total length of the rope should be
 	public float TotalRopeLength;
@@ -85,6 +100,10 @@ public class RopeOther : MonoBehaviour
 	public bool hasSetBeforeFallList = false;
 	public bool hasReattached = false;
 	public bool pickedUp = false;
+	public bool UnraveledAtClimbStart = false;
+
+
+	public bool recoilBelt;
 
 	void Start()
 	{
@@ -110,8 +129,47 @@ public class RopeOther : MonoBehaviour
 		if (pickedUp)
 		{
 			HandleClimbing();
+			HandleFollowing();
 		}
 	}
+
+	void HandleFollowing()
+    {
+		//Debug.Log("wallbar follower name " = wallbarFollower);
+		 wallbarFollower.FollowRope = true;
+         if (wallbarFollower.FollowRope)
+         {
+			RecoilOnFollow();
+         }
+    }
+
+
+	void RecoilOnFollow()
+    {
+		if (wallbar.anchors[RecoilAnchorIndex].AnchorObject != null)
+		{
+			GameObject anchorToRecoil = wallbar.anchors[RecoilAnchorIndex].AnchorObject;
+			followerDistanceFromAnchor = GetDistanceFloat(theFollower.transform.position, anchorToRecoil.transform.position);
+			if (followerDistanceFromAnchor <= UnravelDistanceLet)
+			{
+				if (recoilBelt)
+				{
+					pinnedList[RecoilIndex] = P2TheBelt1; // need a reference to each players belt automatically!
+					RecoilIndex -= whichToCoil1;
+					recoilBelt = false;
+				}
+
+				else if (!recoilBelt)
+				{
+					pinnedList[RecoilIndex] = P2TheBelt2; ;
+					RecoilIndex -= whichToCoil1;
+					recoilBelt = true;
+				}
+			}
+		}
+
+	}
+
 
 	void UnpinOnFall()
     {
@@ -141,12 +199,21 @@ public class RopeOther : MonoBehaviour
 
 	void HandleClimbing()
     {
+		if (wallbar.theAnchor != null)
+		{
+			distanceFromAnchor = GetDistanceFloat(theLeader.transform.position, wallbar.theAnchor.transform.position);
+		}
 		if (wallbar.ClimbRope)
 		{
+			if (!UnraveledAtClimbStart)
+			{
+				UnravelAction(distanceFromAnchor);
+				UnraveledAtClimbStart = true;
+			}
 			Debug.Log("Unravel Index" + points[UnravelIndex].position);
 			if (UnravelIndex > 0)
 			{
-				Unravel(whichToCoil1);
+				Unravel();
 			}
 			if (wallbar.toAnchor)
 			{
@@ -160,7 +227,7 @@ public class RopeOther : MonoBehaviour
 
 		else if (wallbar.isFalling)
 		{
-			thePlayer.transform.position = points[UnravelIndex].position;
+			theLeader.transform.position = points[UnravelIndex].position;
 		}
 
 		if (wallbar.fallCoil && !hasReattached)
@@ -188,33 +255,88 @@ public class RopeOther : MonoBehaviour
 
 	void ConnectToAnchor()
     {
+		if (!pinnedList[UnravelIndex].name.Contains("AnchorPoint"))
+		{
+			ConnectToAnchorAction();
+			Debug.Log("UNRAVELS connect to anchor not anchorpoint");
+		}
+
+        if(pinnedList[UnravelIndex].name.Contains("AnchorPoint"))
+        {
+			Debug.Log("UNRAVELS connect to anchor yes anchorpoint");
+			UnravelIndex -= whichToCoil1;
+			UnravelAction(distanceFromAnchor);
+			RecoilAnchorIndex += 1;
+			//ConnectToAnchorAction();
+		}
+	}
+
+	void ConnectToAnchorAction()
+    {
+		Debug.Log("UNRAVELS Connect to anchor action thinks index is: " + UnravelIndex);
 		pinnedList[UnravelIndex] = wallbar.theAnchor;
 		points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
 		wallbar.toAnchor = false;
 		UnravelStartPosition = wallbar.theAnchor.transform.position;
+		TotalDistanceUnraveled = 0f;
 	}
 
-	void Unravel(int pinnedFrequency)
+	void Unravel()
 	{
-		float DistanceFromOrigin = GetDistanceFloat(thePlayer.transform.position, UnravelStartPosition);
+		/*
+		float DistanceFromOrigin = GetDistanceFloat(theLeader.transform.position, UnravelStartPosition);
 
 		if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet)
 		{
 			if (pinnedList[UnravelIndex] != null && pinnedList[UnravelIndex].name.Contains("AnchorPointStart"))
 			{
-				UnravelIndex -= pinnedFrequency;
+				UnravelIndex -= whichToCoil1;
 				Debug.Log("UNRAVELS -=");
 			}
 			else
 			{
 				pinnedList[UnravelIndex] = null;
 				points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
-				UnravelIndex -= pinnedFrequency;
-				UnravelStartPosition = thePlayer.transform.position;
+				UnravelIndex -= whichToCoil1;
+				UnravelStartPosition = theLeader.transform.position;
 				Debug.Log("UNRAVELS!");
 				TotalDistanceUnraveled += DistanceFromOrigin;
 			}
 		}
+		*/
+		if (wallbar.theAnchor != null)
+		{
+			if(distanceFromAnchor >= UnravelDistanceLet && distanceFromAnchor>=TotalDistanceUnraveled)
+            {
+				if (pinnedList[UnravelIndex] != null && pinnedList[UnravelIndex].name.Contains("AnchorPoint"))
+				{
+					UnravelIndex -= whichToCoil1;
+					Debug.Log("UNRAVELS -=");
+				}
+				else
+				{
+					UnravelAction(distanceFromAnchor);
+				}
+			}	
+		}
+
+
+	}
+
+
+	void UnravelAction(float distance)
+    {
+		
+
+		pinnedList[UnravelIndex] = null;
+		points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
+		UnravelIndex -= whichToCoil1;
+		UnravelStartPosition = theLeader.transform.position;
+		Debug.Log("UNRAVELS! distance from anchor " + distance);
+		Debug.Log("UNRAVELS! distance total unraveled " + TotalDistanceUnraveled);
+		TotalDistanceUnraveled += UnravelDistanceLet;
+		Debug.Log("UNRAVELS Index is  " + UnravelIndex);
+
 	}
 
 	void FixedUpdate()
@@ -234,11 +356,11 @@ public class RopeOther : MonoBehaviour
 		return theDistance;
 	}
 
-	private void CoilRope(int startingPoint, int pinnedFrequency, int lockedFrequency, GameObject Belt1, GameObject Belt2)
+	private void CoilRope(int startingPoint, int whichToCoil1, int lockedFrequency, GameObject Belt1, GameObject Belt2)
 	{
 
 		bool belt = true;
-		for (int i = startingPoint; i < Frequency; i += pinnedFrequency)
+		for (int i = startingPoint; i < Frequency; i += whichToCoil1)
 		{
 			if (belt)
 			{
@@ -433,15 +555,22 @@ public class RopeOther : MonoBehaviour
 			if (Input.GetKey("e"))
 			{
 				PickedUp();
-				thePlayer = other.gameObject;
-				wallbar = thePlayer.GetComponent<WallBar>();
+				theLeader = other.gameObject;
+				wallbar = theLeader.GetComponent<WallBar>();
 				pickedUp = true;
-
+				GameObject[] FindFollower = GameObject.FindGameObjectsWithTag("Player");
+				foreach(GameObject o in FindFollower)
+                {
+					if(o.name != theLeader.name)
+                    {
+						theFollower = o;
+						wallbarFollower = theFollower.GetComponent<WallBar>();
+                    }
+                }
+				Debug.Log("climber leader is " + theLeader.name);
+				Debug.Log("climber follower is " + theFollower.name);
+					
 			}		
 		}
 	}
 }
-
-
-
-

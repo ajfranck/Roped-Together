@@ -18,6 +18,8 @@ TagManager:
   - Rock
   - Ladder
   - ParentLadder
+  - wallLeader
+  - wallFollower
   layers:
   - Default
   - TransparentFX
