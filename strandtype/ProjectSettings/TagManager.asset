@@ -20,6 +20,7 @@ TagManager:
   - ParentLadder
   - wallLeader
   - wallFollower
+  - WarmthBowl
   layers:
   - Default
   - TransparentFX

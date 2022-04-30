@@ -11,6 +11,7 @@ public class HotBar : MonoBehaviour
     public Item TestItem;
     public Item CubeItem;
     public Item RopeItem;
+    public Item BowlItem;
     
     private Animator animator;
     public bool isGrabbing = false;
@@ -132,6 +133,21 @@ public class HotBar : MonoBehaviour
             {
                 StartCoroutine(PickUp(RopeItem, other));
             }
+        }
+
+        if (other.gameObject.tag.Contains("WarmthBowl"))
+        {  
+
+            if (!promptDisplayed && !hasGrabbed)
+            {
+                DisplayPrompt(BowlItem);
+            }
+
+            if (Input.GetKey("e") && !pickedUp)
+            {
+                StartCoroutine(PickUp(BowlItem, other));
+            }
+
         }
     }
 

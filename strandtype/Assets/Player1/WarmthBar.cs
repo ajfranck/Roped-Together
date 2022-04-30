@@ -44,7 +44,7 @@ public class WarmthBar : MonoBehaviour
         
         if(P1currentWarmth > 0)
         {
-            loseWarmth(0.005f);
+            loseWarmth(0.05f);
         }    
 
         if(P1currentWarmth <= 0)
@@ -60,6 +60,12 @@ public class WarmthBar : MonoBehaviour
         P1currentWarmth -= warmthLoss;
         P1HealthBar.P1SetWarmth(P1currentWarmth);
 
+    }
+
+    public void gainWarmth(float warmthLoss)
+    {
+        P1currentWarmth += warmthLoss;
+        P1HealthBar.P1SetWarmth(P1currentWarmth);
     }
 
 
