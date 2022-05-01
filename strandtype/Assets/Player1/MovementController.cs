@@ -138,8 +138,8 @@ public class MovementController : MonoBehaviour
     void DefaultMove(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x;
-        currentMovement.z = currentMovementInput.y; 
+        currentMovement.x = currentMovementInput.x * 0.7f;
+        currentMovement.z = currentMovementInput.y * 0.7f; 
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
     }
 
