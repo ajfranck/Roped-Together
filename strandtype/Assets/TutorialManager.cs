@@ -8,21 +8,62 @@ public class TutorialManager : MonoBehaviour
     public GameObject pickupTutorial;
     public GameObject timerTutorial;
 
-    
-    void OnTriggerEnter(collider other)
+    public Mining mining;
+    public HotBar hotbar;
+
+    public Animator warmthAnim;
+    public Animator itemAnim;
+    public Animator miningAnim;
+    public Animator consumeAnim;
+
+    void Start()
+    {
+        warmthAnim.SetTrigger("FadeIn");
+    }
+    void Update()
+    {
+        if(mining.isMining)
+        {
+            miningAnim.SetTrigger("FadeOut");
+        }
+
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Contains("pickupTutorial"))
+        {
+            itemAnim.SetTrigger("FadeIn");
+        }
+        if (other.gameObject.tag.Contains("timerTutorial"))
+        {
+
+        }
+        if (other.gameObject.tag.Contains("miningTutorial"))
+        {
+            miningAnim.SetTrigger("FadeIn");
+        }
+        if (other.gameObject.tag.Contains("consumableTutorial"))
+        {
+            consumeAnim.SetTrigger("FadeIn");
+        }
+    }
+
+    void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag.Contains("warmthTutorial"))
         {
-            
+            warmthAnim.SetTrigger("FadeOut");
         }
-        else if (other.gameObject.tag.Contains("pickupTutorial"))
+        if (other.gameObject.tag.Contains("pickupTutorial"))
         {
-
+            itemAnim.SetTrigger("FadeOut");
         }
-        else if (other.gameObject.tag.Contains("timerTutorial"))
+        if (other.gameObject.tag.Contains("miningTutorial"))
         {
-
+            miningAnim.SetTrigger("FadeOut");
         }
+        
     }
 
 }

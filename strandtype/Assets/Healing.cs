@@ -8,6 +8,7 @@ public class Healing : MonoBehaviour
     public Mining mining;
     public HotBar hotbar;
     public WarmthBar warmthbar;
+    public TutorialManager tutorial;
 
     public Animator animator;
 
@@ -23,6 +24,7 @@ public class Healing : MonoBehaviour
 
     IEnumerator UseIt()
     {
+        tutorial.consumeAnim.SetTrigger("FadeOut");
         hotbar.isGrabbing = true;
         animator.SetTrigger("Grab");
         yield return new WaitForSeconds(1.5f);

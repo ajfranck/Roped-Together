@@ -21,6 +21,12 @@ TagManager:
   - wallLeader
   - wallFollower
   - WarmthBowl
+  - House
+  - warmthTutorial
+  - pickupTutorial
+  - TutorialFire
+  - miningTutorial
+  - consumableTutorial
   layers:
   - Default
   - TransparentFX

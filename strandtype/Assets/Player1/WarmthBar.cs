@@ -44,7 +44,7 @@ public class WarmthBar : MonoBehaviour
         
         if(P1currentWarmth > 0)
         {
-            loseWarmth(0.05f);
+            loseWarmth(0.02f);
         }    
 
         if(P1currentWarmth <= 0)
@@ -90,22 +90,22 @@ public class WarmthBar : MonoBehaviour
                 fire3 = true;
                 lastFire = 3;
             }
-            if(!isInteracting)
+            if(!other.gameObject.CompareTag("TutorialFire"))
             {
-                p1Interact.SetActive(true);
+                if(!isInteracting)
+                {
+                    p1Interact.SetActive(true);
+                }
+                if(Input.GetKey(KeyCode.E))
+                {
+                    isInteracting = true;
+                    p1Interact.SetActive(false);
+                }
+               if (Input.GetKey("space"))
+                {
+                    isInteracting = false;
+                }
             }
-            
-            if(Input.GetKey(KeyCode.E))
-            {
-                isInteracting = true;
-                p1Interact.SetActive(false);
-            }
-
-            if (Input.GetKey("space"))
-            {
-                isInteracting = false;
-            }
-
             if(P1currentWarmth <= P1MaxWarmth)
             {
                 P1currentWarmth += .75f;
@@ -135,7 +135,7 @@ public class WarmthBar : MonoBehaviour
         lastFire = data.lastFire;
         if(lastFire == 1)
         {
-            if(movementController.isPlayer1) transform.position = new Vector3(-15, 5, -13);
+            if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17); //-15, 5, -13
             else transform.position = new Vector3(30, -1, -14);
             Debug.Log("fire one");
             
@@ -143,6 +143,11 @@ public class WarmthBar : MonoBehaviour
         else if (lastFire == 2)
         {
             Debug.Log("fire two");
+        }
+        else
+        {
+            if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17);
+            else transform.position = new Vector3(30, -1, -14);
         }
     }
 

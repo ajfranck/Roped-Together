@@ -163,9 +163,9 @@ public class HotBar : MonoBehaviour
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);
+        if(other.gameObject.tag.Contains("Pickaxe")) other.gameObject.SetActive(false);
         isGrabbing = false;
     }
-
 
     private void OnTriggerExit(Collider other)
         {
@@ -187,6 +187,14 @@ public class HotBar : MonoBehaviour
         if (other.gameObject.CompareTag("RopeItem"))
         {
             HidePrompt(RopeItem);
+            pickedUp = false;
+            promptDisplayed = false;
+            hasGrabbed = false;
+        }
+
+        if (other.gameObject.CompareTag("WarmthBowl"))
+        {
+            HidePrompt(BowlItem);
             pickedUp = false;
             promptDisplayed = false;
             hasGrabbed = false;

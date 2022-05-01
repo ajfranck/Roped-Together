@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_FaderHDRP
+  m_Name: shader1
   m_Shader: {fileID: -6465566751694194690, guid: 72bbbf7d9106cf7418083fb3e442eb38, type: 3}
   m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT _ENABLE_FOG_ON_TRANSPARENT _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
@@ -101,7 +101,7 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 0
     m_Colors:
-    - Color_6361c46cba0e481db0e1bab8cb078055: {r: 0.38679248, g: 0.12224101, b: 0.12224101, a: 0}
+    - Color_6361c46cba0e481db0e1bab8cb078055: {r: 0.4509804, g: 0.3137255, b: 0.22352941, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

@@ -63,6 +63,7 @@ public class Mining : MonoBehaviour
     
     IEnumerator POGMINE(GameObject other)
     {
+        Hotbar.isGrabbing = true;
         HidePrompt();
         MiningPrompt();
         isMining = true;
@@ -82,6 +83,7 @@ public class Mining : MonoBehaviour
         HideMiningPrompt();
         isMining = false;
         hasMined = true;
+        Hotbar.isGrabbing = false;
     }
 
     void Explode(GameObject originalObject)
