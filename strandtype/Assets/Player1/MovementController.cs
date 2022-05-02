@@ -117,9 +117,18 @@ public class MovementController : MonoBehaviour
     }
 
     void FixedUpdate()
-    {           
+    {
 
-        handleAnimation();     
+        handleAnimation();
+        if (isPlayer1)
+        {
+            Debug.Log("player one wallbar climb is " + wallbar.FollowRope);
+        }
+
+        else
+        {
+            Debug.Log("player two wallbar climb is " + wallbar.FollowRope);
+        }
     }
 
     void onMovementInput(InputAction.CallbackContext Context)
@@ -335,13 +344,7 @@ public class MovementController : MonoBehaviour
             }
         }
 
-        if (other.gameObject.CompareTag("ledge"))
-        {
-            if(wallbar.ClimbRope || wallbar.FollowRope)
-            {
-                wallbar.onLedge = true;
-            }
-        }
+        
 
 
 
@@ -366,6 +369,16 @@ public class MovementController : MonoBehaviour
         if (other.CompareTag("Ladder"))
         {
             characterController.slopeLimit = 90f;
-        }       
+        }
+
+
+        if (other.gameObject.CompareTag("ledge"))
+        {
+            if (wallbar.ClimbRope || wallbar.FollowRope)
+            {
+                wallbar.onLedge = true;
+            }
+        }
+
     }
 }

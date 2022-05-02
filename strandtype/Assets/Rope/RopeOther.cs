@@ -22,6 +22,11 @@ public class RopeOther : MonoBehaviour
 	public GameObject[] pinnedBeforeFallList = new GameObject[100];
 
 
+	public GameObject ledgePrompt;
+	public GameObject p2ledgePrompt;
+
+
+
 	[SerializeField]
 	public GameObject TheBelt1;
 
@@ -34,8 +39,6 @@ public class RopeOther : MonoBehaviour
 
 	[SerializeField]
 	public GameObject P2TheBelt2;
-
-
 
 
 	[SerializeField]
@@ -157,7 +160,6 @@ public class RopeOther : MonoBehaviour
 
 	void RecoilOnFollow()
 	{
-
 		if(wallbarFollower.theFollowerAnchor != null)
         {
 			for(int i = pinnedList.Length-1; i > 0 ; i--)
@@ -215,6 +217,7 @@ public class RopeOther : MonoBehaviour
 
 	void HandleClimbing()
     {
+
 		if (wallbar.theAnchor != null)
 		{
 			distanceFromAnchor = GetDistanceFloat(theLeader.transform.position, wallbar.theAnchor.transform.position);
@@ -250,7 +253,40 @@ public class RopeOther : MonoBehaviour
 		{
 			RepinOnReattach();
 		}
+		
+		if(wallbar.onLedge && wallbarFollower.onLedge)
+        {
+			Debug.Log("both are on ledge");
+			//ledgePrompt.SetActive(true);
+			//p2ledgePrompt.SetActive(true);
+
+           // if (Input.GetKeyDown("e"))
+           // {
+				//SwitchClimberAndFollower();
+            //}
+		}
+
 	}
+
+	public void SwitchClimberAndFollower()
+    {
+		WallBar LeaderSwitch = wallbar;
+		WallBar FollowerSwitch = wallbarFollower;
+		wallbarFollower = LeaderSwitch;
+		wallbar = FollowerSwitch;
+
+		wallbarFollower.isFollower = false;
+		wallbarFollower.FollowRope = false;
+		wallbarFollower.ClimbRope = true;
+		wallbarFollower.isLeader = true;
+
+		wallbar.isLeader = false;
+		wallbar.ClimbRope = false;
+		wallbar.isFollower = true;
+		wallbar.FollowRope = true;
+		Debug.Log("Changes guys, wallbar isFollower " + wallbar.FollowRope + "wallbar follower is leader " + wallbarFollower.ClimbRope);
+	}
+
 	void RepinOnReattach()
     {
 		Debug.Log("runs fallcoil");
