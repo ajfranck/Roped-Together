@@ -39,7 +39,7 @@ public class TutorialManager : MonoBehaviour
         {
 
         }
-        if (other.gameObject.tag.Contains("miningTutorial"))
+        if (other.gameObject.tag.Contains("miningTutorial") || other.gameObject.tag.Contains("ladderTutorial"))
         {
             miningAnim.SetTrigger("FadeIn");
         }
@@ -47,6 +47,7 @@ public class TutorialManager : MonoBehaviour
         {
             consumeAnim.SetTrigger("FadeIn");
         }
+        
     }
 
     void OnTriggerExit(Collider other)
@@ -59,9 +60,13 @@ public class TutorialManager : MonoBehaviour
         {
             itemAnim.SetTrigger("FadeOut");
         }
-        if (other.gameObject.tag.Contains("miningTutorial"))
+        if (other.gameObject.tag.Contains("miningTutorial") || other.gameObject.tag.Contains("ladderTutorial"))
         {
             miningAnim.SetTrigger("FadeOut");
+        }
+        if (other.gameObject.tag.Contains("consumableTutorial"))
+        {
+            consumeAnim.SetTrigger("FadeOut");
         }
         
     }

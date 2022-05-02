@@ -29,6 +29,8 @@ TagManager:
   - consumableTutorial
   - ladderSpotRock
   - climbEnd
+  - ladderTutorial
+  - ladderClimbArea
   layers:
   - Default
   - TransparentFX

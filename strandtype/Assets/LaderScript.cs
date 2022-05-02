@@ -8,6 +8,8 @@ public class LaderScript : MonoBehaviour
 //GameObjects
     public GameObject LadderSegment;
     public GameObject LadderParent;
+    public GameObject ladderClimbPrompt;
+    public MovementController movementcontroller;
     Rigidbody LadderBody;
 //NumericalValues
     float SpawnDistance = 2;
@@ -15,12 +17,12 @@ public class LaderScript : MonoBehaviour
     int x = 0;
     int i = 0;
     int count = 0;
-    int MaxLength = 8;
+    int MaxLength = 9;
 //Bool
     bool FPressed = false;
     bool isWaiting = false;
 //Vector3
-    public Vector3 SpawnPosition;
+    public Vector3 SpawnPosition = new Vector3(35f, -2.5f, 19f);
     Vector3 NewPosition;
 
     void Start()
@@ -28,7 +30,8 @@ public class LaderScript : MonoBehaviour
         LadderParent = GameObject.FindGameObjectWithTag("ParentLadder");
         LadderBody = LadderParent.GetComponent<Rigidbody>();
     }
-
+    
+    /*
     public Vector3 PositionClass()
     {
         Vector3 playerDirection = this.transform.forward;
@@ -36,12 +39,16 @@ public class LaderScript : MonoBehaviour
         SpawnPosition.y = SpawnPosition.y + 3;
         return SpawnPosition;
     }
+    */
+    
     public Vector3 StackFunction(Vector3 Spawn, int count)
     {
         Vector3 NewPosition = Spawn;
         NewPosition.y = NewPosition.y + count;
         return NewPosition;
     }
+    
+    /*
     void Update()
     {
         if(i < MaxLength)
@@ -72,7 +79,7 @@ public class LaderScript : MonoBehaviour
                 LadderBody.useGravity = true;
                 LadderBody.isKinematic = false;
                 FPressed = true;
-                LadderBody.AddTorque(this.transform.right * (MaxLength * 20));
+                LadderBody.AddTorque(this.transform.right * (MaxLength * 100));
                 x++;
             }
             if(x==1 && Input.GetKeyDown("f") && FPressed == false)
@@ -87,10 +94,73 @@ public class LaderScript : MonoBehaviour
 
         //if(LadderBody.useGravity) //StartCoroutine(BeginDestruction());
     }
+    */
+    
 
     IEnumerator Waiter()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.05f);
         isWaiting = false;
+    }
+    IEnumerator Waiter2()
+    {
+        yield return new WaitForSeconds(3f);
+        LadderBody.isKinematic = true;
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject.tag.Contains("ladderClimbArea")) movementcontroller.characterController.slopeLimit = 90f;
+        if(other.gameObject.tag.Contains("ladderSpotRock"))
+        {
+            ladderClimbPrompt.SetActive(true);
+            //display a prompt
+            if(i < MaxLength)
+            {
+                if(Input.GetKey("space") && isWaiting == false)
+                {   
+                        isWaiting = true;
+                        if(i == 0)
+                        {
+                            SpawnPosition = SpawnPosition;//PositionClass();
+                            LadderParent.transform.position = this.transform.position + this.transform.forward * SpawnDistance;
+                            GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, Quaternion.Euler(0,0,0), LadderParent.transform);
+                            i++;
+                        }
+                        else
+                        {
+                            NewPosition = StackFunction(SpawnPosition, i);
+                            Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0,0,0), LadderParent.transform);
+                            i++;
+                        }    
+                        StartCoroutine(Waiter());
+                }
+            }
+            else
+            {
+                if(Input.GetKey("f") && x == 0 && FPressed == false)
+                {
+                    LadderBody.useGravity = true;
+                    LadderBody.isKinematic = false;
+                    FPressed = true;
+                    LadderBody.AddTorque(this.transform.right * (MaxLength * 75));
+                    x++;
+                }
+                else
+                {
+                    StartCoroutine(Waiter2());
+                    FPressed = false;
+                }
+            }
+
+            
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag.Contains("ladderClimbArea"))
+        {
+            movementcontroller.characterController.slopeLimit = 45f;
+        }
     }
 }

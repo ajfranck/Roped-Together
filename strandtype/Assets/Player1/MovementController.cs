@@ -49,11 +49,11 @@ public class MovementController : MonoBehaviour
     
     void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Ladder"))
+        if(other.gameObject.tag.Contains("ParentLadder"))
         {
             characterController.slopeLimit = 45f;
         }
-        climbPrompt.SetActive(false);
+        
     }
 
 
@@ -348,8 +348,9 @@ public class MovementController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ladder"))
+        if (other.gameObject.tag.Contains("ParentLadder"))
         {
+            climbPrompt.SetActive(false);
             characterController.slopeLimit = 90f;
         }
 
