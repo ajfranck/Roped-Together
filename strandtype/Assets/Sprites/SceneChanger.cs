@@ -5,7 +5,7 @@ public class SceneChanger : MonoBehaviour
 {
     public void NextScene()
     {
-        SceneManager.LoadScene("Main Scene");
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void QuitGame ()
