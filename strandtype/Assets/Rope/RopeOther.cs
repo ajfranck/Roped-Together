@@ -85,9 +85,10 @@ public class RopeOther : MonoBehaviour
 
 	public GameObject UnravelStartObject;
 	public Vector3 UnravelStartPosition;
+	public Vector3 RecoilStartPosition;
 	public int UnravelIndex; 
 	public int RecoilIndex;
-	public int RecoilAnchorIndex;
+	public int RecoilAnchorIndex = 0;
 	public float UnravelDistanceLet;
 	public float distanceFromAnchor;
 	public float followerDistanceFromAnchor;
@@ -101,6 +102,7 @@ public class RopeOther : MonoBehaviour
 	public bool hasReattached = false;
 	public bool pickedUp = false;
 	public bool UnraveledAtClimbStart = false;
+	public bool setRecoilStart = false;
 
 
 	public bool recoilBelt;
@@ -135,11 +137,15 @@ public class RopeOther : MonoBehaviour
 
 	void HandleFollowing()
     {
-		//Debug.Log("wallbar follower name " = wallbarFollower);
-		// wallbarFollower.FollowRope = true;
          if (wallbarFollower.FollowRope && wallbar.theAnchor != null)
          {
-			//Debug.Log("wallbar the anchor" + wallbar.theAnchor); 
+            if (!setRecoilStart)
+            {
+				RecoilStartPosition = theFollower.transform.position;
+				setRecoilStart = true; 
+            }
+			Debug.Log("wallBarFollower" + wallbarFollower.FollowRope);
+
 			RecoilOnFollow();
          }
     }
@@ -147,29 +153,33 @@ public class RopeOther : MonoBehaviour
 
 	void RecoilOnFollow()
 	{
-		if (wallbar.anchors[RecoilAnchorIndex-1].AnchorObject != null)
-		{
-			//pinnedList[RecoilIndex - 1] = P2TheBelt1;
-			//GameObject anchorToRecoil = wallbar.anchors[RecoilAnchorIndex-1].AnchorObject;
-			//followerDistanceFromAnchor = GetDistanceFloat(theFollower.transform.position, anchorToRecoil.transform.position);
-			//if (followerDistanceFromAnchor <= UnravelDistanceLet)
-			//{
-			//	if (recoilBelt)
-			//	{
-			//		pinnedList[RecoilIndex-1] = P2TheBelt1; // need a reference to each players belt automatically!
-				//	RecoilIndex -= whichToCoil1;
-				//	recoilBelt = false;
-			//	}
 
-			//	else if (!recoilBelt)
-				//{
-				//	pinnedList[RecoilIndex-1] = P2TheBelt2; ;
-				//	RecoilIndex -= whichToCoil1;
-				//	recoilBelt = true;
-				//}
-			//}
+		if (wallbar.anchors[0].AnchorObject != null)
+        {
+			pinnedList[RecoilIndex] = P2TheBelt1;
+        }
+
+		float DistanceFromOrigin = GetDistanceFloat(theFollower.transform.position, RecoilStartPosition);
+		if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet)
+		{
+			if (recoilBelt)
+			{
+				pinnedList[RecoilIndex] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT
+				RecoilIndex -= whichToCoil1;
+				recoilBelt = false;
+				RecoilStartPosition = theFollower.transform.position;
+				RecoilAnchorIndex++;
+			}
+
+			else if (!recoilBelt)
+			{
+				pinnedList[RecoilIndex] = P2TheBelt2; ;
+				RecoilIndex -= whichToCoil1;
+				recoilBelt = true;
+				RecoilStartPosition = theFollower.transform.position;
+				RecoilAnchorIndex++;
+			}
 		}
-		
 	}
 
 
@@ -268,7 +278,7 @@ public class RopeOther : MonoBehaviour
 			Debug.Log("UNRAVELS connect to anchor yes anchorpoint");
 			UnravelIndex -= whichToCoil1;
 			UnravelAction(distanceFromAnchor);
-			RecoilAnchorIndex += 1;
+			//RecoilAnchorIndex += 1;
 			//ConnectToAnchorAction();
 		}
 	}
@@ -560,6 +570,7 @@ public class RopeOther : MonoBehaviour
 				theLeader = other.gameObject;
 				wallbar = theLeader.GetComponent<WallBar>();
 				pickedUp = true;
+				wallbar.isLeader = true;
 				GameObject[] FindFollower = GameObject.FindGameObjectsWithTag("Player");
 				foreach(GameObject o in FindFollower)
                 {
@@ -567,6 +578,7 @@ public class RopeOther : MonoBehaviour
                     {
 						theFollower = o;
 						wallbarFollower = theFollower.GetComponent<WallBar>();
+						wallbarFollower.isFollower = true;
                     }
                 }
 				Debug.Log("climber leader is " + theLeader.name);

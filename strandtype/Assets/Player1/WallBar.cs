@@ -8,6 +8,8 @@ public class WallBar : MonoBehaviour
 
     public bool ClimbRope;
     public bool FollowRope = false;
+    public bool isLeader;
+    public bool isFollower;
     public bool toAnchor;
     // Start is called before the first frame update
 
