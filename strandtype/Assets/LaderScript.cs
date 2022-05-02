@@ -112,11 +112,13 @@ public class LaderScript : MonoBehaviour
     }
     IEnumerator Waiter2()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         LadderBody2.isKinematic = true;
         i = 0;
         x = 0;
         count = 0;
+        //holdingLadder = false;
+        duplicated = false;
     }
     IEnumerator BeginDestruction()
     {
@@ -196,11 +198,11 @@ public class LaderScript : MonoBehaviour
 
             if(other.gameObject.tag.Contains("ladderSpotBridge"))
             {
-                if (holdingLadder && !duplicated2)
+                if (holdingLadder && !duplicated)
                 {
                     ladderClimbPrompt.SetActive(true);
                     LadderParent2 = Instantiate(LadderParent);
-                    duplicated2 = true;
+                    duplicated = true;
                     LadderBody2 = LadderParent2.GetComponent<Rigidbody>();
 
                     
@@ -232,7 +234,6 @@ public class LaderScript : MonoBehaviour
                 {
                     if (Input.GetKey("f") && x == 0 && FPressed == false)
                     {
-                        Debug.Log("weiner weiner weiner weiner ");
                         LadderBody2.useGravity = true;
                         LadderBody2.isKinematic = false;
                         FPressed = true;
