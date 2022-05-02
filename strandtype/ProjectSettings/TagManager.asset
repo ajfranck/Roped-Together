@@ -28,6 +28,7 @@ TagManager:
   - miningTutorial
   - consumableTutorial
   - ladderSpotRock
+  - climbEnd
   layers:
   - Default
   - TransparentFX

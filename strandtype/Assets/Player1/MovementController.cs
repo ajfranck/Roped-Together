@@ -21,11 +21,17 @@ public class MovementController : MonoBehaviour
 
     public Vector3 currentMovement;
 
+    public Vector3 zero = new Vector3(0f, 0f, 0f);
+
     public GameObject climbPrompt;
+    public GameObject endClimbPrompt;
+
 
     Vector3 ropeMovement;
 
     bool movementPressed;
+
+    public GameObject thePlayer;
 
     float rotationFactor = 10f;
 
@@ -39,15 +45,8 @@ public class MovementController : MonoBehaviour
     public HotBar hotbar;
 
     public bool isPlayer1;
-
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Ladder"))
-        {
-            characterController.slopeLimit = 90f;
-        }
-
-    }
+    public bool isEndingClimb = false;
+    
     void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Ladder"))
@@ -93,7 +92,14 @@ public class MovementController : MonoBehaviour
     void Update()
     {
         Debug.Log("current gravity is " );
-        if (wallbar.ClimbRope) 
+        Debug.Log("put at " + this.transform.position);
+        if (wallbar.FollowRope)
+        {
+            Debug.Log("Update followrope " + wallbar.FollowRope);
+            characterController.Move(currentMovement * Time.deltaTime * 2f);
+        }
+
+        else if (wallbar.ClimbRope) 
         {
             characterController.Move(currentMovement * Time.deltaTime);
         }    
@@ -111,7 +117,7 @@ public class MovementController : MonoBehaviour
         {
             OnDisable();
         }
-        else
+        else if(!isEndingClimb)
         {
             OnEnable();
         }
@@ -125,11 +131,17 @@ public class MovementController : MonoBehaviour
 
     void onMovementInput(InputAction.CallbackContext Context)
     {
-        if (wallbar.ClimbRope)
+        Debug.Log("Movement thinks " + wallbar.FollowRope);
+        if (wallbar.FollowRope)
+        {
+            FollowRopeMove(Context);
+        }
+
+        else if (wallbar.ClimbRope)
         {
             RopeMove(Context);
         }
-        else 
+        else if(!isEndingClimb)
         {
             DefaultMove(Context);
         }
@@ -150,9 +162,25 @@ public class MovementController : MonoBehaviour
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x;
         currentMovement.y = currentMovementInput.y;
+        currentMovement.z = 0f;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
         if(Input.GetKey("s") && characterController.isGrounded)
+        {
+            wallbar.ClimbRope = false;
+        }
+    }
+
+    void FollowRopeMove(InputAction.CallbackContext context)
+    {
+        Debug.Log("FollowRope runs");
+        currentMovementInput = context.ReadValue<Vector2>();
+        currentMovement.x = currentMovementInput.x;
+        currentMovement.y = currentMovementInput.y;
+        currentMovement.z = 0f;
+        movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
+
+        if (Input.GetKey("s") && characterController.isGrounded)
         {
             wallbar.ClimbRope = false;
         }
@@ -211,7 +239,8 @@ public class MovementController : MonoBehaviour
     {
         if(isPlayer1) playerInput.CharacterController.Enable();
         else player2Input.CharacterController.Enable();
-        
+        Debug.Log("ONENABLE");
+
     }
 
 
@@ -219,6 +248,7 @@ public class MovementController : MonoBehaviour
     {
         if(isPlayer1) playerInput.CharacterController.Disable();
         else player2Input.CharacterController.Disable();
+        Debug.Log("ONDISABLE");
     }
 
     void RopeRotation()
@@ -258,12 +288,13 @@ public class MovementController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("wallLeader"))// && Input.GetKey("v"))
+        if (other.gameObject.CompareTag("wallLeader") && wallbar.isLeader)// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
-            Debug.Log("wallbar. climbrope is " + wallbar.ClimbRope);
+            
             if(Input.GetKey("e") && !wallbar.ClimbRope)
             {
+                Debug.Log("starts leading");
                 Debug.Log("wallLeader");
                 if (wallbar.isFalling) 
                 {
@@ -273,19 +304,55 @@ public class MovementController : MonoBehaviour
                 climbPrompt.SetActive(false);
                 currentMovement = new Vector3(0f, 0f, 0f);
                 wallbar.isFalling = false;
-                other.gameObject.SetActive(false);
+               // other.gameObject.SetActive(false);
             }
             if(wallbar.ClimbRope) climbPrompt.SetActive(false);        
         }
 
-        if (other.gameObject.CompareTag("wallFollower"))
+        if (other.gameObject.CompareTag("wallFollower") && wallbar.isFollower)
         {
+            
             climbPrompt.SetActive(true);
-            if (Input.GetKey("e") && !wallbar.ClimbRope)
+            if (Input.GetKey("e") && !wallbar.FollowRope)
             {
+                Debug.Log("Starts following");
                 wallbar.FollowRope = true;
+                climbPrompt.SetActive(false);
+                currentMovement = new Vector3(0f, 0f, 0f);
+                wallbar.isFalling = false;
+                
+            }
+            if (wallbar.FollowRope) climbPrompt.SetActive(false);
+        }
+
+        if (other.gameObject.CompareTag("climbEnd"))
+        {
+            endClimbPrompt.SetActive(true);
+            if (Input.GetKey("e") && wallbar.ClimbRope)
+            {
+                characterController.enabled = false;
+                wallbar.ClimbRope = false;
+                wallbar.isFalling = false;
+                wallbar.FollowRope = false;
+                GameObject endClimber = other.gameObject;
+                //currentMovement = new Vector3(0f, 0f, 0f);
+                this.transform.position = endClimber.transform.position;
+                Debug.Log("Should be transported to " + endClimber.transform.position);
+                endClimbPrompt.SetActive(false);
+                characterController.enabled = true;
             }
         }
-        if (wallbar.ClimbRope) climbPrompt.SetActive(false);
+    }
+
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            characterController.slopeLimit = 90f;
+        }
+
+       
     }
 }
