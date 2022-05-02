@@ -21,6 +21,7 @@ TagManager:
   - wallLeader
   - wallFollower
   - climbEnd
+  - ledge
   layers:
   - Default
   - TransparentFX

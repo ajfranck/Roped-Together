@@ -47,14 +47,7 @@ public class MovementController : MonoBehaviour
     public bool isPlayer1;
     public bool isEndingClimb = false;
     
-    void OnTriggerExit(Collider other)
-    {
-        if(other.CompareTag("Ladder"))
-        {
-            characterController.slopeLimit = 45f;
-        }
-        climbPrompt.SetActive(false);
-    }
+    
 
 
 
@@ -328,31 +321,51 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("climbEnd"))
         {
             endClimbPrompt.SetActive(true);
-            if (Input.GetKey("e") && wallbar.ClimbRope)
+            if (Input.GetKey("e") && (wallbar.ClimbRope || wallbar.FollowRope))
             {
                 characterController.enabled = false;
                 wallbar.ClimbRope = false;
                 wallbar.isFalling = false;
                 wallbar.FollowRope = false;
                 GameObject endClimber = other.gameObject;
-                //currentMovement = new Vector3(0f, 0f, 0f);
                 this.transform.position = endClimber.transform.position;
                 Debug.Log("Should be transported to " + endClimber.transform.position);
                 endClimbPrompt.SetActive(false);
                 characterController.enabled = true;
             }
         }
+
+        if (other.gameObject.CompareTag("ledge"))
+        {
+            if(wallbar.ClimbRope || wallbar.FollowRope)
+            {
+                wallbar.onLedge = true;
+            }
+        }
+
+
+
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            characterController.slopeLimit = 45f;
+        }
+        climbPrompt.SetActive(false);
 
+        if (other.gameObject.CompareTag("ledge"))
+        {
+            wallbar.onLedge = false;
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ladder"))
         {
             characterController.slopeLimit = 90f;
-        }
-
-       
+        }       
     }
 }

@@ -88,7 +88,7 @@ public class RopeOther : MonoBehaviour
 	public Vector3 RecoilStartPosition;
 	public int UnravelIndex; 
 	public int RecoilIndex;
-	public int RecoilAnchorIndex = 0;
+	//public int RecoilAnchorIndex = 0;
 	public float UnravelDistanceLet;
 	public float distanceFromAnchor;
 	public float followerDistanceFromAnchor;
@@ -146,7 +146,11 @@ public class RopeOther : MonoBehaviour
             }
 			Debug.Log("wallBarFollower" + wallbarFollower.FollowRope);
 
-			RecoilOnFollow();
+			if (wallbarFollower.hitAnchorFollower)
+			{
+				RecoilOnFollow();
+				wallbarFollower.hitAnchorFollower = false;
+			}
          }
     }
 
@@ -154,32 +158,32 @@ public class RopeOther : MonoBehaviour
 	void RecoilOnFollow()
 	{
 
-		if (wallbar.anchors[0].AnchorObject != null)
+		if(wallbarFollower.theFollowerAnchor != null)
         {
-			pinnedList[RecoilIndex] = P2TheBelt1;
+			for(int i = pinnedList.Length-1; i > 0 ; i--)
+            {
+				if (pinnedList[i] != null && wallbarFollower.theFollowerAnchor == pinnedList[i])
+                {
+					Debug.Log("pinned list at position " + i + "is " + pinnedList[i] + "wallbarFollower i is " + wallbarFollower.theFollowerAnchor);
+					for(int ii = i; ii < pinnedList.Length; ii+=whichToCoil1)
+                    {
+						if (recoilBelt)
+						{
+							pinnedList[ii] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT
+							recoilBelt = false;
+						}
+
+						else if (!recoilBelt)
+						{
+							pinnedList[ii] = P2TheBelt2;
+							recoilBelt = true;
+						}
+					}
+                }
+            }
         }
 
-		float DistanceFromOrigin = GetDistanceFloat(theFollower.transform.position, RecoilStartPosition);
-		if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet)
-		{
-			if (recoilBelt)
-			{
-				pinnedList[RecoilIndex] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT
-				RecoilIndex -= whichToCoil1;
-				recoilBelt = false;
-				RecoilStartPosition = theFollower.transform.position;
-				RecoilAnchorIndex++;
-			}
-
-			else if (!recoilBelt)
-			{
-				pinnedList[RecoilIndex] = P2TheBelt2; ;
-				RecoilIndex -= whichToCoil1;
-				recoilBelt = true;
-				RecoilStartPosition = theFollower.transform.position;
-				RecoilAnchorIndex++;
-			}
-		}
+		
 	}
 
 
@@ -582,8 +586,7 @@ public class RopeOther : MonoBehaviour
                     }
                 }
 				Debug.Log("climber leader is " + theLeader.name);
-				Debug.Log("climber follower is " + theFollower.name);
-					
+				Debug.Log("climber follower is " + theFollower.name);					
 			}		
 		}
 	}
