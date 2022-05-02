@@ -78,20 +78,21 @@ public class WarmthBar : MonoBehaviour
             if(other.gameObject.CompareTag("Fire1"))
             {
                 fire1 = true;
-                lastFire = 1;
+                lastFire = 2;
             }
             else if(other.gameObject.CompareTag("Fire2"))
             {
                 fire2 = true;
-                lastFire = 2;
+                lastFire = 3;
             }
             else if(other.gameObject.CompareTag("Fire3"))
             {
                 fire3 = true;
-                lastFire = 3;
+                lastFire = 4;
             }
             if(!other.gameObject.CompareTag("TutorialFire"))
             {
+                lastFire = 1;
                 if(!isInteracting)
                 {
                     p1Interact.SetActive(true);
@@ -136,9 +137,8 @@ public class WarmthBar : MonoBehaviour
         if(lastFire == 1)
         {
             if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17); //-15, 5, -13
-            else transform.position = new Vector3(30, -1, -14);
-            Debug.Log("fire one");
-            
+            else transform.position = new Vector3(45, -2, -17);
+            Debug.Log("fire one");  
         }
         else if (lastFire == 2)
         {
@@ -147,7 +147,7 @@ public class WarmthBar : MonoBehaviour
         else
         {
             if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17);
-            else transform.position = new Vector3(30, -1, -14);
+            else transform.position = new Vector3(45, -2, -17);
         }
     }
 
