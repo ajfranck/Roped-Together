@@ -49,6 +49,10 @@ public class HotBar : MonoBehaviour
 
     public  List<GameObject> P1BackpackBackgroundsList = new List<GameObject>();
 
+
+
+
+
     public List<GameObject> P2BackpackSpritesList = new List<GameObject>();
 
 
@@ -190,7 +194,7 @@ public class HotBar : MonoBehaviour
             {
                  StaticBackPack.BackpackList.Add(null);
                  StaticBackPack.P1BackpackBackgroundsList.Add(null);
-
+             
                  StaticBackPack.P1BackpackSpritesList = P1BackpackSpritesList;
                  StaticBackPack.P1BackpackBackgroundsList = P1BackpackBackgroundsList;
                  HotBars.HotBarBackgroundsListP1 = HotBarBackgroundsListP1;   
@@ -245,7 +249,7 @@ public class HotBar : MonoBehaviour
         {
             //sets backpack to hotbar
             StaticBackPack.BackpackList[BackpackPosition] = HotBars.HotBarListP1[HotBars.HotBarPositionP1];
-          
+            
             
             Debug.Log("Backpack at position " + BackpackPosition + "is: " + StaticBackPack.BackpackList[BackpackPosition]);
 

@@ -25,20 +25,29 @@ public class RopeOther : MonoBehaviour
 	public GameObject ledgePrompt;
 	public GameObject p2ledgePrompt;
 
-
-
 	[SerializeField]
-	public GameObject TheBelt1;
-
+	public GameObject P1DragInBelt1;
 	[SerializeField]
-	public GameObject TheBelt2;
-
-
+	public GameObject P1DragInBelt2;
 	[SerializeField]
-	public GameObject P2TheBelt1;
-
+	public GameObject P2DragInBelt1;
 	[SerializeField]
-	public GameObject P2TheBelt2;
+	public GameObject P2DragInBelt2;
+
+
+
+	[HideInInspector]
+	public GameObject TheBelt1 = null;
+
+	[HideInInspector]
+	public GameObject TheBelt2 = null;
+
+
+	[HideInInspector]
+	public GameObject P2TheBelt1 = null;
+
+	[HideInInspector]
+	public GameObject P2TheBelt2 = null;
 
 
 	[SerializeField]
@@ -130,6 +139,7 @@ public class RopeOther : MonoBehaviour
 		{
 			Simulate();
 		}
+
 		DrawSticks();
 		if (pickedUp)
 		{
@@ -183,9 +193,7 @@ public class RopeOther : MonoBehaviour
 					}
                 }
             }
-        }
-
-		
+        }	
 	}
 
 
@@ -621,6 +629,21 @@ public class RopeOther : MonoBehaviour
 						wallbarFollower.isFollower = true;
                     }
                 }
+
+				if(theLeader.name == "Player1 Animated")
+                {
+					TheBelt1 = P1DragInBelt1;
+					TheBelt2 = P1DragInBelt2;
+					P2TheBelt1 = P2DragInBelt1;
+					P2TheBelt2 = P2DragInBelt2;
+                }
+                else
+                {
+					TheBelt1 = P2DragInBelt1;
+					TheBelt2 = P2DragInBelt2;
+					P2TheBelt1 = P1DragInBelt1;
+					P2TheBelt2 = P1DragInBelt2;
+				}
 				Debug.Log("climber leader is " + theLeader.name);
 				Debug.Log("climber follower is " + theFollower.name);					
 			}		
