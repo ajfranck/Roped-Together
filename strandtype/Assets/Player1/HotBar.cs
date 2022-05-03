@@ -12,6 +12,7 @@ public class HotBar : MonoBehaviour
     public Item CubeItem;
     public Item RopeItem;
     public Item BowlItem;
+    public Item LadderItem;
     
     private Animator animator;
     public bool isGrabbing = false;
@@ -214,7 +215,7 @@ public class HotBar : MonoBehaviour
                 HotBars.HotBarBackgroundsListP2.Add(null);
             }
 
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 12; i++)
             {
                  StaticBackPack.BackpackList.Add(null);
                  StaticBackPack.P1BackpackBackgroundsList.Add(null);
@@ -233,7 +234,7 @@ public class HotBar : MonoBehaviour
 
                  
                  Debug.Log(StaticBackPack.P1BackpackSpritesList[i]);
-                 Debug.Log(StaticBackPack.P2BackpackSpritesList[i]);    
+                 Debug.Log("among us lol " + StaticBackPack.P2BackpackSpritesList[i]);    
 
             }
 

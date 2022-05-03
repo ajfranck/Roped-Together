@@ -12,7 +12,8 @@ public class P2HotBar : MonoBehaviour
     public Item CubeItem;
     public Item RopeItem;
     public Item BowlItem;
-    
+    public Item LadderItem;
+
     private Animator animator;
     public bool isGrabbing = false;
 
@@ -67,7 +68,7 @@ public class P2HotBar : MonoBehaviour
 
     void Update()
     {
-        
+        //Debug.Log("testing 12345 " + HotBars.HotBarListP2[HotBars.HotBarPositionP2].name);
         HandleHotBar();
 
         if (warmthbar.isInteracting)
@@ -149,6 +150,20 @@ public class P2HotBar : MonoBehaviour
             }
 
         }
+        if (other.gameObject.tag.Contains("LadderItem"))
+        {  
+
+            if (!promptDisplayed && !hasGrabbed)
+            {
+                DisplayPrompt(LadderItem);
+            }
+
+            if (Input.GetKey("e") && !pickedUp)
+            {
+                StartCoroutine(PickUp(LadderItem, other));
+            }
+
+        }
     }
 
     IEnumerator PickUp(Item item, Collider other)
@@ -163,7 +178,7 @@ public class P2HotBar : MonoBehaviour
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);
-        if(other.gameObject.tag.Contains("Pickaxe")) other.gameObject.SetActive(false);
+        if(other.gameObject.tag.Contains("Pickaxe") && other.gameObject.tag.Contains("Bowl")) other.gameObject.SetActive(false);
         isGrabbing = false;
     }
 
@@ -391,13 +406,13 @@ public class P2HotBar : MonoBehaviour
             if (Input.GetKeyDown("e"))
             {
 
-                if (HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
+                if (HotBars.HotBarListP2[HotBars.HotBarPositionP2] == null)
                 {
                     Debug.Log("Nothing in this hotbar position");
                 }
                 else
                 {
-                    HotBars.HotBarListP1[HotBars.HotBarPositionP1].CallFunction();
+                    HotBars.HotBarListP2[HotBars.HotBarPositionP2].CallFunction();
                 }
             }
 

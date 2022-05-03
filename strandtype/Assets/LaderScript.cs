@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class LaderScript : MonoBehaviour
@@ -12,6 +13,11 @@ public class LaderScript : MonoBehaviour
     Rigidbody LadderBody2;
     public GameObject ladderClimbPrompt;
     public MovementController movementcontroller;
+    public Mining mining;
+    public WarmthBar warmthbar;
+
+    public P2HotBar p2hotbar;
+
     Rigidbody LadderBody;
 //NumericalValues
     float SpawnDistance = 2;
@@ -26,7 +32,7 @@ public class LaderScript : MonoBehaviour
     bool duplicated = false;
     bool duplicated2 = false;
 //Vector3
-    public Vector3 SpawnPosition = new Vector3(35f, -2.5f, 19f);
+    private Vector3 SpawnPosition = new Vector3(35f, -2.5f, 19f);
     private Vector3 SpawnPositionBridge = new Vector3(8f, 4.7f, 35.8f);
     Vector3 NewPosition;
 
@@ -119,6 +125,8 @@ public class LaderScript : MonoBehaviour
         count = 0;
         //holdingLadder = false;
         duplicated = false;
+        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
+        p2hotbar.HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = p2hotbar.BackgroundImage.GetComponent<Image>().sprite;
     }
     IEnumerator Waiter3()
     {
@@ -129,6 +137,8 @@ public class LaderScript : MonoBehaviour
         count = 0;
         //holdingLadder = false;
         duplicated = false;
+        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
+        p2hotbar.HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = p2hotbar.BackgroundImage.GetComponent<Image>().sprite;
     }
     IEnumerator BeginDestruction()
     {
@@ -153,88 +163,37 @@ public class LaderScript : MonoBehaviour
     {
         if(other.gameObject.tag.Contains("ladderClimbArea")) movementcontroller.characterController.slopeLimit = 90f;
 
-        if(other.gameObject.tag.Contains("ladderSpotRock"))
+        ////THESE NEED TO BE P1 IN OTHER SCRIPT
+        if(HotBars.HotBarListP2[HotBars.HotBarPositionP2].name != null && HotBars.HotBarListP2[HotBars.HotBarPositionP2].name == "LadderItem" && !mining.isMining && !warmthbar.isInteracting)
         {
-            if(holdingLadder && !duplicated)
+            if(other.gameObject.tag.Contains("ladderSpotRock"))
             {
-                LadderParent2 = Instantiate(LadderParent);
-                duplicated = true;
-                LadderBody2 = LadderParent2.GetComponent<Rigidbody>(); 
-            }
-
-
-            ladderClimbPrompt.SetActive(true);
-            //display a prompt
-            if (i < MaxLength && holdingLadder)
-            {
-                if (Input.GetKey("space") && isWaiting == false)
+                if(holdingLadder && !duplicated)
                 {
-                    isWaiting = true;
-                    if (i == 0)
-                    {
-                        SpawnPosition = SpawnPosition;//PositionClass();
-                        LadderParent2.transform.position = this.transform.position + this.transform.forward * SpawnDistance;
-                        GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, Quaternion.Euler(0, 0, 0), LadderParent2.transform);
-                        i++;
-                    }
-                    else
-                    {
-                        NewPosition = StackFunction(SpawnPosition, i);
-                        Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 0, 0), LadderParent2.transform);
-                        i++;
-                    }
-                    StartCoroutine(Waiter());
-                }
-            }
-            else
-            {
-                if (Input.GetKey("f") && x == 0 && FPressed == false)
-                {
-                    LadderBody2.useGravity = true;
-                    LadderBody2.isKinematic = false;
-                    FPressed = true;
-                    LadderBody2.AddTorque(this.transform.right * (MaxLength * 75));
-                    x++;
-                }
-                else
-                {
-                    StartCoroutine(Waiter3());
-                    //StartCoroutine(BeginDestruction());
-                    FPressed = false;
-                }
-            }
-        }
-
-
-            if(other.gameObject.tag.Contains("ladderSpotBridge"))
-            {
-                if (holdingLadder && !duplicated)
-                {
-                    ladderClimbPrompt.SetActive(true);
                     LadderParent2 = Instantiate(LadderParent);
                     duplicated = true;
-                    LadderBody2 = LadderParent2.GetComponent<Rigidbody>();
-
-                    
+                    LadderBody2 = LadderParent2.GetComponent<Rigidbody>(); 
                 }
 
+
+                ladderClimbPrompt.SetActive(true);
                 //display a prompt
-                if (i < MaxLength + 4 && holdingLadder)
+                if (i < MaxLength && holdingLadder)
                 {
                     if (Input.GetKey("space") && isWaiting == false)
                     {
                         isWaiting = true;
                         if (i == 0)
                         {
-                            SpawnPosition = SpawnPositionBridge;//PositionClass();
+                            SpawnPosition = SpawnPosition;//PositionClass();
                             LadderParent2.transform.position = this.transform.position + this.transform.forward * SpawnDistance;
-                            GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                            GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, Quaternion.Euler(0, 0, 0), LadderParent2.transform);
                             i++;
                         }
                         else
                         {
                             NewPosition = StackFunction(SpawnPosition, i);
-                            Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                            Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 0, 0), LadderParent2.transform);
                             i++;
                         }
                         StartCoroutine(Waiter());
@@ -252,13 +211,69 @@ public class LaderScript : MonoBehaviour
                     }
                     else
                     {
-                        StartCoroutine(Waiter2());
-                        //StartCoroutine(BeginDestruction2());
+                        StartCoroutine(Waiter3());
+                        //StartCoroutine(BeginDestruction());
                         FPressed = false;
                     }
                 }
+            }
 
+
+                if(other.gameObject.tag.Contains("ladderSpotBridge"))
+                {
+                    if (holdingLadder && !duplicated)
+                    {
+                        ladderClimbPrompt.SetActive(true);
+                        LadderParent2 = Instantiate(LadderParent);
+                        duplicated = true;
+                        LadderBody2 = LadderParent2.GetComponent<Rigidbody>();
+
+                        
+                    }
+
+                    //display a prompt
+                    if (i < MaxLength + 4 && holdingLadder)
+                    {
+                        if (Input.GetKey("space") && isWaiting == false)
+                        {
+                            isWaiting = true;
+                            if (i == 0)
+                            {
+                                SpawnPosition = SpawnPositionBridge;//PositionClass();
+                                LadderParent2.transform.position = this.transform.position + this.transform.forward * SpawnDistance;
+                                GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                                i++;
+                            }
+                            else
+                            {
+                                NewPosition = StackFunction(SpawnPosition, i);
+                                Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                                i++;
+                            }
+                            StartCoroutine(Waiter());
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKey("f") && x == 0 && FPressed == false)
+                        {
+                            LadderBody2.useGravity = true;
+                            LadderBody2.isKinematic = false;
+                            FPressed = true;
+                            LadderBody2.AddTorque(this.transform.right * (MaxLength * 75));
+                            x++;
+                        }
+                        else
+                        {
+                            StartCoroutine(Waiter2());
+                            //StartCoroutine(BeginDestruction2());
+                            FPressed = false;
+                        }
+                    }
+
+            }
         }
+        
         
     }
 
@@ -267,6 +282,7 @@ public class LaderScript : MonoBehaviour
         if(other.gameObject.tag.Contains("ladderClimbArea"))
         {
             movementcontroller.characterController.slopeLimit = 45f;
+            ladderClimbPrompt.SetActive(false);
            // duplicated = false;
         }
     }
