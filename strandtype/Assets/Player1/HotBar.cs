@@ -47,8 +47,10 @@ public class HotBar : MonoBehaviour
     public List<GameObject> P1BackpackSpritesList = new List<GameObject>();
 
     public List<GameObject> HotBarBackgroundsListP1 = new List<GameObject>();
+    public List<GameObject> HotBarBackgroundsListP2 = new List<GameObject>();
 
     public  List<GameObject> P1BackpackBackgroundsList = new List<GameObject>();
+    public  List<GameObject> P2BackpackBackgroundsList = new List<GameObject>();
 
     public List<GameObject> P2BackpackSpritesList = new List<GameObject>();
 
@@ -208,6 +210,8 @@ public class HotBar : MonoBehaviour
             {
                 HotBars.HotBarListP1.Add(null);
                 HotBars.HotBarBackgroundsListP1.Add(null);
+                HotBars.HotBarListP2.Add(null);
+                HotBars.HotBarBackgroundsListP2.Add(null);
             }
 
             for (int i = 0; i < 11; i++)
@@ -219,8 +223,13 @@ public class HotBar : MonoBehaviour
                  StaticBackPack.P1BackpackBackgroundsList = P1BackpackBackgroundsList;
                  HotBars.HotBarBackgroundsListP1 = HotBarBackgroundsListP1;   
 
-                    
+
+                 StaticBackPack.BackpackList.Add(null);
+                 StaticBackPack.P2BackpackBackgroundsList.Add(null);
+
                  StaticBackPack.P2BackpackSpritesList = P2BackpackSpritesList;
+                 StaticBackPack.P2BackpackBackgroundsList = P2BackpackBackgroundsList;
+                 HotBars.HotBarBackgroundsListP2 = HotBarBackgroundsListP2;   
 
                  
                  Debug.Log(StaticBackPack.P1BackpackSpritesList[i]);
@@ -371,12 +380,16 @@ public class HotBar : MonoBehaviour
 
         private void BackgroundSelect(int amountToAdd)
         {
-            int oldPosition = BackpackPosition;                     
-            StaticBackPack.P1BackpackBackgroundsList[oldPosition].SetActive(false);
+            int oldPosition = BackpackPosition;            
+            StaticBackPack.P1BackpackBackgroundsList[oldPosition].SetActive(false);         
+            StaticBackPack.P2BackpackBackgroundsList[oldPosition].SetActive(false);
+
             Debug.Log("old backpack spot " + BackpackPosition);
             BackpackPosition = oldPosition+amountToAdd;
             Debug.Log("new backpack spot " + BackpackPosition);
+
             StaticBackPack.P1BackpackBackgroundsList[BackpackPosition].SetActive(true);
+            StaticBackPack.P2BackpackBackgroundsList[BackpackPosition].SetActive(true);
            
         }
         

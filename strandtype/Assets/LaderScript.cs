@@ -112,7 +112,17 @@ public class LaderScript : MonoBehaviour
     }
     IEnumerator Waiter2()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
+        LadderBody2.isKinematic = true;
+        i = 0;
+        x = 0;
+        count = 0;
+        //holdingLadder = false;
+        duplicated = false;
+    }
+    IEnumerator Waiter3()
+    {
+        yield return new WaitForSeconds(1.5f);
         LadderBody2.isKinematic = true;
         i = 0;
         x = 0;
@@ -188,7 +198,7 @@ public class LaderScript : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(Waiter2());
+                    StartCoroutine(Waiter3());
                     //StartCoroutine(BeginDestruction());
                     FPressed = false;
                 }
