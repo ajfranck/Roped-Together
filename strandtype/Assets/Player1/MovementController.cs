@@ -46,15 +46,7 @@ public class MovementController : MonoBehaviour
 
     public bool isPlayer1;
     public bool isEndingClimb = false;
-    
-    void OnTriggerExit(Collider other)
-    {
-        if(other.gameObject.tag.Contains("ParentLadder"))
-        {
-            characterController.slopeLimit = 45f;
-        }
-        
-    }
+
 
 
 
@@ -368,6 +360,11 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("ledge"))
         {
             wallbar.onLedge = false;
+        }
+
+        if (other.gameObject.tag.Contains("ParentLadder"))
+        {
+            characterController.slopeLimit = 45f;
         }
     }
 
