@@ -30,9 +30,14 @@ public class WallBar : MonoBehaviour
     public LineRenderer ropeLines;
     public GameObject theAnchor;
 
+    public GameObject theFollowerAnchor;
+
     public int RecoilAnchorIndex;
     public GameObject ConnectorObject;
+
     public bool dontAnchor;
+    public bool hitAnchorFollower = false;
+    public bool onLedge = false;
     public List<Anchor> anchors = new List<Anchor>();
 
 
@@ -47,21 +52,24 @@ public class WallBar : MonoBehaviour
 
     void Update()
     {
-
-        Debug.Log("Grip " + grip);
-        Debug.Log("Grip movement" + movementController.currentMovement.magnitude);
-        Debug.Log("ClimbRope " + ClimbRope);
         if (ClimbRope)
         {
             //GRIP LOSS LEVEL
             if (movementController.currentMovement.magnitude < 1f)
             {
                 Debug.Log("Grip minusing");
-                grip -= 0.5f;
+                if (!onLedge)
+                {
+                    grip -= 0.5f;
+                }
+             
             }
             else
             {
-              //  loseStamina(.1f);
+                if (!onLedge)
+                {
+                    loseStamina(.05f);
+                }
                 grip += 0.7f;
             }
 
@@ -82,7 +90,11 @@ public class WallBar : MonoBehaviour
 
         if (FollowRope)
         {
-            loseStamina(0.05f);
+            Debug.Log("LOSING STAMINA FOLLOW " + P1currentStamina);
+            if (!onLedge)
+            {
+                loseStamina(0.1f);
+            }
             
             if(P1currentStamina <= 0f)
             {
@@ -189,6 +201,13 @@ public class WallBar : MonoBehaviour
                 dontAnchor = false;
             }
 
+            if (FollowRope)
+            {
+                hitAnchorFollower = true;
+                theFollowerAnchor = other.gameObject;                
+            }
+
+
         }
     }
 
@@ -200,12 +219,13 @@ public class WallBar : MonoBehaviour
     {
         if (other.gameObject.CompareTag("wallLeader") && Input.GetKey("v"))
         {
-            ClimbRope = true;
-            
+            ClimbRope = true;           
         }
 
-
     }
+
+
+    
 }
 
 

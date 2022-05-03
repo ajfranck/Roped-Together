@@ -33,6 +33,7 @@ TagManager:
   - ladderClimbArea
   - ladderSpotBridge
   - LadderItem
+  - ledge
   layers:
   - Default
   - TransparentFX

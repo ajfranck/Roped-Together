@@ -22,20 +22,32 @@ public class RopeOther : MonoBehaviour
 	public GameObject[] pinnedBeforeFallList = new GameObject[100];
 
 
-	[SerializeField]
-	public GameObject TheBelt1;
+	public GameObject ledgePrompt;
+	public GameObject p2ledgePrompt;
 
 	[SerializeField]
-	public GameObject TheBelt2;
-
-
+	public GameObject P1DragInBelt1;
 	[SerializeField]
-	public GameObject P2TheBelt1;
-
+	public GameObject P1DragInBelt2;
 	[SerializeField]
-	public GameObject P2TheBelt2;
+	public GameObject P2DragInBelt1;
+	[SerializeField]
+	public GameObject P2DragInBelt2;
 
 
+
+	[HideInInspector]
+	public GameObject TheBelt1 = null;
+
+	[HideInInspector]
+	public GameObject TheBelt2 = null;
+
+
+	[HideInInspector]
+	public GameObject P2TheBelt1 = null;
+
+	[HideInInspector]
+	public GameObject P2TheBelt2 = null;
 
 
 	[SerializeField]
@@ -88,7 +100,7 @@ public class RopeOther : MonoBehaviour
 	public Vector3 RecoilStartPosition;
 	public int UnravelIndex; 
 	public int RecoilIndex;
-	public int RecoilAnchorIndex = 0;
+	//public int RecoilAnchorIndex = 0;
 	public float UnravelDistanceLet;
 	public float distanceFromAnchor;
 	public float followerDistanceFromAnchor;
@@ -127,6 +139,7 @@ public class RopeOther : MonoBehaviour
 		{
 			Simulate();
 		}
+
 		DrawSticks();
 		if (pickedUp)
 		{
@@ -146,40 +159,41 @@ public class RopeOther : MonoBehaviour
             }
 			Debug.Log("wallBarFollower" + wallbarFollower.FollowRope);
 
-			RecoilOnFollow();
+			if (wallbarFollower.hitAnchorFollower)
+			{
+				RecoilOnFollow();
+				wallbarFollower.hitAnchorFollower = false;
+			}
          }
     }
 
 
 	void RecoilOnFollow()
 	{
-
-		if (wallbar.anchors[0].AnchorObject != null)
+		if(wallbarFollower.theFollowerAnchor != null)
         {
-			pinnedList[RecoilIndex] = P2TheBelt1;
-        }
+			for(int i = pinnedList.Length-1; i > 0 ; i--)
+            {
+				if (pinnedList[i] != null && wallbarFollower.theFollowerAnchor == pinnedList[i])
+                {
+					Debug.Log("pinned list at position " + i + "is " + pinnedList[i] + "wallbarFollower i is " + wallbarFollower.theFollowerAnchor);
+					for(int ii = i; ii < pinnedList.Length; ii+=whichToCoil1)
+                    {
+						if (recoilBelt)
+						{
+							pinnedList[ii] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT
+							recoilBelt = false;
+						}
 
-		float DistanceFromOrigin = GetDistanceFloat(theFollower.transform.position, RecoilStartPosition);
-		if (Mathf.Abs(DistanceFromOrigin) >= UnravelDistanceLet)
-		{
-			if (recoilBelt)
-			{
-				pinnedList[RecoilIndex] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT
-				RecoilIndex -= whichToCoil1;
-				recoilBelt = false;
-				RecoilStartPosition = theFollower.transform.position;
-				RecoilAnchorIndex++;
-			}
-
-			else if (!recoilBelt)
-			{
-				pinnedList[RecoilIndex] = P2TheBelt2; ;
-				RecoilIndex -= whichToCoil1;
-				recoilBelt = true;
-				RecoilStartPosition = theFollower.transform.position;
-				RecoilAnchorIndex++;
-			}
-		}
+						else if (!recoilBelt)
+						{
+							pinnedList[ii] = P2TheBelt2;
+							recoilBelt = true;
+						}
+					}
+                }
+            }
+        }	
 	}
 
 
@@ -190,7 +204,7 @@ public class RopeOther : MonoBehaviour
 		int c = 0;
 		for(int i = 0; i<pinnedList.Length; i++)
         {
-            if (pinnedList[i] != null && !pinnedList[i].name.Contains("AnchorPoint"))
+            if (pinnedList[i] != null && !pinnedList[i].name.Contains("AnchorPoint") && pinnedList[i] != P2TheBelt1 && pinnedList[i] != P2TheBelt1)
             {
 				pinnedBeforeFallList[i] = pinnedList[i];
 				pinnedList[i] = null;
@@ -211,6 +225,7 @@ public class RopeOther : MonoBehaviour
 
 	void HandleClimbing()
     {
+
 		if (wallbar.theAnchor != null)
 		{
 			distanceFromAnchor = GetDistanceFloat(theLeader.transform.position, wallbar.theAnchor.transform.position);
@@ -246,7 +261,40 @@ public class RopeOther : MonoBehaviour
 		{
 			RepinOnReattach();
 		}
+		
+		if(wallbar.onLedge && wallbarFollower.onLedge)
+        {
+			Debug.Log("both are on ledge");
+			//ledgePrompt.SetActive(true);
+			//p2ledgePrompt.SetActive(true);
+
+           // if (Input.GetKeyDown("e"))
+           // {
+				//SwitchClimberAndFollower();
+            //}
+		}
+
 	}
+
+	public void SwitchClimberAndFollower()
+    {
+		WallBar LeaderSwitch = wallbar;
+		WallBar FollowerSwitch = wallbarFollower;
+		wallbarFollower = LeaderSwitch;
+		wallbar = FollowerSwitch;
+
+		wallbarFollower.isFollower = false;
+		wallbarFollower.FollowRope = false;
+		wallbarFollower.ClimbRope = true;
+		wallbarFollower.isLeader = true;
+
+		wallbar.isLeader = false;
+		wallbar.ClimbRope = false;
+		wallbar.isFollower = true;
+		wallbar.FollowRope = true;
+		Debug.Log("Changes guys, wallbar isFollower " + wallbar.FollowRope + "wallbar follower is leader " + wallbarFollower.ClimbRope);
+	}
+
 	void RepinOnReattach()
     {
 		Debug.Log("runs fallcoil");
@@ -581,9 +629,23 @@ public class RopeOther : MonoBehaviour
 						wallbarFollower.isFollower = true;
                     }
                 }
+
+				if(theLeader.name == "Player1 Animated")
+                {
+					TheBelt1 = P1DragInBelt1;
+					TheBelt2 = P1DragInBelt2;
+					P2TheBelt1 = P2DragInBelt1;
+					P2TheBelt2 = P2DragInBelt2;
+                }
+                else
+                {
+					TheBelt1 = P2DragInBelt1;
+					TheBelt2 = P2DragInBelt2;
+					P2TheBelt1 = P1DragInBelt1;
+					P2TheBelt2 = P1DragInBelt2;
+				}
 				Debug.Log("climber leader is " + theLeader.name);
-				Debug.Log("climber follower is " + theFollower.name);
-					
+				Debug.Log("climber follower is " + theFollower.name);					
 			}		
 		}
 	}

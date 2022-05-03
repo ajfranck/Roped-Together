@@ -95,7 +95,7 @@ public class MovementController2 : MonoBehaviour
                 Rotation();
             }
         }
-        if (warmthbar.isInteracting || hotbar.isGrabbing)
+        if (warmthbar.isInteracting) //|| hotbar.isGrabbing)
 
         {
             OnDisable();

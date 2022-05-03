@@ -124,9 +124,18 @@ public class MovementController : MonoBehaviour
     }
 
     void FixedUpdate()
-    {           
+    {
 
-        handleAnimation();     
+        handleAnimation();
+        if (isPlayer1)
+        {
+            Debug.Log("player one wallbar climb is " + wallbar.FollowRope);
+        }
+
+        else
+        {
+            Debug.Log("player two wallbar climb is " + wallbar.FollowRope);
+        }
     }
 
     void onMovementInput(InputAction.CallbackContext Context)
@@ -328,23 +337,39 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("climbEnd"))
         {
             endClimbPrompt.SetActive(true);
-            if (Input.GetKey("e") && wallbar.ClimbRope)
+            if (Input.GetKey("e") && (wallbar.ClimbRope || wallbar.FollowRope))
             {
                 characterController.enabled = false;
                 wallbar.ClimbRope = false;
                 wallbar.isFalling = false;
                 wallbar.FollowRope = false;
                 GameObject endClimber = other.gameObject;
-                //currentMovement = new Vector3(0f, 0f, 0f);
                 this.transform.position = endClimber.transform.position;
                 Debug.Log("Should be transported to " + endClimber.transform.position);
                 endClimbPrompt.SetActive(false);
                 characterController.enabled = true;
             }
         }
+
+        
+
+
+
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            characterController.slopeLimit = 45f;
+        }
+        climbPrompt.SetActive(false);
 
+        if (other.gameObject.CompareTag("ledge"))
+        {
+            wallbar.onLedge = false;
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -354,6 +379,14 @@ public class MovementController : MonoBehaviour
             characterController.slopeLimit = 90f;
         }
 
-       
+
+        if (other.gameObject.CompareTag("ledge"))
+        {
+            if (wallbar.ClimbRope || wallbar.FollowRope)
+            {
+                wallbar.onLedge = true;
+            }
+        }
+
     }
 }

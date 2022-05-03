@@ -15,6 +15,7 @@ public static class StaticBackPack
     public static List<GameObject> P2BackpackBackgroundsList = new List<GameObject>();
 
     public static List<GameObject> P2BackpackSpritesList = new List<GameObject>();
+
     
     
 
