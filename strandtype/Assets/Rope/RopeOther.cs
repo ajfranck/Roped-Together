@@ -196,7 +196,7 @@ public class RopeOther : MonoBehaviour
 		int c = 0;
 		for(int i = 0; i<pinnedList.Length; i++)
         {
-            if (pinnedList[i] != null && !pinnedList[i].name.Contains("AnchorPoint"))
+            if (pinnedList[i] != null && !pinnedList[i].name.Contains("AnchorPoint") && pinnedList[i] != P2TheBelt1 && pinnedList[i] != P2TheBelt1)
             {
 				pinnedBeforeFallList[i] = pinnedList[i];
 				pinnedList[i] = null;
