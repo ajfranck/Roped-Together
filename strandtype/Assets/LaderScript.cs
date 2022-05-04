@@ -206,12 +206,13 @@ public class LaderScript : MonoBehaviour
                         LadderBody2.useGravity = true;
                         LadderBody2.isKinematic = false;
                         FPressed = true;
-                        LadderBody2.AddTorque(this.transform.right * (MaxLength * 75));
+                        LadderBody2.AddTorque(LadderParent.transform.right * (MaxLength * 75));
                         x++;
+                        StartCoroutine(Waiter3());
                     }
                     else
                     {
-                        StartCoroutine(Waiter3());
+                        
                         //StartCoroutine(BeginDestruction());
                         FPressed = false;
                     }
