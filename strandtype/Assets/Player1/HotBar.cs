@@ -172,6 +172,7 @@ public class HotBar : MonoBehaviour
         HidePrompt(item);
         if(other.gameObject.tag.Contains("Pickaxe")) other.gameObject.SetActive(false);
         isGrabbing = false;
+        pickedUp = false;
     }
 
     private void OnTriggerExit(Collider other)

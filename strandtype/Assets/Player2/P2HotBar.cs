@@ -111,7 +111,7 @@ public class P2HotBar : MonoBehaviour
         if (other.gameObject.tag.Contains("CubeItem"))
         {
 
-            if (!hasGrabbed)
+            if (!promptDisplayed && !hasGrabbed)
             {
                 DisplayPrompt(CubeItem);
             }
@@ -138,12 +138,12 @@ public class P2HotBar : MonoBehaviour
 
         if (other.gameObject.tag.Contains("WarmthBowl"))
         {
-            if (!hasGrabbed)
+            if (!promptDisplayed && !hasGrabbed)
             {
                 DisplayPrompt(BowlItem);
             }
 
-            if (Input.GetKey("[4]"))
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(BowlItem, other));
             }
@@ -152,12 +152,12 @@ public class P2HotBar : MonoBehaviour
         if (other.gameObject.tag.Contains("LadderItem"))
         {
 
-            if (!hasGrabbed)
+            if (!promptDisplayed && !hasGrabbed)
             {
                 DisplayPrompt(LadderItem);
             }
 
-            if (Input.GetKey("[4]"))
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(LadderItem, other));
             }

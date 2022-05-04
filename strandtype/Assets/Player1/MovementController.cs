@@ -105,8 +105,9 @@ public class MovementController : MonoBehaviour
                 Rotation();
             }
         }
-        if (warmthbar.isInteracting || hotbar.isGrabbing || p2hotbar.isGrabbing)
+        if (warmthbar.isInteracting == true || hotbar.isGrabbing == true || p2hotbar.isGrabbing == true)
         {
+            Debug.Log("disabling the movement " );
             OnDisable();
         }
         else if(!isEndingClimb)
