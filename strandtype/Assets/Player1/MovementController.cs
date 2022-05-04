@@ -43,6 +43,7 @@ public class MovementController : MonoBehaviour
     public WarmthBar warmthbar;
     public WallBar wallbar;
     public HotBar hotbar;
+    public P2HotBar p2hotbar;
 
     public bool isPlayer1;
     public bool isEndingClimb = false;
@@ -104,8 +105,7 @@ public class MovementController : MonoBehaviour
                 Rotation();
             }
         }
-        if (warmthbar.isInteracting || hotbar.isGrabbing)
-
+        if (warmthbar.isInteracting || hotbar.isGrabbing || p2hotbar.isGrabbing)
         {
             OnDisable();
         }

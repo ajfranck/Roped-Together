@@ -25,9 +25,13 @@ public class Mining : MonoBehaviour
 
     public WallBar wallbar;
     public HotBar Hotbar;
+    public P2HotBar p2hotbar;
+
     public ItemFuncitons itemFuncs;
 
     public Animator animator;
+
+    public bool player1;
 
     void Update()
     {
@@ -36,7 +40,7 @@ public class Mining : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag.Contains("Rock") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "PickaxeItem")
+        if (player1 && other.gameObject.tag.Contains("Rock") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "PickaxeItem")
         {
             miningPossible = true;
             //display prompt to mine
@@ -47,7 +51,22 @@ public class Mining : MonoBehaviour
             if (Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x)
             {   
                 //reference item funcs, pass thru other and animator
-                StartCoroutine(POGMINE(other.gameObject));
+                StartCoroutine(POGMINE(other.gameObject, player1));
+
+            }
+        }
+        else if (!player1 && other.gameObject.tag.Contains("Rock") && HotBars.HotBarListP2[HotBars.HotBarPositionP2] != null && HotBars.HotBarListP2[HotBars.HotBarPositionP2].name == "PickaxeItem")
+        {
+            miningPossible = true;
+            //display prompt to mine
+            if (!promptDisplayed && !isMining && other.transform.localScale.x > minSize.x)
+            {
+                DisplayPrompt();
+            }
+            if (Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x)
+            {   
+                //reference item funcs, pass thru other and animator
+                StartCoroutine(POGMINE(other.gameObject, player1));
 
             }
         }
@@ -61,9 +80,10 @@ public class Mining : MonoBehaviour
         }
     }
     
-    IEnumerator POGMINE(GameObject other)
+    IEnumerator POGMINE(GameObject other, bool player1)
     {
-        Hotbar.isGrabbing = true;
+        if(player1) Hotbar.isGrabbing = true;
+        else p2hotbar.isGrabbing = true;
         HidePrompt();
         MiningPrompt();
         isMining = true;
@@ -83,8 +103,11 @@ public class Mining : MonoBehaviour
         HideMiningPrompt();
         isMining = false;
         hasMined = true;
-        Hotbar.isGrabbing = false;
+        if(player1) Hotbar.isGrabbing = false;
+        else p2hotbar.isGrabbing = false;
     }
+
+
 
     void Explode(GameObject originalObject)
     {

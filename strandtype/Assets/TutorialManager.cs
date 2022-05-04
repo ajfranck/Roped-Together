@@ -15,6 +15,8 @@ public class TutorialManager : MonoBehaviour
     public Animator itemAnim;
     public Animator miningAnim;
     public Animator consumeAnim;
+    public Animator consume2Anim;
+    public Animator finalfire;
 
     void Start()
     {
@@ -43,9 +45,17 @@ public class TutorialManager : MonoBehaviour
         {
             miningAnim.SetTrigger("FadeIn");
         }
-        if (other.gameObject.tag.Contains("consumableTutorial"))
+        if (other.gameObject.CompareTag("consumableTutorial"))
         {
             consumeAnim.SetTrigger("FadeIn");
+        }
+        if (other.gameObject.CompareTag("consumableTutorial2"))
+        {
+            consume2Anim.SetTrigger("FadeIn2");
+        }
+        if (other.gameObject.CompareTag("finalfire"))
+        {
+            finalfire.SetTrigger("FadeIn");
         }
         
     }
@@ -64,11 +74,18 @@ public class TutorialManager : MonoBehaviour
         {
             miningAnim.SetTrigger("FadeOut");
         }
-        if (other.gameObject.tag.Contains("consumableTutorial"))
+        if (other.gameObject.CompareTag("consumableTutorial"))
         {
             consumeAnim.SetTrigger("FadeOut");
         }
-        
+        if (other.gameObject.CompareTag("consumableTutorial2"))
+        {
+            consume2Anim.SetTrigger("FadeOut2");
+        }
+        if (other.gameObject.CompareTag("finalfire"))
+        {
+            finalfire.SetTrigger("FadeOut");
+        }
     }
 
 }

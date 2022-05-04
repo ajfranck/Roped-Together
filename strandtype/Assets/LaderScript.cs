@@ -158,7 +158,7 @@ public class LaderScript : MonoBehaviour
             Destroy(LadderParent.transform.GetChild(i).gameObject);
         }
     }
-    /*
+    
     void OnTriggerStay(Collider other) //mountain and we //roped together
     {
         if(other.gameObject.tag.Contains("ladderClimbArea")) movementcontroller.characterController.slopeLimit = 90f;
@@ -276,7 +276,7 @@ public class LaderScript : MonoBehaviour
         
        
     }
-     */
+     
     void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag.Contains("ladderClimbArea"))

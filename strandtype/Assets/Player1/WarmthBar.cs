@@ -143,6 +143,8 @@ public class WarmthBar : MonoBehaviour
         else if (lastFire == 2)
         {
             Debug.Log("fire two");
+            if(movementController.isPlayer1) transform.position = new Vector3(18.81f, 26.5f, 98.5f); //-15, 5, -13
+            else transform.position = new Vector3(17.5f, 26.5f, 98.5f);
         }
         else
         {

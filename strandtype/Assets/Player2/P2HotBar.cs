@@ -138,7 +138,6 @@ public class P2HotBar : MonoBehaviour
 
         if (other.gameObject.tag.Contains("WarmthBowl"))
         {  
-
             if (!promptDisplayed && !hasGrabbed)
             {
                 DisplayPrompt(BowlItem);

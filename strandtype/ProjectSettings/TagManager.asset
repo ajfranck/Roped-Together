@@ -34,6 +34,9 @@ TagManager:
   - ladderSpotBridge
   - LadderItem
   - ledge
+  - consumableTutorial2
+  - finalfire
+  - exitscene
   layers:
   - Default
   - TransparentFX
