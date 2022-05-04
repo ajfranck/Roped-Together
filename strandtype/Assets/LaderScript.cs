@@ -180,7 +180,7 @@ public class LaderScript : MonoBehaviour
                 //display a prompt
                 if (i < MaxLength && holdingLadder)
                 {
-                    if (Input.GetKey("space") && isWaiting == false)
+                    if ((Input.GetKey("space") || Input.GetKey("[0]")) && isWaiting == false)
                     {
                         isWaiting = true;
                         if (i == 0)
@@ -201,7 +201,7 @@ public class LaderScript : MonoBehaviour
                 }
                 else
                 {
-                    if (Input.GetKey("f") && x == 0 && FPressed == false)
+                    if ((Input.GetKey("f") || Input.GetKey("[6]")) && x == 0 && FPressed == false)
                     {
                         LadderBody2.useGravity = true;
                         LadderBody2.isKinematic = false;

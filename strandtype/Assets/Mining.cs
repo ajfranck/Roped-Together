@@ -48,7 +48,7 @@ public class Mining : MonoBehaviour
             {
                 DisplayPrompt();
             }
-            if (Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x)
+            if ((Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x) || (Input.GetKey("[4]") && !isMining && other.transform.localScale.x > minSize.x))
             {   
                 //reference item funcs, pass thru other and animator
                 StartCoroutine(POGMINE(other.gameObject, player1));
@@ -63,7 +63,7 @@ public class Mining : MonoBehaviour
             {
                 DisplayPrompt();
             }
-            if (Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x)
+            if ((Input.GetKey("e") && !isMining && other.transform.localScale.x > minSize.x) || (Input.GetKey("[4]") && !isMining && other.transform.localScale.x > minSize.x))
             {   
                 //reference item funcs, pass thru other and animator
                 StartCoroutine(POGMINE(other.gameObject, player1));

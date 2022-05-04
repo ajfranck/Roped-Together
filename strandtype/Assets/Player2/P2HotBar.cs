@@ -116,7 +116,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(CubeItem);
             }
 
-            if (Input.GetKey("e") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(CubeItem, other));
             }
@@ -130,7 +130,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(RopeItem);
             }
 
-            if (Input.GetKey("e") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(RopeItem, other));
             }
@@ -143,7 +143,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(BowlItem);
             }
 
-            if (Input.GetKey("e") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(BowlItem, other));
             }
@@ -157,7 +157,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(LadderItem);
             }
 
-            if (Input.GetKey("e") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(LadderItem, other));
             }
@@ -297,26 +297,26 @@ public class P2HotBar : MonoBehaviour
         {
 
             SelectItemBackpack();
-            if (Input.GetKeyDown("d") && BackpackPosition < 11)
+            if (Input.GetKeyDown("[5]") && BackpackPosition < 11)
             {
                 addAmount = 1;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
                 BackgroundSelect(addAmount);
             }
-            if (Input.GetKeyDown("a") && BackpackPosition > 0)
+            if (Input.GetKeyDown("[1]") && BackpackPosition > 0)
             {
                 addAmount = -1;
                 //BackpackPosition--;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
                 BackgroundSelect(addAmount);
             }
-            if (Input.GetKeyDown("s") && BackpackPosition<9)
+            if (Input.GetKeyDown("[2]") && BackpackPosition<9)
             {
                 addAmount = 3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
                 BackgroundSelect(addAmount);
             }
-            if (Input.GetKeyDown("w") && BackpackPosition > 2)
+            if (Input.GetKeyDown("[3]") && BackpackPosition > 2)
             {
                 addAmount = -3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
@@ -324,12 +324,12 @@ public class P2HotBar : MonoBehaviour
             }
 
 
-            if (Input.GetKey("f") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
+            if (Input.GetKey("[4]") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
             {
                 HotBarToBackpack();
                 Debug.Log("runs f");
             }
-            if (Input.GetKey("g") && StaticBackPack.BackpackList[BackpackPosition] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
+            if (Input.GetKey("[6]") && StaticBackPack.BackpackList[BackpackPosition] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
             {
                 BackpackToHotbar();
                 Debug.Log("runs g");
@@ -381,7 +381,7 @@ public class P2HotBar : MonoBehaviour
 
     private void HandleHotBar()
     {
-            if (Input.GetKeyDown("1"))
+            if (Input.GetKeyDown("[7]"))
             {
 
                 HotBarPosition = 0;
@@ -391,7 +391,7 @@ public class P2HotBar : MonoBehaviour
             }
 
 
-            if (Input.GetKeyDown("2"))
+            if (Input.GetKeyDown("[8]"))
             {
 
                 HotBarPosition = 1;
@@ -402,7 +402,7 @@ public class P2HotBar : MonoBehaviour
 
 
 
-            if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown("[4]"))
             {
 
                 if (HotBars.HotBarListP2[HotBars.HotBarPositionP2] == null)

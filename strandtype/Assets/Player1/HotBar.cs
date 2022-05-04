@@ -352,12 +352,12 @@ public class HotBar : MonoBehaviour
             }
 
 
-            if (Input.GetKey("f") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
+            if (Input.GetKey("e") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
             {
                 HotBarToBackpack();
                 Debug.Log("runs f");
             }
-            if (Input.GetKey("g") && StaticBackPack.BackpackList[BackpackPosition] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
+            if (Input.GetKey("f") && StaticBackPack.BackpackList[BackpackPosition] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
             {
                 BackpackToHotbar();
                 Debug.Log("runs g");

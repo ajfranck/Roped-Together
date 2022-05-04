@@ -166,7 +166,7 @@ public class MovementController : MonoBehaviour
         currentMovement.z = 0f;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
-        if(Input.GetKey("s") && characterController.isGrounded)
+        if((Input.GetKey("e") || Input.GetKey("[4]")) && characterController.isGrounded)
         {
             wallbar.ClimbRope = false;
         }
@@ -181,7 +181,7 @@ public class MovementController : MonoBehaviour
         currentMovement.z = 0f;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
-        if (Input.GetKey("s") && characterController.isGrounded)
+        if ((Input.GetKey("e") || Input.GetKey("[4]")) && characterController.isGrounded)
         {
             wallbar.ClimbRope = false;
         }
@@ -291,7 +291,7 @@ public class MovementController : MonoBehaviour
         {
             climbPrompt.SetActive(true);
             
-            if(Input.GetKey("e") && !wallbar.ClimbRope)
+            if((Input.GetKey("e") || Input.GetKey("[4]")) && !wallbar.ClimbRope)
             {
                 Debug.Log("starts leading");
                 Debug.Log("wallLeader");
@@ -313,7 +313,7 @@ public class MovementController : MonoBehaviour
             Debug.Log("Followerd" );
             
             climbPrompt.SetActive(true);
-            if (Input.GetKey("e") && !wallbar.FollowRope)
+            if ((Input.GetKey("e") || Input.GetKey("[4]")) && !wallbar.FollowRope)
             {
                 Debug.Log("Starts following");
                 wallbar.FollowRope = true;
@@ -328,7 +328,7 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("climbEnd"))
         {
             endClimbPrompt.SetActive(true);
-            if (Input.GetKey("e") && (wallbar.ClimbRope || wallbar.FollowRope))
+            if ((Input.GetKey("e") || Input.GetKey("[4]")) && (wallbar.ClimbRope || wallbar.FollowRope))
             {
                 characterController.enabled = false;
                 wallbar.ClimbRope = false;

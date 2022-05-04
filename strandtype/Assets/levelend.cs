@@ -5,25 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class levelend : MonoBehaviour
 {
-    public bool promptDisplayed = false;
+    public bool promptDisplay = false;
     public GameObject prompt;
     
     public Animator transition;
 
     void Start()
     {
-        promptDisplayed = false;
+        promptDisplay = false;
     }
 
     void OnTriggerStay(Collider other)
     {
         if(other.gameObject.CompareTag("exitscene"))
         {
-            if(!promptDisplayed) prompt.SetActive(true);
-            if(Input.GetKey("e") || Input.GetKey("f"))
+            if(!promptDisplay) prompt.SetActive(true);
+            if(Input.GetKey("e") || Input.GetKey("[4]"))
             {
                 Debug.Log("loading next scene");
-                promptDisplayed = true;
+                promptDisplay = true;
                 StartCoroutine(LoadAsynchronously());   
             }
         }
@@ -34,7 +34,7 @@ public class levelend : MonoBehaviour
         if(other.gameObject.CompareTag("exitscene"))
         {
             prompt.SetActive(false);
-            promptDisplayed = false;
+            promptDisplay = false;
         }
     }
     
