@@ -37,6 +37,7 @@ TagManager:
   - consumableTutorial2
   - finalfire
   - exitscene
+  - timeBar
   layers:
   - Default
   - TransparentFX

@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class TimeLeft : MonoBehaviour
 {
-    public WarmthBar p1warmthbar;
-    public P2WarmthBar p2warmthbar;
+    //public WarmthBar p1warmthbar;
+    //public P2WarmthBar p2warmthbar;
 
     public Slider slider;
 
     public float currentTimeLeft;
+
+    public bool startLoss = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,7 @@ public class TimeLeft : MonoBehaviour
     void Update()
     {
         slider.value = currentTimeLeft;
+        /*
         if(p1warmthbar.P1currentWarmth <= 0)
         {
             loseWarmth(0.001f);
@@ -27,6 +30,10 @@ public class TimeLeft : MonoBehaviour
         if(p2warmthbar.P2currentWarmth <= 0)
         {
             loseWarmth(0.001f);
+        }*/
+        if(startLoss) 
+        {
+            loseWarmth(0.005f);
         }
     }
 
@@ -47,4 +54,6 @@ public class TimeLeft : MonoBehaviour
         slider.value = timeleft;
     }
     */
+
+
 }

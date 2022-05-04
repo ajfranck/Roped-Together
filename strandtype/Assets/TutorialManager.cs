@@ -6,7 +6,9 @@ public class TutorialManager : MonoBehaviour
 {
     public GameObject warmthTutorial;
     public GameObject pickupTutorial;
-    public GameObject timerTutorial;
+    public GameObject timebar;
+
+    public TimeLeft timeleft;
 
     public Mining mining;
     public HotBar hotbar;
@@ -17,6 +19,7 @@ public class TutorialManager : MonoBehaviour
     public Animator consumeAnim;
     public Animator consume2Anim;
     public Animator finalfire;
+    public Animator timeBar;
 
     void Start()
     {
@@ -57,6 +60,12 @@ public class TutorialManager : MonoBehaviour
         {
             finalfire.SetTrigger("FadeIn");
         }
+        if(other.gameObject.CompareTag("timeBar"))
+        {
+            timebar.SetActive(true);
+            timeleft.startLoss = true;
+            timeBar.SetTrigger("FadeIn");
+        }
         
     }
 
@@ -85,6 +94,10 @@ public class TutorialManager : MonoBehaviour
         if (other.gameObject.CompareTag("finalfire"))
         {
             finalfire.SetTrigger("FadeOut");
+        }
+        if(other.gameObject.CompareTag("timeBar"))
+        {
+            timeBar.SetTrigger("FadeOut");
         }
     }
 
