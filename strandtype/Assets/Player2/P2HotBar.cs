@@ -49,7 +49,7 @@ public class P2HotBar : MonoBehaviour
 
     public List<GameObject> HotBarBackgroundsListP1 = new List<GameObject>();
 
-    public  List<GameObject> P1BackpackBackgroundsList = new List<GameObject>();
+    public List<GameObject> P1BackpackBackgroundsList = new List<GameObject>();
 
     public List<GameObject> P2BackpackSpritesList = new List<GameObject>();
 
@@ -58,9 +58,9 @@ public class P2HotBar : MonoBehaviour
     public string name;
     public int BackpackPosition = 0;
 
-    
+
     void Start()
-    {       
+    {
         animator = gameObject.GetComponent<Animator>();
         //ClearInventory();
         BackgroundSelectHotBar(0);
@@ -75,7 +75,7 @@ public class P2HotBar : MonoBehaviour
         {
             HandleBackPack();
             BackgroundSelect(0);
-            StartCoroutine(BackpackFadeIn());          
+            StartCoroutine(BackpackFadeIn());
         }
         else
         {
@@ -101,22 +101,22 @@ public class P2HotBar : MonoBehaviour
         yield return new WaitForSeconds(0.0001f);
         if (BackpackUI.alpha > 0f)
         {
-            BackpackUI.alpha -= Time.deltaTime*2f;
+            BackpackUI.alpha -= Time.deltaTime * 2f;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-            
-        if (other.gameObject.tag.Contains("CubeItem"))
-        {  
 
-            if (!promptDisplayed && !hasGrabbed)
+        if (other.gameObject.tag.Contains("CubeItem"))
+        {
+
+            if (!hasGrabbed)
             {
                 DisplayPrompt(CubeItem);
             }
 
-            if (Input.GetKey("[4]") && !pickedUp)
+            if (Input.GetKey("[4]"))
             {
                 StartCoroutine(PickUp(CubeItem, other));
             }
@@ -137,27 +137,27 @@ public class P2HotBar : MonoBehaviour
         }
 
         if (other.gameObject.tag.Contains("WarmthBowl"))
-        {  
-            if (!promptDisplayed && !hasGrabbed)
+        {
+            if (!hasGrabbed)
             {
                 DisplayPrompt(BowlItem);
             }
 
-            if (Input.GetKey("[4]") && !pickedUp)
+            if (Input.GetKey("[4]"))
             {
                 StartCoroutine(PickUp(BowlItem, other));
             }
 
         }
         if (other.gameObject.tag.Contains("LadderItem"))
-        {  
+        {
 
-            if (!promptDisplayed && !hasGrabbed)
+            if (!hasGrabbed)
             {
                 DisplayPrompt(LadderItem);
             }
 
-            if (Input.GetKey("[4]") && !pickedUp)
+            if (Input.GetKey("[4]"))
             {
                 StartCoroutine(PickUp(LadderItem, other));
             }
@@ -177,7 +177,7 @@ public class P2HotBar : MonoBehaviour
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);
-        if(other.gameObject.tag.Contains("Pickaxe") && other.gameObject.tag.Contains("Bowl")) other.gameObject.SetActive(false);
+        if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
         isGrabbing = false;
     }
    
