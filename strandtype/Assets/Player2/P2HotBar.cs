@@ -381,7 +381,7 @@ public class P2HotBar : MonoBehaviour
 
     private void HandleHotBar()
     {
-            if (Input.GetKeyDown("[7]"))
+            if (Input.GetKeyDown("[7         ]"))
             {
 
                 HotBarPosition = 0;

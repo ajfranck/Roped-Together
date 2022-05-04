@@ -34,6 +34,8 @@ public class SceneChanger : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(1f);
-        AsyncOperation operation = SceneManager.LoadSceneAsync("Tutorial");
+        //AsyncOperation operation = SceneManager.LoadSceneAsync("Tutorial");
+        SceneManager.LoadScene("Tutorial");
+        //LoadPlayer();
     }
 }
