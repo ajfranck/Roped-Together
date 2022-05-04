@@ -182,6 +182,7 @@ public class P2HotBar : MonoBehaviour
         isGrabbing = false;
         pickedUp = false;
         promptDisplayed = false;
+        hasGrabbed = false;
     }
    
     private void OnTriggerExit(Collider other)
@@ -384,7 +385,7 @@ public class P2HotBar : MonoBehaviour
 
     private void HandleHotBar()
     {
-            if (Input.GetKeyDown("[7]"))
+            if (Input.GetKeyDown("[8]"))
             {
 
                 HotBarPosition = 0;
@@ -394,7 +395,7 @@ public class P2HotBar : MonoBehaviour
             }
 
 
-            if (Input.GetKeyDown("[8]"))
+            if (Input.GetKeyDown("[7]"))
             {
 
                 HotBarPosition = 1;

@@ -118,18 +118,24 @@ public class LaderScript : MonoBehaviour
     }
     IEnumerator Waiter2()
     {
+        ladderClimbPrompt.SetActive(false);
+        p2hotbar.HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = p2hotbar.BackgroundImage.GetComponent<Image>().sprite;
+        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
+
         yield return new WaitForSeconds(2.5f);
         LadderBody2.isKinematic = true;
         i = 0;
         x = 0;
         count = 0;
         //holdingLadder = false;
-        duplicated = false;
-        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
-        p2hotbar.HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = p2hotbar.BackgroundImage.GetComponent<Image>().sprite;
+        duplicated = false;  
     }
     IEnumerator Waiter3()
     {
+        ladderClimbPrompt.SetActive(false);
+        p2hotbar.HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = p2hotbar.BackgroundImage.GetComponent<Image>().sprite;
+        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
+
         yield return new WaitForSeconds(1.5f);
         LadderBody2.isKinematic = true;
         i = 0;
@@ -137,8 +143,6 @@ public class LaderScript : MonoBehaviour
         count = 0;
         //holdingLadder = false;
         duplicated = false;
-        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
-        p2hotbar.HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = p2hotbar.BackgroundImage.GetComponent<Image>().sprite;
     }
     IEnumerator BeginDestruction()
     {
@@ -261,7 +265,7 @@ public class LaderScript : MonoBehaviour
                             LadderBody2.useGravity = true;
                             LadderBody2.isKinematic = false;
                             FPressed = true;
-                            LadderBody2.AddTorque(this.transform.right * (MaxLength * 75));
+                            LadderBody2.AddTorque(LadderParent.transform.forward * (MaxLength * 75));
                             x++;
                             StartCoroutine(Waiter2());
                         }
@@ -288,5 +292,7 @@ public class LaderScript : MonoBehaviour
            // duplicated = false;
         }
     }
+
+    
     
 }
