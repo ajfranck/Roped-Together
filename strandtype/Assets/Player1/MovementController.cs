@@ -195,9 +195,7 @@ public class MovementController : MonoBehaviour
         }
         else
         {
-
             currentMovement.y += gravity;
-
         }
     }
 
@@ -312,6 +310,7 @@ public class MovementController : MonoBehaviour
 
         if (other.gameObject.CompareTag("wallFollower") && wallbar.isFollower)
         {
+            Debug.Log("Followerd" );
             
             climbPrompt.SetActive(true);
             if (Input.GetKey("e") && !wallbar.FollowRope)

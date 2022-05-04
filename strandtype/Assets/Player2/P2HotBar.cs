@@ -181,7 +181,7 @@ public class P2HotBar : MonoBehaviour
         if(other.gameObject.tag.Contains("Pickaxe") && other.gameObject.tag.Contains("Bowl")) other.gameObject.SetActive(false);
         isGrabbing = false;
     }
-
+   
     private void OnTriggerExit(Collider other)
         {
 
