@@ -116,7 +116,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(CubeItem);
             }
 
-            if (Input.GetKey("[4]"))
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(CubeItem, other));
             }
@@ -179,6 +179,7 @@ public class P2HotBar : MonoBehaviour
         HidePrompt(item);
         if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
         isGrabbing = false;
+        pickedUp = false;
     }
    
     private void OnTriggerExit(Collider other)
