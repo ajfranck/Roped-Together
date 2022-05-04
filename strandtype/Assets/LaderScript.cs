@@ -32,7 +32,7 @@ public class LaderScript : MonoBehaviour
     bool duplicated = false;
     bool duplicated2 = false;
 //Vector3
-    private Vector3 SpawnPosition = new Vector3(35f, -2.5f, 19f);
+    private Vector3 SpawnPosition = new Vector3(35f, -2.3f, 19f);
     private Vector3 SpawnPositionBridge = new Vector3(8f, 4.7f, 35.8f);
     Vector3 NewPosition;
 
@@ -201,7 +201,7 @@ public class LaderScript : MonoBehaviour
                 }
                 else
                 {
-                    if ((Input.GetKey("f") || Input.GetKey("[6]")) && x == 0 && FPressed == false)
+                    if ((Input.GetKeyDown("f") || Input.GetKeyDown("[6]")) && x == 0 && FPressed == false)
                     {
                         LadderBody2.useGravity = true;
                         LadderBody2.isKinematic = false;
