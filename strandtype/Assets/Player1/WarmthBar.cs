@@ -6,9 +6,6 @@ using UnityEngine.InputSystem;
 public class WarmthBar : MonoBehaviour
 {
 
-    [SerializeField]
-    Light light;
-
     public GameObject p1Interact;
     public GameObject p1Inventory;
 
@@ -33,7 +30,6 @@ public class WarmthBar : MonoBehaviour
     void Start()
     {
         LoadPlayer();
-        light.intensity = 4;
         P1currentWarmth = P1MaxWarmth;
         P1HealthBar.P1SetWarmth(P1MaxWarmth);
     }

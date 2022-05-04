@@ -81,6 +81,7 @@ public class P2HotBar : MonoBehaviour
         {
             StartCoroutine(BackpackFadeOut());
         }
+
     }
 
     IEnumerator BackpackFadeIn()
@@ -180,6 +181,7 @@ public class P2HotBar : MonoBehaviour
         if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
         isGrabbing = false;
         pickedUp = false;
+        promptDisplayed = false;
     }
    
     private void OnTriggerExit(Collider other)

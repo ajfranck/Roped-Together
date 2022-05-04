@@ -156,6 +156,20 @@ public class HotBar : MonoBehaviour
             }
 
         }
+        if (other.gameObject.tag.Contains("LadderItem"))
+        {
+
+            if (!promptDisplayed && !hasGrabbed)
+            {
+                DisplayPrompt(LadderItem);
+            }
+
+            if (Input.GetKey("[4]") && !pickedUp)
+            {
+                StartCoroutine(PickUp(LadderItem, other));
+            }
+
+        }
     }
 
     IEnumerator PickUp(Item item, Collider other)
@@ -170,7 +184,7 @@ public class HotBar : MonoBehaviour
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);
-        if(other.gameObject.tag.Contains("Pickaxe")) other.gameObject.SetActive(false);
+        if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
         isGrabbing = false;
         pickedUp = false;
     }

@@ -118,7 +118,7 @@ public class LaderScript : MonoBehaviour
     }
     IEnumerator Waiter2()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.5f);
         LadderBody2.isKinematic = true;
         i = 0;
         x = 0;
@@ -263,10 +263,11 @@ public class LaderScript : MonoBehaviour
                             FPressed = true;
                             LadderBody2.AddTorque(this.transform.right * (MaxLength * 75));
                             x++;
+                            StartCoroutine(Waiter2());
                         }
                         else
                         {
-                            StartCoroutine(Waiter2());
+                            
                             //StartCoroutine(BeginDestruction2());
                             FPressed = false;
                         }
