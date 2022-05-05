@@ -270,6 +270,8 @@ public class RopeOther : MonoBehaviour
 
             if (Input.GetKeyDown("g"))
             {
+				UnravelAll();
+				UnravelIndex = 95;
 				SwitchClimberAndFollower();
             }
 		}
@@ -348,6 +350,15 @@ public class RopeOther : MonoBehaviour
 		UnravelStartPosition = wallbar.theAnchor.transform.position;
 		TotalDistanceUnraveled = 0f;
 	}
+
+	void UnravelAll()
+    {
+		for(int i = 0; i<pinnedList.Length; i++)
+        {
+			pinnedList[i] = null;
+			points[i].pinnedTo = null;
+        }
+    }
 
 	void Unravel()
 	{
