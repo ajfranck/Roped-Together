@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
         if(warmthbar.fire1)
         {
             // +0.7x, +4.39y, -4.5z
-            firePosition = new Vector3(19.05f, 31.53f, 90.41f);
+            firePosition = new Vector3(19.05f, 76.53f, 88.41f);
         }
         else if(warmthbar.fire2)
         {
