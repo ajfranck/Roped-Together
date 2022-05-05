@@ -13,6 +13,7 @@ public class P2HotBar : MonoBehaviour
     public Item RopeItem;
     public Item BowlItem;
     public Item LadderItem;
+    public Item StaminaItem;
 
     private Animator animator;
     public bool isGrabbing = false;
@@ -147,6 +148,20 @@ public class P2HotBar : MonoBehaviour
             if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(BowlItem, other));
+            }
+
+        }
+        if (other.gameObject.tag.Contains("StaminaBowl"))
+        {  
+
+            if (!promptDisplayed && !hasGrabbed)
+            {
+                DisplayPrompt(StaminaItem);
+            }
+
+            if (Input.GetKey("e") && !pickedUp)
+            {
+                StartCoroutine(PickUp(StaminaItem, other));
             }
 
         }
