@@ -292,7 +292,7 @@ public class MovementController : MonoBehaviour
         {
             climbPrompt.SetActive(true);
             
-            if((Input.GetKey("e") || Input.GetKey("[4]")) && !wallbar.ClimbRope)
+            if(Input.GetKey("e") /* || Input.GetKey("[4]"))*/ && !wallbar.ClimbRope)
             {
                 Debug.Log("starts leading");
                 Debug.Log("wallLeader");
@@ -304,7 +304,8 @@ public class MovementController : MonoBehaviour
                 climbPrompt.SetActive(false);
                 currentMovement = new Vector3(0f, 0f, 0f);
                 wallbar.isFalling = false;
-               // other.gameObject.SetActive(false);
+                wallbar.onLedge = false;
+                // other.gameObject.SetActive(false);
             }
             if(wallbar.ClimbRope) climbPrompt.SetActive(false);        
         }
@@ -321,7 +322,8 @@ public class MovementController : MonoBehaviour
                 climbPrompt.SetActive(false);
                 currentMovement = new Vector3(0f, 0f, 0f);
                 wallbar.isFalling = false;
-                
+                wallbar.onLedge = false;
+
             }
             if (wallbar.FollowRope) climbPrompt.SetActive(false);
         }
@@ -329,18 +331,20 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("climbEnd"))
         {
             endClimbPrompt.SetActive(true);
-            if ((Input.GetKey("e") || Input.GetKey("[4]")) && (wallbar.ClimbRope || wallbar.FollowRope))
+            if ((Input.GetKey("f") || Input.GetKey("[4]")) && (wallbar.ClimbRope || wallbar.FollowRope))
             {
                 characterController.enabled = false;
                 wallbar.ClimbRope = false;
                 wallbar.isFalling = false;
                 wallbar.FollowRope = false;
+                wallbar.onLedge = true;
                 GameObject endClimber = other.gameObject;
                 this.transform.position = endClimber.transform.position;
                 Debug.Log("Should be transported to " + endClimber.transform.position);
                 endClimbPrompt.SetActive(false);
                 characterController.enabled = true;
             }
+
         }
 
         

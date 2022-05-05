@@ -181,7 +181,7 @@ public class RopeOther : MonoBehaviour
                     {
 						if (recoilBelt)
 						{
-							pinnedList[ii] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT
+							pinnedList[ii] = P2TheBelt1; // need a reference to each players belt automatically! COULD JUST USE IF STATEMENT. nvm got it. 
 							recoilBelt = false;
 						}
 
@@ -268,31 +268,39 @@ public class RopeOther : MonoBehaviour
 			//ledgePrompt.SetActive(true);
 			//p2ledgePrompt.SetActive(true);
 
-           // if (Input.GetKeyDown("e"))
-           // {
-				//SwitchClimberAndFollower();
-            //}
+            if (Input.GetKeyDown("g"))
+            {
+				SwitchClimberAndFollower();
+            }
 		}
 
 	}
 
 	public void SwitchClimberAndFollower()
     {
-		WallBar LeaderSwitch = wallbar;
-		WallBar FollowerSwitch = wallbarFollower;
-		wallbarFollower = LeaderSwitch;
-		wallbar = FollowerSwitch;
+		GameObject theLeaderSwitch = theLeader;
+		GameObject theFollowerSwitch = theFollower;
 
-		wallbarFollower.isFollower = false;
+		theLeader = theFollowerSwitch;
+
+		theFollower = theLeaderSwitch;
+
+		wallbar = theLeader.GetComponent<WallBar>();
+		wallbarFollower = theFollower.GetComponent<WallBar>();
+
+		wallbarFollower.isFollower = true;
 		wallbarFollower.FollowRope = false;
-		wallbarFollower.ClimbRope = true;
-		wallbarFollower.isLeader = true;
+		wallbarFollower.ClimbRope = false;
+		wallbarFollower.isLeader = false;
 
-		wallbar.isLeader = false;
+		wallbar.isLeader = true;
 		wallbar.ClimbRope = false;
-		wallbar.isFollower = true;
-		wallbar.FollowRope = true;
+		wallbar.FollowRope = false;
+		wallbar.isFollower = false;
+		SetLeaderFollower();
+		CoilRope(0, whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
 		Debug.Log("Changes guys, wallbar isFollower " + wallbar.FollowRope + "wallbar follower is leader " + wallbarFollower.ClimbRope);
+		
 	}
 
 	void RepinOnReattach()
@@ -379,15 +387,11 @@ public class RopeOther : MonoBehaviour
 				}
 			}	
 		}
-
-
 	}
 
 
 	void UnravelAction(float distance)
     {
-		
-
 		pinnedList[UnravelIndex] = null;
 		points[UnravelIndex].pinnedTo = pinnedList[UnravelIndex];
 		UnravelIndex -= whichToCoil1;
@@ -396,7 +400,6 @@ public class RopeOther : MonoBehaviour
 		Debug.Log("UNRAVELS! distance total unraveled " + TotalDistanceUnraveled);
 		TotalDistanceUnraveled += UnravelDistanceLet;
 		Debug.Log("UNRAVELS Index is  " + UnravelIndex);
-
 	}
 
 	void FixedUpdate()
@@ -607,45 +610,54 @@ public class RopeOther : MonoBehaviour
 		}
 	}
 
-
+	void SetLeaderFollower()
+    {
+		if (theLeader.name == "Player1 Animated")
+		{
+			TheBelt1 = P1DragInBelt1;
+			TheBelt2 = P1DragInBelt2;
+			P2TheBelt1 = P2DragInBelt1;
+			P2TheBelt2 = P2DragInBelt2;
+		}
+		else
+		{
+			TheBelt1 = P2DragInBelt1;
+			TheBelt2 = P2DragInBelt2;
+			P2TheBelt1 = P1DragInBelt1;
+			P2TheBelt2 = P1DragInBelt2;
+		}
+	}
+	
 	private void OnTriggerStay(Collider other)
 	{
 		if (other.gameObject.tag.Contains("Player"))
 		{
+			Debug.Log("Hit player");
 			if (Input.GetKey("e"))
 			{
+				Debug.Log("Hit e");
 				PickedUp();
 				theLeader = other.gameObject;
 				wallbar = theLeader.GetComponent<WallBar>();
 				pickedUp = true;
 				wallbar.isLeader = true;
 				GameObject[] FindFollower = GameObject.FindGameObjectsWithTag("Player");
-				foreach(GameObject o in FindFollower)
-                {
-					if(o.name != theLeader.name)
-                    {
+
+				foreach (GameObject o in FindFollower)
+				{
+					if (o.name != theLeader.name)
+					{
 						theFollower = o;
 						wallbarFollower = theFollower.GetComponent<WallBar>();
 						wallbarFollower.isFollower = true;
-                    }
-                }
-
-				if(theLeader.name == "Player1 Animated")
-                {
-					TheBelt1 = P1DragInBelt1;
-					TheBelt2 = P1DragInBelt2;
-					P2TheBelt1 = P2DragInBelt1;
-					P2TheBelt2 = P2DragInBelt2;
-                }
-                else
-                {
-					TheBelt1 = P2DragInBelt1;
-					TheBelt2 = P2DragInBelt2;
-					P2TheBelt1 = P1DragInBelt1;
-					P2TheBelt2 = P1DragInBelt2;
+					}
 				}
+				SetLeaderFollower();
+
+				
 				Debug.Log("climber leader is " + theLeader.name);
-				Debug.Log("climber follower is " + theFollower.name);					
+				Debug.Log("climber follower is " + theFollower.name);
+
 			}		
 		}
 	}
