@@ -101,7 +101,7 @@ public class MovementController : MonoBehaviour
             if (!wallbar.isFalling)
             {
                 Gravity(-9.8f);
-                characterController.Move(currentMovement * Time.deltaTime * 10f);
+                characterController.Move(currentMovement * Time.deltaTime * 6f);
                 Rotation();
             }
         }

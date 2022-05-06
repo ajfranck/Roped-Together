@@ -136,6 +136,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.InputSystem.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.HighDefinition.Runtime.dll
+--root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\UnityEngine.XR.LegacyInputHelpers.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Animation.Rigging.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
@@ -145,6 +146,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Postprocessing.Runtime.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
+--root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\UnityEngine.SpatialTracking.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll
 --assembly-folder=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\
@@ -301,6 +303,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Mathematics.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.InputSystem.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.HighDefinition.Runtime.dll
+--root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\UnityEngine.XR.LegacyInputHelpers.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Animation.Rigging.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.TextMeshPro.dll
@@ -310,6 +313,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.Postprocessing.Runtime.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
+--root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\UnityEngine.SpatialTracking.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
 --root-assembly=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll
 --assembly-folder=C:\Users\1amaj\Desktop\Github\strandtype\strandtype\Temp\StagingArea\Data\Managed\
