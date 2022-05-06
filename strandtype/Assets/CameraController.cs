@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     private Vector3 velocity;
     private Camera cam;
 
+    public bool camera1;
+
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -24,7 +26,11 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
 
-        if(warmthbar.isInteracting)
+        if(warmthbar.isInteracting && camera1)
+        {
+            Zoom();
+        }
+        if(warmthbar.p2isInteracting && !camera1)
         {
             Zoom();
         }

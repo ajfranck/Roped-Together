@@ -13,7 +13,9 @@ public class WarmthBar : MonoBehaviour
     public float P1currentWarmth;  
 
     public bool isInteracting = false;
+    public bool p2isInteracting = false;
     public bool contactingFire = false;
+    public bool player1;
     
     public P1HealthBar P1HealthBar;
 
@@ -93,9 +95,14 @@ public class WarmthBar : MonoBehaviour
                 {
                     p1Interact.SetActive(true);
                 }
-                if(Input.GetKey(KeyCode.E))
+                if(Input.GetKey(KeyCode.E) && player1)
                 {
                     isInteracting = true;
+                    p1Interact.SetActive(false);
+                }
+                if(Input.GetKey("[4]") && !player1)
+                {
+                    p2isInteracting = true;
                     p1Interact.SetActive(false);
                 }
                if (Input.GetKey("space"))
@@ -139,8 +146,8 @@ public class WarmthBar : MonoBehaviour
         else if (lastFire == 2)
         {
             Debug.Log("fire two");
-            if(movementController.isPlayer1) transform.position = new Vector3(18.81f, 26.5f, 98.5f); //-15, 5, -13
-            else transform.position = new Vector3(17.5f, 26.5f, 98.5f);
+            if(movementController.isPlayer1) transform.position = new Vector3(18.81f, 72f, 98.5f); //-15, 5, -13
+            else transform.position = new Vector3(17.5f, 72f, 98.5f);
         }
         else
         {
