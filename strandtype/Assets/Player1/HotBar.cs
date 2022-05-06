@@ -13,6 +13,7 @@ public class HotBar : MonoBehaviour
     public Item RopeItem;
     public Item BowlItem;
     public Item LadderItem;
+    public Item StaminaItem;
     
     private Animator animator;
     public bool isGrabbing = false;
@@ -117,7 +118,7 @@ public class HotBar : MonoBehaviour
         if (other.gameObject.tag.Contains("CubeItem"))
         {  
 
-            if (!promptDisplayed && !hasGrabbed)
+            if (!promptDisplayed && !isGrabbing)
             {
                 DisplayPrompt(CubeItem);
             }
@@ -131,7 +132,7 @@ public class HotBar : MonoBehaviour
 
         if (other.gameObject.tag.Contains("RopeItem"))
         {
-            if (!promptDisplayed && !hasGrabbed)
+            if (!promptDisplayed && !isGrabbing)
             {
                 DisplayPrompt(RopeItem);
             }
@@ -145,7 +146,7 @@ public class HotBar : MonoBehaviour
         if (other.gameObject.tag.Contains("WarmthBowl"))
         {  
 
-            if (!promptDisplayed && !hasGrabbed)
+            if (!promptDisplayed && !isGrabbing)
             {
                 DisplayPrompt(BowlItem);
             }
@@ -156,10 +157,24 @@ public class HotBar : MonoBehaviour
             }
 
         }
+        if (other.gameObject.tag.Contains("StaminaBowl"))
+        {  
+
+            if (!promptDisplayed && !isGrabbing)
+            {
+                DisplayPrompt(StaminaItem);
+            }
+
+            if (Input.GetKey("e") && !pickedUp)
+            {
+                StartCoroutine(PickUp(StaminaItem, other));
+            }
+
+        }
         if (other.gameObject.tag.Contains("LadderItem"))
         {
 
-            if (!promptDisplayed && !hasGrabbed)
+            if (!promptDisplayed && !isGrabbing)
             {
                 DisplayPrompt(LadderItem);
             }
@@ -184,9 +199,10 @@ public class HotBar : MonoBehaviour
         //other.gameObject.SetActive(false);
         HideGrabPrompt();
         HidePrompt(item);
-        if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
+        if (other.gameObject.CompareTag("CubeItem") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
         isGrabbing = false;
         pickedUp = false;
+        promptDisplayed = false;
     }
 
     private void OnTriggerExit(Collider other)

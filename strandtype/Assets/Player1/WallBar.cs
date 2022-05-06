@@ -52,6 +52,9 @@ public class WallBar : MonoBehaviour
 
     void Update()
     {
+        if(P1currentStamina > 1f) P1currentStamina = 1f;
+        P1HealthBar.P1SetStamina(P1currentStamina);
+        
         if (ClimbRope)
         {
             //GRIP LOSS LEVEL
@@ -79,14 +82,11 @@ public class WallBar : MonoBehaviour
                 ClimbRope = false;
             }
         }
-
         else // (movementController.characterController.isGrounded)
         {
             Debug.Log("adding stamina");
-            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded && !mining.isMining && !onLedge)
-            {
-                addStamina(0.175f);
-            }
+            //removed the auto adding stamina
+            //if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded && !mining.isMining) addStamina(0.175f);
             grip = 100f;
         }
 
