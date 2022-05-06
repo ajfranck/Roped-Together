@@ -38,6 +38,8 @@ public class WallBar : MonoBehaviour
     public bool dontAnchor;
     public bool hitAnchorFollower = false;
     public bool onLedge = false;
+    public bool fallIfNoAnchors = false;
+
     public List<Anchor> anchors = new List<Anchor>();
 
 

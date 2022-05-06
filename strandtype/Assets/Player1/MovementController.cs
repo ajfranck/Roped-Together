@@ -100,6 +100,7 @@ public class MovementController : MonoBehaviour
         {
             if (!wallbar.isFalling)
             {
+                Debug.Log("Not falling should have gravity");
                 Gravity(-9.8f);
                 characterController.Move(currentMovement * Time.deltaTime * 10f);
                 Rotation();
@@ -113,6 +114,11 @@ public class MovementController : MonoBehaviour
         else if(!isEndingClimb)
         {
             OnEnable();
+        }
+
+        if (characterController.isGrounded)
+        {
+            wallbar.fallIfNoAnchors = true;
         }
     }
 
@@ -240,7 +246,6 @@ public class MovementController : MonoBehaviour
         if(isPlayer1) playerInput.CharacterController.Enable();
         else player2Input.CharacterController.Enable();
         Debug.Log("ONENABLE");
-
     }
 
 
@@ -392,25 +397,25 @@ public class MovementController : MonoBehaviour
                     endClimbPrompt.SetActive(false);
                     characterController.enabled = true;
                 }
-
-                else
+            }
+            else
+            {
+                endClimbPrompt.SetActive(true);
+                if ((Input.GetKey("5")) && (wallbar.ClimbRope || wallbar.FollowRope))
                 {
-                    endClimbPrompt.SetActive(true);
-                    if ((Input.GetKey("5")) && (wallbar.ClimbRope || wallbar.FollowRope))
-                    {
-                        characterController.enabled = false;
-                        wallbar.ClimbRope = false;
-                        wallbar.isFalling = false;
-                        wallbar.FollowRope = false;
-                        wallbar.onLedge = true;
-                        GameObject endClimber = other.gameObject;
-                        this.transform.position = endClimber.transform.position;
-                        Debug.Log("Should be transported to " + endClimber.transform.position);
-                        endClimbPrompt.SetActive(false);
-                        characterController.enabled = true;
-                    }
+                    characterController.enabled = false;
+                    wallbar.ClimbRope = false;
+                    wallbar.isFalling = false;
+                    wallbar.FollowRope = false;
+                    wallbar.onLedge = true;
+                    GameObject endClimber = other.gameObject;
+                    this.transform.position = endClimber.transform.position;
+                    Debug.Log("Should be transported to " + endClimber.transform.position);
+                    endClimbPrompt.SetActive(false);
+                    characterController.enabled = true;
                 }
             }
+            
 
         }
 

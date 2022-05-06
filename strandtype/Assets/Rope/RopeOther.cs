@@ -100,6 +100,7 @@ public class RopeOther : MonoBehaviour
 	public Vector3 RecoilStartPosition;
 	public int UnravelIndex; 
 	public int RecoilIndex;
+	public int  ResetUnravelIndexTo;
 	//public int RecoilAnchorIndex = 0;
 	public float UnravelDistanceLet;
 	public float distanceFromAnchor;
@@ -115,6 +116,7 @@ public class RopeOther : MonoBehaviour
 	public bool pickedUp = false;
 	public bool UnraveledAtClimbStart = false;
 	public bool setRecoilStart = false;
+	public bool hasCheckedForReset = false;
 
 
 	public bool recoilBelt;
@@ -236,6 +238,7 @@ public class RopeOther : MonoBehaviour
 		}
 		if (wallbar.ClimbRope)
 		{
+			hasCheckedForReset = false;
 			if (!UnraveledAtClimbStart)
 			{
 				UnravelAction(distanceFromAnchor);
@@ -258,11 +261,20 @@ public class RopeOther : MonoBehaviour
 
 		else if (wallbar.isFalling)
 		{
-			theLeader.transform.position = points[UnravelIndex].position;
-            if (Input.GetKey("c"))
+			
+			if (!hasCheckedForReset)
+			{
+				bool isAnchorThere = ShouldReset();
+				if (!isAnchorThere)
+				{
+					ResetClimb();
+				}
+				hasCheckedForReset = true;
+			}
+            else
             {
-
-            }
+				theLeader.transform.position = points[UnravelIndex].position;
+			}
 		}
 
 		if (wallbar.fallCoil && !hasReattached)
@@ -270,6 +282,8 @@ public class RopeOther : MonoBehaviour
 			RepinOnReattach();
 		}
 		
+		
+
 		if(wallbar.onLedge && wallbarFollower.onLedge)
         {
 			Debug.Log("both are on ledge");
@@ -279,12 +293,44 @@ public class RopeOther : MonoBehaviour
             if (Input.GetKeyDown("g"))
             {
 				UnravelAll();
-				UnravelIndex = 95;
+				UnravelIndex = ResetUnravelIndexTo;
 				SwitchClimberAndFollower();
             }
 		}
 
 	}
+	private bool ShouldReset()
+	{
+		bool isAnAnchor = false; ;
+		for (int i = 0; i < pinnedList.Length; i++)
+		{
+			if (pinnedList[i] != null && pinnedList[i].name.Contains("AnchorPoint"))
+			{
+				isAnAnchor = true;
+			}
+		}
+		return isAnAnchor;
+	}
+
+	void ResetClimb()
+	{
+		wallbar.ClimbRope = false;
+		wallbar.isFalling = false;
+		wallbarFollower.FollowRope = false;
+		UnravelAll();
+		CoilRope(0, whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
+		UnravelIndex = ResetUnravelIndexTo;
+	}
+
+
+	void ClearAnchors()
+    {
+		for(int i = 0; i<wallbar.anchors.Count; i++)
+        {
+			wallbar.anchors[i] = null;
+			Debug.Log(wallbar.anchors[i]);
+        }
+    }
 
 	public void SwitchClimberAndFollower()
     {
