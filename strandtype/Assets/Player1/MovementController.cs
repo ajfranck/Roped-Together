@@ -291,58 +291,125 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.CompareTag("wallLeader") && wallbar.isLeader)// && Input.GetKey("v"))
         {
             climbPrompt.SetActive(true);
-            
-            if(Input.GetKey("e") /* || Input.GetKey("[4]"))*/ && !wallbar.ClimbRope)
+            if (isPlayer1)
             {
-                Debug.Log("starts leading");
-                Debug.Log("wallLeader");
-                if (wallbar.isFalling) 
+                if (Input.GetKey("e") && !wallbar.ClimbRope)
                 {
-                    wallbar.fallCoil = true;
-                }               
-                wallbar.ClimbRope = true;
-                climbPrompt.SetActive(false);
-                currentMovement = new Vector3(0f, 0f, 0f);
-                wallbar.isFalling = false;
-                wallbar.onLedge = false;
-                // other.gameObject.SetActive(false);
+
+                    Debug.Log("starts leading");
+                    Debug.Log("wallLeader");
+                    if (wallbar.isFalling)
+                    {
+                        wallbar.fallCoil = true;
+                    }
+                    wallbar.ClimbRope = true;
+                    climbPrompt.SetActive(false);
+                    currentMovement = new Vector3(0f, 0f, 0f);
+                    wallbar.isFalling = false;
+                    wallbar.onLedge = false;
+                    // other.gameObject.SetActive(false);
+                }
+                if (wallbar.ClimbRope) climbPrompt.SetActive(false);
             }
-            if(wallbar.ClimbRope) climbPrompt.SetActive(false);        
+
+            else
+            {
+                if (Input.GetKey("4") && !wallbar.ClimbRope)
+                {
+
+                    Debug.Log("starts leading");
+                    Debug.Log("wallLeader");
+                    if (wallbar.isFalling)
+                    {
+                        wallbar.fallCoil = true;
+                    }
+                    wallbar.ClimbRope = true;
+                    climbPrompt.SetActive(false);
+                    currentMovement = new Vector3(0f, 0f, 0f);
+                    wallbar.isFalling = false;
+                    wallbar.onLedge = false;
+                    // other.gameObject.SetActive(false);
+                }
+                if (wallbar.ClimbRope) climbPrompt.SetActive(false);
+            }
+
+
         }
 
         if (other.gameObject.CompareTag("wallFollower") && wallbar.isFollower)
         {
             Debug.Log("Followerd" );
-            
-            climbPrompt.SetActive(true);
-            if ((Input.GetKey("e") || Input.GetKey("[4]")) && !wallbar.FollowRope)
+            if (isPlayer1)
             {
-                Debug.Log("Starts following");
-                wallbar.FollowRope = true;
-                climbPrompt.SetActive(false);
-                currentMovement = new Vector3(0f, 0f, 0f);
-                wallbar.isFalling = false;
-                wallbar.onLedge = false;
+                climbPrompt.SetActive(true);
+                if ((Input.GetKey("e")) && !wallbar.FollowRope)
+                {
+                    Debug.Log("Starts following");
+                    wallbar.FollowRope = true;
+                    climbPrompt.SetActive(false);
+                    currentMovement = new Vector3(0f, 0f, 0f);
+                    wallbar.isFalling = false;
+                    wallbar.onLedge = false;
 
+                }
+                if (wallbar.FollowRope) climbPrompt.SetActive(false);
             }
-            if (wallbar.FollowRope) climbPrompt.SetActive(false);
+
+            else
+            {
+                climbPrompt.SetActive(true);
+                if ((Input.GetKey("4")) && !wallbar.FollowRope)
+                {
+                    Debug.Log("Starts following");
+                    wallbar.FollowRope = true;
+                    climbPrompt.SetActive(false);
+                    currentMovement = new Vector3(0f, 0f, 0f);
+                    wallbar.isFalling = false;
+                    wallbar.onLedge = false;
+
+                }
+                if (wallbar.FollowRope) climbPrompt.SetActive(false);
+            }
+
+
         }
 
         if (other.gameObject.CompareTag("climbEnd"))
         {
-            endClimbPrompt.SetActive(true);
-            if ((Input.GetKey("f") || Input.GetKey("[4]")) && (wallbar.ClimbRope || wallbar.FollowRope))
+            if (isPlayer1)
             {
-                characterController.enabled = false;
-                wallbar.ClimbRope = false;
-                wallbar.isFalling = false;
-                wallbar.FollowRope = false;
-                wallbar.onLedge = true;
-                GameObject endClimber = other.gameObject;
-                this.transform.position = endClimber.transform.position;
-                Debug.Log("Should be transported to " + endClimber.transform.position);
-                endClimbPrompt.SetActive(false);
-                characterController.enabled = true;
+                endClimbPrompt.SetActive(true);
+                if ((Input.GetKey("f")) && (wallbar.ClimbRope || wallbar.FollowRope))
+                {
+                    characterController.enabled = false;
+                    wallbar.ClimbRope = false;
+                    wallbar.isFalling = false;
+                    wallbar.FollowRope = false;
+                    wallbar.onLedge = true;
+                    GameObject endClimber = other.gameObject;
+                    this.transform.position = endClimber.transform.position;
+                    Debug.Log("Should be transported to " + endClimber.transform.position);
+                    endClimbPrompt.SetActive(false);
+                    characterController.enabled = true;
+                }
+
+                else
+                {
+                    endClimbPrompt.SetActive(true);
+                    if ((Input.GetKey("5")) && (wallbar.ClimbRope || wallbar.FollowRope))
+                    {
+                        characterController.enabled = false;
+                        wallbar.ClimbRope = false;
+                        wallbar.isFalling = false;
+                        wallbar.FollowRope = false;
+                        wallbar.onLedge = true;
+                        GameObject endClimber = other.gameObject;
+                        this.transform.position = endClimber.transform.position;
+                        Debug.Log("Should be transported to " + endClimber.transform.position);
+                        endClimbPrompt.SetActive(false);
+                        characterController.enabled = true;
+                    }
+                }
             }
 
         }
