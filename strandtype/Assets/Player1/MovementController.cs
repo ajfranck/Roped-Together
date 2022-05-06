@@ -106,16 +106,26 @@ public class MovementController : MonoBehaviour
                 Rotation();
             }
         }
-        if (warmthbar.isInteracting == true || hotbar.isGrabbing == true || p2hotbar.isGrabbing == true)// || mining.isMining)
+        if (warmthbar.isInteracting == true)// || hotbar.isGrabbing == true || p2hotbar.isGrabbing == true)// || mining.isMining)
         {
-            Debug.Log("disabling the movement " );
-            OnDisable();
+            //Debug.Log("disabling the movement " );
+            //OnDisable();
+            if(isPlayer1) playerInput.CharacterController.Disable();
+            else player2Input.CharacterController.Disable();
         }
         else if(!isEndingClimb)
         {
             OnEnable();
         }
 
+        if(hotbar.isGrabbing)
+        {
+            playerInput.CharacterController.Disable();
+        }
+        if(p2hotbar.isGrabbing)
+        {
+            player2Input.CharacterController.Disable();
+        }
         if (characterController.isGrounded)
         {
             wallbar.fallIfNoAnchors = true;
