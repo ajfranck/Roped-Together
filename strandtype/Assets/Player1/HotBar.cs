@@ -179,7 +179,7 @@ public class HotBar : MonoBehaviour
                 DisplayPrompt(LadderItem);
             }
 
-            if (Input.GetKey("[4]") && !pickedUp)
+            if (Input.GetKey("e") && !pickedUp)
             {
                 StartCoroutine(PickUp(LadderItem, other));
             }

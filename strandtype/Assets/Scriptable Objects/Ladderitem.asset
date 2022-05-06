@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: LadderItem
   description: Ladder - climbing smaller cliffs
-  artwork: {fileID: 21300000, guid: af97e9aeed673ef4d817483be6bdeb0d, type: 3}
-  image: {fileID: 21300000, guid: af97e9aeed673ef4d817483be6bdeb0d, type: 3}
+  artwork: {fileID: 21300000, guid: 2288f133caccaa6419374caa50ad026b, type: 3}
+  image: {fileID: 21300000, guid: 2288f133caccaa6419374caa50ad026b, type: 3}
   TheFunction:
     m_PersistentCalls:
       m_Calls:

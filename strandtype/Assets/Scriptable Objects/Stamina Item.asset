@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: StaminaItem
   description: Stamina Drink for Stamina
-  artwork: {fileID: 21300000, guid: 34f8402cca3a02f4e9f2d486f6282f69, type: 3}
-  image: {fileID: 21300000, guid: 34f8402cca3a02f4e9f2d486f6282f69, type: 3}
+  artwork: {fileID: 21300000, guid: 90f0c917800bbba41b665726794cde09, type: 3}
+  image: {fileID: 21300000, guid: 90f0c917800bbba41b665726794cde09, type: 3}
   TheFunction:
     m_PersistentCalls:
       m_Calls:
