@@ -184,7 +184,7 @@ public class LaderScript : MonoBehaviour
                 //display a prompt
                 if (i < MaxLength && holdingLadder)
                 {
-                    if ((Input.GetKey("space") || Input.GetKey("[0]")) && isWaiting == false)
+                    if (Input.GetKey("[0]") && isWaiting == false)
                     {
                         isWaiting = true;
                         if (i == 0)
@@ -205,7 +205,7 @@ public class LaderScript : MonoBehaviour
                 }
                 else
                 {
-                    if ((Input.GetKeyDown("f") || Input.GetKeyDown("[6]")) && x == 0 && FPressed == false)
+                    if (Input.GetKeyDown("[6]") && x == 0 && FPressed == false)
                     {
                         LadderBody2.useGravity = true;
                         LadderBody2.isKinematic = false;
@@ -236,10 +236,11 @@ public class LaderScript : MonoBehaviour
                         
                     }
 
+                    ladderClimbPrompt.SetActive(true);
                     //display a prompt
                     if (i < MaxLength + 4 && holdingLadder)
                     {
-                        if ((Input.GetKey("space") || Input.GetKey("[0]")) && isWaiting == false)
+                        if (Input.GetKey("[0]") && isWaiting == false)
                         {
                             isWaiting = true;
                             if (i == 0)
@@ -260,7 +261,7 @@ public class LaderScript : MonoBehaviour
                     }
                     else
                     {
-                        if ((Input.GetKeyDown("f") || Input.GetKeyDown("[6]")) && x == 0 && FPressed == false)
+                        if (Input.GetKeyDown("[6]") && x == 0 && FPressed == false)
                         {
                             LadderBody2.useGravity = true;
                             LadderBody2.isKinematic = false;
