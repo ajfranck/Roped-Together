@@ -68,7 +68,7 @@ public class WallBar : MonoBehaviour
             {
                 if (!onLedge)
                 {
-                    loseStamina(.03f);
+                    loseStamina(.04f);
                 }
                 grip += 0.7f;
             }
@@ -83,7 +83,10 @@ public class WallBar : MonoBehaviour
         else // (movementController.characterController.isGrounded)
         {
             Debug.Log("adding stamina");
-            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded && !mining.isMining) addStamina(0.175f);
+            if (P1currentStamina < P1MaxStamina && movementController.characterController.isGrounded && !mining.isMining && !onLedge)
+            {
+                addStamina(0.175f);
+            }
             grip = 100f;
         }
 

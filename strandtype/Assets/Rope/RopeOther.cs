@@ -167,6 +167,10 @@ public class RopeOther : MonoBehaviour
          }
     }
 
+	//void Restart()
+    //{
+	//	Coil()
+   // }
 
 	void RecoilOnFollow()
 	{
@@ -200,7 +204,7 @@ public class RopeOther : MonoBehaviour
 	void UnpinOnFall()
     {
 		Debug.Log("FALLING " + wallbar.isFalling);
-		wallbar.P1currentStamina = 1f;
+		//wallbar.P1currentStamina = 1f;
 		int c = 0;
 		for(int i = 0; i<pinnedList.Length; i++)
         {
@@ -255,6 +259,10 @@ public class RopeOther : MonoBehaviour
 		else if (wallbar.isFalling)
 		{
 			theLeader.transform.position = points[UnravelIndex].position;
+            if (Input.GetKey("c"))
+            {
+
+            }
 		}
 
 		if (wallbar.fallCoil && !hasReattached)
