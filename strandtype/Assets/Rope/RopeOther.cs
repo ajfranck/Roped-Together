@@ -239,11 +239,11 @@ public class RopeOther : MonoBehaviour
 		if (wallbar.ClimbRope)
 		{
 			hasCheckedForReset = false;
-			if (!UnraveledAtClimbStart)
-			{
-				UnravelAction(distanceFromAnchor);
-				UnraveledAtClimbStart = true;
-			}
+			//if (!UnraveledAtClimbStart)
+			//{
+			//	UnravelAction(distanceFromAnchor);
+				//UnraveledAtClimbStart = true;
+			//}
 			Debug.Log("Unravel Index" + points[UnravelIndex].position);
 			if (UnravelIndex > 0)
 			{
@@ -268,12 +268,20 @@ public class RopeOther : MonoBehaviour
 				if (!isAnchorThere)
 				{
 					ResetClimb();
+					ClearAnchors();
 				}
 				hasCheckedForReset = true;
 			}
+
             else
             {
 				theLeader.transform.position = points[UnravelIndex].position;
+				bool anchorCheck2 = ShouldReset();
+                if (!anchorCheck2)
+                {
+					ResetClimb();
+					ClearAnchors();
+                }
 			}
 		}
 
@@ -295,9 +303,9 @@ public class RopeOther : MonoBehaviour
 				UnravelAll();
 				UnravelIndex = ResetUnravelIndexTo;
 				SwitchClimberAndFollower();
-            }
+				wallbar.theAnchor = null;
+			}
 		}
-
 	}
 	private bool ShouldReset()
 	{
@@ -320,6 +328,7 @@ public class RopeOther : MonoBehaviour
 		UnravelAll();
 		CoilRope(0, whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
 		UnravelIndex = ResetUnravelIndexTo;
+		wallbar.theAnchor = null;
 	}
 
 
@@ -354,6 +363,8 @@ public class RopeOther : MonoBehaviour
 		wallbar.FollowRope = false;
 		wallbar.isFollower = false;
 		SetLeaderFollower();
+		UnravelAll();
+		UnravelIndex = ResetUnravelIndexTo;
 		CoilRope(0, whichToCoil1, whichToCoil2, TheBelt1, TheBelt2);
 		Debug.Log("Changes guys, wallbar isFollower " + wallbar.FollowRope + "wallbar follower is leader " + wallbarFollower.ClimbRope);
 		
@@ -493,12 +504,14 @@ public class RopeOther : MonoBehaviour
 			if (belt)
 			{
 				pinnedList[i] = Belt1;
+				points[i].pinnedTo = pinnedList[i];
 				belt = false;
 			}
 
 			else if (!belt)
 			{
 				pinnedList[i] = Belt2;
+				points[i].pinnedTo = pinnedList[i];
 				belt = true;
 			}
 		}

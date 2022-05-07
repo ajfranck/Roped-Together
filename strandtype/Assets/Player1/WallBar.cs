@@ -173,14 +173,26 @@ public class WallBar : MonoBehaviour
         {
             if (ClimbRope)
             {
-                foreach (Anchor anchor in anchors)
+                for(int i = 0; i<anchors.Count; i++)
                 {
-                    if (other.gameObject.name == anchor.AnchorObject.name)
+                    if(anchors[i] != null)
                     {
-                        dontAnchor = true;
-                        Debug.Log("DONT ANCHOR");
+                        if(other.gameObject.name == anchors[i].AnchorObject.name)
+                        {
+                            dontAnchor = true;
+                            Debug.Log("DONT ANCHOR FOR");
+                        }
                     }
                 }
+               // foreach (Anchor anchor in anchors)
+                //{
+                 //   Debug.Log("fucking anchors thing " + anchor);
+                 //   if (other.gameObject.name == anchor.AnchorObject.name)
+                 //   {
+                 //       dontAnchor = true;
+                  //      Debug.Log("DONT ANCHOR");
+                  //  }
+              //  }
 
                 if (!dontAnchor)
                 {
