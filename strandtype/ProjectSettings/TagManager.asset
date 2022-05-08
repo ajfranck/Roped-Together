@@ -39,6 +39,7 @@ TagManager:
   - exitscene
   - timeBar
   - StaminaBowl
+  - ladderBridge2
   layers:
   - Default
   - TransparentFX
