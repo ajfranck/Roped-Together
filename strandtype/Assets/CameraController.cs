@@ -54,6 +54,14 @@ public class CameraController : MonoBehaviour
         {
             firePosition = new Vector3(-14.5f,-7.625f,-21.93f);
         }
+        else if(warmthbar.fire3)
+        {
+            firePosition = new Vector3(0,0,0);
+        }
+        else if(warmthbar.fire4)
+        {
+            firePosition = new Vector3(0,0,0);
+        }
         
         transform.position = Vector3.SmoothDamp(transform.position, firePosition, ref velocity, smoothTime);
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class WarmthBar : MonoBehaviour
 {
@@ -26,11 +27,19 @@ public class WarmthBar : MonoBehaviour
     public bool fire1 = false;
     public bool fire2 = false;
     public bool fire3 = false;
+    public bool fire4 = false;
+    public bool fire5 = false;
+    public bool fire6 = false;
 
     public int lastFire;
 
+    string sceneName;
+    Scene currentScene;
+
     void Start()
     {
+        currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
         LoadPlayer();
         P1currentWarmth = P1MaxWarmth;
         P1HealthBar.P1SetWarmth(P1MaxWarmth);
@@ -38,8 +47,9 @@ public class WarmthBar : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        
+    {       
+        currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
         if(P1currentWarmth > 0)
         {
             loseWarmth(0.02f);
@@ -88,14 +98,23 @@ public class WarmthBar : MonoBehaviour
                 fire3 = true;
                 lastFire = 4;
             }
+            else if(other.gameObject.CompareTag("Fire4"))
+            {
+                fire4 = true;
+                lastFire = 5;
+            }
+            else if(other.gameObject.CompareTag("Fire5"))
+            {
+                fire5 = true;
+                lastFire = 6;
+            }
             if(!other.gameObject.CompareTag("TutorialFire"))
             {
-                lastFire = 1;
                 if(!isInteracting)
                 {
                     p1Interact.SetActive(true);
                 }
-                if(Input.GetKey(KeyCode.E) && player1)
+                if(Input.GetKey("e") && player1)
                 {
                     isInteracting = true;
                     p1Interact.SetActive(false);
@@ -105,7 +124,11 @@ public class WarmthBar : MonoBehaviour
                     p2isInteracting = true;
                     p1Interact.SetActive(false);
                 }
-               if (Input.GetKey("space"))
+                if(Input.GetKey("space") && player1)
+                {
+                    isInteracting = false;
+                }
+                if (Input.GetKey("[0]") && !player1)
                 {
                     isInteracting = false;
                 }
@@ -126,6 +149,9 @@ public class WarmthBar : MonoBehaviour
         fire1 = false;
         fire2 = false;
         fire3 = false;
+        fire4 = false;
+        fire5 = false;
+        fire6 = false;
     }
 
     public void SavePlayer()
@@ -137,23 +163,53 @@ public class WarmthBar : MonoBehaviour
         PlayerData data = SaveSystem.LoadPlayer();
 
         lastFire = data.lastFire;
-        if(lastFire == 1)
+
+        if(sceneName == "Tutorial")
         {
-            if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17); //-15, 5, -13
-            else transform.position = new Vector3(45, -2, -17);
-            Debug.Log("fire one");  
+            if(lastFire == 1)
+            {
+                if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17); //-15, 5, -13
+                else transform.position = new Vector3(45, -2, -17);
+                Debug.Log("fire one");  
+            }
+            else if (lastFire == 2)
+            {
+                Debug.Log("fire two");
+                if(movementController.isPlayer1) transform.position = new Vector3(18.81f, 72f, 98.5f); //-15, 5, -13
+                else transform.position = new Vector3(17.5f, 72f, 98.5f);
+            }
+            else
+            {
+                if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17);
+                else transform.position = new Vector3(45, -2, -17);
+            }
         }
-        else if (lastFire == 2)
+        else if(sceneName == "Level")
         {
-            Debug.Log("fire two");
-            if(movementController.isPlayer1) transform.position = new Vector3(18.81f, 72f, 98.5f); //-15, 5, -13
-            else transform.position = new Vector3(17.5f, 72f, 98.5f);
+            if(lastFire == 4)
+            {
+                ///bottom right fire
+                if(movementController.isPlayer1) transform.position = new Vector3(96.18f, 2.52f, 14.71f); //-15, 5, -13
+                else transform.position = new Vector3(97.2f, 2.52f, 14.71f);
+                Debug.Log("fire three");  
+            }
+            else if(lastFire == 5)
+            {
+                //fire at bottom right
+
+            }
+            else if(lastFire == 6)
+            {
+
+            }
+            else
+            {//level start
+                if(movementController.isPlayer1) transform.position = new Vector3(9.61f, 2.04f, -9.92f); //-15, 5, -13
+                else transform.position = new Vector3(8f, 2.04f, -9.92f);
+                Debug.Log("level start");
+            }
         }
-        else
-        {
-            if(movementController.isPlayer1) transform.position = new Vector3(-37, 4, -17);
-            else transform.position = new Vector3(45, -2, -17);
-        }
+        
     }
 
 }

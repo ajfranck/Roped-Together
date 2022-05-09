@@ -40,6 +40,8 @@ TagManager:
   - timeBar
   - StaminaBowl
   - ladderBridge2
+  - Fire4
+  - Fire5
   layers:
   - Default
   - TransparentFX
