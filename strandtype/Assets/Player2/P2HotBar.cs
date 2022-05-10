@@ -232,6 +232,13 @@ public class P2HotBar : MonoBehaviour
             promptDisplayed = false;
             hasGrabbed = false;
         }
+        if (other.gameObject.CompareTag("StaminaBowl"))
+        {
+            HidePrompt(BowlItem);
+            pickedUp = false;
+            promptDisplayed = false;
+            hasGrabbed = false;
+        }
 
     }
 

@@ -238,6 +238,14 @@ public class HotBar : MonoBehaviour
             hasGrabbed = false;
         }
 
+        if (other.gameObject.CompareTag("StaminaBowl"))
+        {
+            HidePrompt(BowlItem);
+            pickedUp = false;
+            promptDisplayed = false;
+            hasGrabbed = false;
+        }
+
     }
 
         private void ClearInventory()
