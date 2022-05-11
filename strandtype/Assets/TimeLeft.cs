@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TimeLeft : MonoBehaviour
 {
@@ -13,10 +14,14 @@ public class TimeLeft : MonoBehaviour
     public float currentTimeLeft;
 
     public bool startLoss = false;
+    public bool level1StartLoss;
+    public Animator sceneMover;
+    public GameObject deathText;
 
     // Start is called before the first frame update
     void Start()
     {
+        deathText.SetActive(false);
         currentTimeLeft = 100;
     }
     void Update()
@@ -35,13 +40,34 @@ public class TimeLeft : MonoBehaviour
         {
             loseWarmth(0.005f);
         }
+        else if(level1StartLoss)
+        {
+            loseWarmth(0.001f);
+        }
+        if(currentTimeLeft <= 0f)
+        {
+            StartCoroutine(LoadAsynchronously());
+            //loss condition
+        }
     }
 
-    void loseWarmth(float warmthLoss)
+    public void loseWarmth(float warmthLoss)
     {
         currentTimeLeft -= warmthLoss;
         slider.value = currentTimeLeft;
 
+    }
+
+    IEnumerator LoadAsynchronously()
+    {
+        
+        sceneMover.SetTrigger("Start");
+        yield return new WaitForSeconds(2f);
+        deathText.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        //AsyncOperation operation = SceneManager.LoadSceneAsync("Tutorial");
+        SceneManager.LoadScene("Main Menu");
+        //LoadPlayer();
     }
     /*
     public void MaxTimeLeft(float timeisLeft)

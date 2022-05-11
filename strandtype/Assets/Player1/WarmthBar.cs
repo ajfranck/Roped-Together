@@ -11,12 +11,14 @@ public class WarmthBar : MonoBehaviour
     public GameObject p1Inventory;
 
     public float P1MaxWarmth = 100f;
-    public float P1currentWarmth;  
+    public float P1currentWarmth;
+    public TimeLeft timeleft;
 
     public bool isInteracting = false;
     public bool p2isInteracting = false;
     public bool contactingFire = false;
     public bool player1;
+    bool veryCold;
     
     public P1HealthBar P1HealthBar;
 
@@ -52,12 +54,19 @@ public class WarmthBar : MonoBehaviour
         sceneName = currentScene.name;
         if(P1currentWarmth > 0)
         {
-            loseWarmth(0.02f);
-        }    
+            veryCold = false;
+            loseWarmth(0.05f);
+        }
+
+        if(veryCold)
+        {
+            timeleft.loseWarmth(0.03f);
+        }
 
         if(P1currentWarmth <= 0)
         {
-            Debug.Log("dead from cold");
+            veryCold = true;
+            P1currentWarmth = 0f;
         }
         //if not in trigger, -1 health per second
         //add trigger collider here
