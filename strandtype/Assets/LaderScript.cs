@@ -36,6 +36,11 @@ public class LaderScript : MonoBehaviour
     private Vector3 SpawnPositionBridge = new Vector3(8f, 4.7f, 35.8f);
     private Vector3 SpawnPositionBridge2 = new Vector3(27f, 4f, 61.5f);
     Vector3 NewPosition;
+    public AudioSource Source;
+    public AudioClip Clip;
+
+    public AudioClip ClipSegments;
+    public AudioClip ClipTop;
 
     bool holdingLadder = true;
 
@@ -124,6 +129,7 @@ public class LaderScript : MonoBehaviour
         HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
 
         yield return new WaitForSeconds(3f);
+        PlaySound(Clip);
         LadderBody2.isKinematic = true;
         i = 0;
         x = 0;
@@ -131,6 +137,14 @@ public class LaderScript : MonoBehaviour
         //holdingLadder = false;
         duplicated = false;  
     }
+
+    void PlaySound(AudioClip theClip)
+    {
+        Source.clip = theClip;
+        Debug.Log("Play happens");
+        Source.Play();
+    }
+
     IEnumerator Waiter3()
     {
         ladderClimbPrompt.SetActive(false);
@@ -199,6 +213,7 @@ public class LaderScript : MonoBehaviour
                         {
                             NewPosition = StackFunction(SpawnPosition, i);
                             Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 0, 0), LadderParent2.transform);
+                            PlaySound(ClipSegments);
                             i++;
                         }
                         StartCoroutine(Waiter());
@@ -255,6 +270,7 @@ public class LaderScript : MonoBehaviour
                             {
                                 NewPosition = StackFunction(SpawnPosition, i);
                                 Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                                PlaySound(ClipSegments);
                                 i++;
                             }
                             StartCoroutine(Waiter());
@@ -311,6 +327,7 @@ public class LaderScript : MonoBehaviour
                             {
                                 NewPosition = StackFunction(SpawnPosition, i);
                                 Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                                PlaySound(ClipSegments);
                                 i++;
                             }
                             StartCoroutine(Waiter());
