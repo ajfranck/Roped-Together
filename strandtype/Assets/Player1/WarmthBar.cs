@@ -40,7 +40,7 @@ public class WarmthBar : MonoBehaviour
     {
         currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
-        LoadPlayer();
+        //LoadPlayer();
         P1currentWarmth = P1MaxWarmth;
         P1HealthBar.P1SetWarmth(P1MaxWarmth);
     }

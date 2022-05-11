@@ -101,7 +101,7 @@ public class MovementController : MonoBehaviour
             if (!wallbar.isFalling)
             {
                 Debug.Log("Not falling should have gravity");
-                Gravity(-9.8f);
+                Gravity(-3f);
                 characterController.Move(currentMovement * Time.deltaTime * 10f);
                 Rotation();
             }
