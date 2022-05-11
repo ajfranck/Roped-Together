@@ -72,7 +72,7 @@ public class P2HotBar : MonoBehaviour
         //Debug.Log("testing 12345 " + HotBars.HotBarListP2[HotBars.HotBarPositionP2].name);
         HandleHotBar();
 
-        if (warmthbar.isInteracting)
+        if (warmthbar.p2isInteracting)
         {
             HandleBackPack();
             BackgroundSelect(0);
@@ -87,6 +87,7 @@ public class P2HotBar : MonoBehaviour
 
     IEnumerator BackpackFadeIn()
     {
+        //BackpackUI.SetActive(true);
         yield return new WaitForSeconds(0.7f);
         if (BackpackUI.alpha < 1f)
         {
@@ -118,7 +119,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(CubeItem);
             }
 
-            if (Input.GetKey("4") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(CubeItem, other));
             }
@@ -132,7 +133,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(RopeItem);
             }
 
-            if (Input.GetKey("4") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(RopeItem, other));
             }
@@ -145,7 +146,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(BowlItem);
             }
 
-            if (Input.GetKey("4") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(BowlItem, other));
             }
@@ -159,7 +160,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(StaminaItem);
             }
 
-            if (Input.GetKey("4") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(StaminaItem, other));
             }
@@ -173,7 +174,7 @@ public class P2HotBar : MonoBehaviour
                 DisplayPrompt(LadderItem);
             }
 
-            if (Input.GetKey("4") && !pickedUp)
+            if (Input.GetKey("[4]") && !pickedUp)
             {
                 StartCoroutine(PickUp(LadderItem, other));
             }
@@ -226,6 +227,13 @@ public class P2HotBar : MonoBehaviour
         }
 
         if (other.gameObject.CompareTag("WarmthBowl"))
+        {
+            HidePrompt(BowlItem);
+            pickedUp = false;
+            promptDisplayed = false;
+            hasGrabbed = false;
+        }
+        if (other.gameObject.CompareTag("StaminaBowl"))
         {
             HidePrompt(BowlItem);
             pickedUp = false;
@@ -323,7 +331,7 @@ public class P2HotBar : MonoBehaviour
         {
 
             SelectItemBackpack();
-            if (Input.GetKeyDown("[5]") && BackpackPosition < 11)
+            if (Input.GetKeyDown("[3]") && BackpackPosition < 11)
             {
                 addAmount = 1;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
@@ -342,7 +350,7 @@ public class P2HotBar : MonoBehaviour
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
                 BackgroundSelect(addAmount);
             }
-            if (Input.GetKeyDown("[3]") && BackpackPosition > 2)
+            if (Input.GetKeyDown("[5]") && BackpackPosition > 2)
             {
                 addAmount = -3;
                 Debug.Log("Backpack Position is: " + BackpackPosition + "item is: " + StaticBackPack.BackpackList[BackpackPosition]);
@@ -350,7 +358,7 @@ public class P2HotBar : MonoBehaviour
             }
 
 
-            if (Input.GetKey("4") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
+            if (Input.GetKey("[4]") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
             {
                 HotBarToBackpack();
                 Debug.Log("runs f");
@@ -428,7 +436,7 @@ public class P2HotBar : MonoBehaviour
 
 
 
-            if (Input.GetKeyDown("4"))
+            if (Input.GetKeyDown("[4]"))
             {
 
                 if (HotBars.HotBarListP2[HotBars.HotBarPositionP2] == null)

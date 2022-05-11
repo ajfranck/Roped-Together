@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
     public float smoothTime = 0.5f;
     public WarmthBar warmthbar;
     new Vector3 firePosition;
+    Quaternion fireRotation;
 
     private Vector3 velocity;
     private Camera cam;
@@ -56,18 +57,21 @@ public class CameraController : MonoBehaviour
         }
         else if(warmthbar.fire3)
         {
-            firePosition = new Vector3(0,0,0);
+            firePosition = new Vector3(99.65477f,7.28326797f,9.95687675f);
         }
         else if(warmthbar.fire4)
         {
-            firePosition = new Vector3(0,0,0);
+            firePosition = new Vector3(-12.5218239f,57.6039925f,101.274681f);
         }
         
         transform.position = Vector3.SmoothDamp(transform.position, firePosition, ref velocity, smoothTime);
+
     }
 
     void Move()
     {
+        Quaternion target = Quaternion.Euler(35f,0f,0f);
+        transform.rotation = target;
         Vector3 centerPoint = targets.position;
         Vector3 newPosition = centerPoint + offset;
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);

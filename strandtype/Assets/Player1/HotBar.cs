@@ -245,6 +245,13 @@ public class HotBar : MonoBehaviour
             promptDisplayed = false;
             hasGrabbed = false;
         }
+        if (other.gameObject.CompareTag("LadderItem"))
+        {
+            HidePrompt(BowlItem);
+            pickedUp = false;
+            promptDisplayed = false;
+            hasGrabbed = false;
+        }
 
     }
 

@@ -110,7 +110,11 @@ public class WarmthBar : MonoBehaviour
             }
             if(!other.gameObject.CompareTag("TutorialFire"))
             {
-                if(!isInteracting)
+                if(!isInteracting && player1)
+                {
+                    p1Interact.SetActive(true);
+                }
+                if(!p2isInteracting && !player1)
                 {
                     p1Interact.SetActive(true);
                 }
@@ -130,7 +134,7 @@ public class WarmthBar : MonoBehaviour
                 }
                 if (Input.GetKey("[0]") && !player1)
                 {
-                    isInteracting = false;
+                    p2isInteracting = false;
                 }
             }
             if(P1currentWarmth <= P1MaxWarmth)

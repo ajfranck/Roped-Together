@@ -42,6 +42,8 @@ TagManager:
   - ladderBridge2
   - Fire4
   - Fire5
+  - ladderBridge3
+  - ladderCliff2
   layers:
   - Default
   - TransparentFX
