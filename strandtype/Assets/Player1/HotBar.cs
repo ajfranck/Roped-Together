@@ -130,18 +130,6 @@ public class HotBar : MonoBehaviour
 
         }
 
-        if (other.gameObject.tag.Contains("RopeItem"))
-        {
-            if (!promptDisplayed && !isGrabbing)
-            {
-                DisplayPrompt(RopeItem);
-            }
-
-            if (Input.GetKey("e") && !pickedUp)
-            {
-                StartCoroutine(PickUp(RopeItem, other));
-            }
-        }
 
         if (other.gameObject.tag.Contains("WarmthBowl"))
         {  

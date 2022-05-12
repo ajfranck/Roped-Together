@@ -126,19 +126,6 @@ public class P2HotBar : MonoBehaviour
 
         }
 
-        if (other.gameObject.tag.Contains("RopeItem"))
-        {
-            if (!promptDisplayed && !hasGrabbed)
-            {
-                DisplayPrompt(RopeItem);
-            }
-
-            if (Input.GetKey("[4]") && !pickedUp)
-            {
-                StartCoroutine(PickUp(RopeItem, other));
-            }
-        }
-
         if (other.gameObject.tag.Contains("WarmthBowl"))
         {
             if (!promptDisplayed && !hasGrabbed)

@@ -144,11 +144,26 @@ public class RopeOther : MonoBehaviour
 
 		DrawSticks();
 		if (pickedUp)
-		{
+		{			
 			HandleClimbing();
 			HandleFollowing();
+			CheckInFront();
 		}
 	}
+
+	void CheckInFront()
+    {
+		float leaderY = theLeader.transform.position.y;
+		leaderY += 2f;
+		float followerY = theFollower.transform.position.y;
+		float followerX = theFollower.transform.position.x;
+		float followerZ = theFollower.transform.position.z;
+		if(leaderY < followerY)
+        {
+			followerY -= 2f;
+			theFollower.transform.position = new Vector3(followerX, followerY, followerZ);
+        }
+    }
 
 	void HandleFollowing()
     {
@@ -711,7 +726,7 @@ public class RopeOther : MonoBehaviour
 		if (other.gameObject.tag.Contains("Player"))
 		{
 			Debug.Log("Hit player");
-			if (Input.GetKey("e"))
+			if (Input.GetKey("e") || Input.GetKey("[4]"))
 			{
 				Debug.Log("Hit e");
 				PickedUp();

@@ -308,7 +308,7 @@ public class MovementController : MonoBehaviour
             climbPrompt.SetActive(true);
             if (isPlayer1)
             {
-                if (Input.GetKey("e") && !wallbar.ClimbRope)
+                if (Input.GetKey("e") && !wallbar.ClimbRope && wallbar.P1currentStamina>0f)
                 {
 
                     Debug.Log("starts leading");
@@ -329,7 +329,7 @@ public class MovementController : MonoBehaviour
 
             else
             {
-                if (Input.GetKey("4") && !wallbar.ClimbRope)
+                if (Input.GetKey("4") && !wallbar.ClimbRope && wallbar.P1currentStamina > 0f)
                 {
 
                     Debug.Log("starts leading");
