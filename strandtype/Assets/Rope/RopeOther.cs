@@ -154,11 +154,18 @@ public class RopeOther : MonoBehaviour
 	void CheckInFront()
     {
 		float leaderY = theLeader.transform.position.y;
+		float anchorY = wallbar.theAnchor.transform.position.y;
+		anchorY += 2f;
 		leaderY += 2f;
 		float followerY = theFollower.transform.position.y;
 		float followerX = theFollower.transform.position.x;
 		float followerZ = theFollower.transform.position.z;
-		if(leaderY < followerY)
+        if (wallbar.isFalling && followerY > anchorY)
+        {
+			followerY -= 2f;
+			theFollower.transform.position = new Vector3(followerX, followerY, followerZ);
+        }
+		else if(leaderY < followerY && !wallbar.isFalling)
         {
 			followerY -= 2f;
 			theFollower.transform.position = new Vector3(followerX, followerY, followerZ);
