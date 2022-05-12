@@ -251,7 +251,7 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    void OnEnable()
+    public void OnEnable()
     {
         if(isPlayer1) playerInput.CharacterController.Enable();
         else player2Input.CharacterController.Enable();
@@ -259,7 +259,7 @@ public class MovementController : MonoBehaviour
     }
 
 
-    void OnDisable()
+    public void OnDisable()
     {
         if(isPlayer1) playerInput.CharacterController.Disable();
         else player2Input.CharacterController.Disable();
