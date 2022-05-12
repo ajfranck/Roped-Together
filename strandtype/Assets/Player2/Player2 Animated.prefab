@@ -1448,7 +1448,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4541851082664062425}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acab327f7ebca074488858e79171fdcc, type: 3}
   m_Name: 
@@ -1457,6 +1457,7 @@ MonoBehaviour:
   p1Inventory: {fileID: 0}
   P1MaxWarmth: 100
   P1currentWarmth: 0
+  timeleft: {fileID: 0}
   isInteracting: 0
   p2isInteracting: 0
   contactingFire: 0
@@ -1466,6 +1467,9 @@ MonoBehaviour:
   fire1: 0
   fire2: 0
   fire3: 0
+  fire4: 0
+  fire5: 0
+  fire6: 0
   lastFire: 0
 --- !u!114 &4541851082664062400
 MonoBehaviour:
@@ -1645,6 +1649,10 @@ MonoBehaviour:
   mining: {fileID: 4541851082664062402}
   warmthbar: {fileID: 4541851082664062406}
   p2hotbar: {fileID: 4541851082664062400}
+  Source: {fileID: 0}
+  Clip: {fileID: 0}
+  ClipSegments: {fileID: 0}
+  ClipTop: {fileID: 0}
 --- !u!114 &4541851082664062410
 MonoBehaviour:
   m_ObjectHideFlags: 0
