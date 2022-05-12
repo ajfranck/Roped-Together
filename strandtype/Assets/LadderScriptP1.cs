@@ -36,6 +36,7 @@ public class LadderScriptP1 : MonoBehaviour
     private Vector3 SpawnPositionBridge = new Vector3(8f, 4.7f, 35.8f);
     private Vector3 SpawnPositionBridge2 = new Vector3(27f, 4f, 61.5f);
     private Vector3 SpawnPositionBridge3 = new Vector3(-19.19f, 59f, 149.74f);
+    private Vector3 SpawnPositionBridge4 = new Vector3(-5f, 52f, 192.24f);
     private Vector3 SpawnPositionCliff2 = new Vector3(11.89f, 52.5f, 118.59f);
     Vector3 NewPosition;
     public AudioSource Source;
@@ -458,6 +459,63 @@ public class LadderScriptP1 : MonoBehaviour
                             LadderBody2.isKinematic = false;
                             FPressed = true;
                             LadderBody2.AddTorque(LadderParent.transform.forward * (MaxLength * 75));
+                            x++;
+                            StartCoroutine(Waiter2());
+                        }
+                        else
+                        {
+                            
+                            //StartCoroutine(BeginDestruction2());
+                            FPressed = false;
+                        }
+                    }
+
+            }
+
+            if(other.gameObject.tag.Contains("ladderBridge4"))
+                {
+                    if (holdingLadder && !duplicated)
+                    {
+                        ladderClimbPrompt.SetActive(true);
+                        LadderParent2 = Instantiate(LadderParent);
+                        duplicated = true;
+                        LadderBody2 = LadderParent2.GetComponent<Rigidbody>();
+
+                        
+                    }
+                    
+                    ladderClimbPrompt.SetActive(true);
+                    //display a prompt
+                    if (i < MaxLength + 3 && holdingLadder)
+                    {
+                        if (Input.GetKey("space") && isWaiting == false)
+                        {
+                            isWaiting = true;
+                            if (i == 0)
+                            {
+                                SpawnPosition = SpawnPositionBridge4;//PositionClass();
+                                LadderParent2.transform.position = this.transform.position + this.transform.forward * SpawnDistance;
+                                GameObject Ladder = Instantiate(LadderSegment, SpawnPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                                i++;
+                            }
+                            else
+                            {
+                                NewPosition = StackFunction(SpawnPosition, i);
+                                Instantiate(LadderSegment, NewPosition, Quaternion.Euler(0, 90, 0), LadderParent2.transform);
+                                PlaySound(ClipSegments);
+                                i++;
+                            }
+                            StartCoroutine(Waiter());
+                        }
+                    }
+                    else
+                    {
+                        if (Input.GetKeyDown("f") && x == 0 && FPressed == false)
+                        {
+                            LadderBody2.useGravity = true;
+                            LadderBody2.isKinematic = false;
+                            FPressed = true;
+                            LadderBody2.AddTorque(LadderParent.transform.forward * (MaxLength * 75) * -1);
                             x++;
                             StartCoroutine(Waiter2());
                         }

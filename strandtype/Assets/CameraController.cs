@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     public Vector3 offset;
     public float smoothTime = 0.5f;
     public WarmthBar warmthbar;
+    public levelend levelend;
     new Vector3 firePosition;
     Quaternion fireRotation;
 
@@ -19,6 +20,8 @@ public class CameraController : MonoBehaviour
 
     public bool camera1;
 
+    Quaternion targetRotation = new Quaternion(-5.981f, 17.704f, 0f, 1);
+
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -26,16 +29,20 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-
-        if(warmthbar.isInteracting && camera1)
+        
+        if(levelend.startRotation == true)
+        {
+            FinalMove();
+        }
+        else if(warmthbar.isInteracting && camera1)
         {
             Zoom();
         }
-        if(warmthbar.p2isInteracting && !camera1)
+        else if(warmthbar.p2isInteracting && !camera1)
         {
             Zoom();
         }
-        if(!warmthbar.isInteracting)
+        else if(!warmthbar.isInteracting)
         {
             Move();
         }
@@ -75,6 +82,13 @@ public class CameraController : MonoBehaviour
         Vector3 centerPoint = targets.position;
         Vector3 newPosition = centerPoint + offset;
         transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
+    }
+
+    void FinalMove()
+    {
+        cam.rect = new Rect(0,0,1,1);
+        transform.position = Vector3.SmoothDamp(transform.position, new Vector3(-27.77f, 115.6f, 228.23f), ref velocity, 3f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(-5f, 17f, 0f), Time.deltaTime * 0.2f);
     }
     
    

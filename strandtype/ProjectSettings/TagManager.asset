@@ -44,6 +44,8 @@ TagManager:
   - Fire5
   - ladderBridge3
   - ladderCliff2
+  - ladderBridge4
+  - endLevel1
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Mining : MonoBehaviour
 {
 
+    //credit to gabriel aguilar and brackeys for the idea!
+
     bool promptDisplayed = false;
     public bool isMining = false;
     public bool miningPossible = false;
@@ -107,7 +109,7 @@ public class Mining : MonoBehaviour
         else p2hotbar.isGrabbing = false;
     }
 
-
+    
 
     void Explode(GameObject originalObject)
     {
