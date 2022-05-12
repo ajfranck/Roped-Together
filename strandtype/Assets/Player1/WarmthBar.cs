@@ -55,7 +55,7 @@ public class WarmthBar : MonoBehaviour
         if(P1currentWarmth > 0)
         {
             veryCold = false;
-            loseWarmth(0.05f);
+            loseWarmth(0.01f);
         }
 
         if(veryCold)
