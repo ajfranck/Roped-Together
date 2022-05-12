@@ -73,7 +73,7 @@ public class WallBar : MonoBehaviour
             {
                 if (!onLedge)
                 {
-                    loseStamina(.04f);
+                    loseStamina(.02f);
                 }
                 grip += 0.7f;
             }
@@ -96,15 +96,12 @@ public class WallBar : MonoBehaviour
         if (FollowRope)
         {
             Debug.Log("LOSING STAMINA FOLLOW " + P1currentStamina);
-            if (!onLedge)
-            {
-                loseStamina(0.01f);
-            }
+           // if (!onLedge)
+           // {
+               // loseStamina(0.01f);
+            //}
             
-            if(P1currentStamina <= 0f)
-            {
-                isFalling = true;
-            }
+
         }
 
 
