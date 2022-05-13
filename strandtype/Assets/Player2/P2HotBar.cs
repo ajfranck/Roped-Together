@@ -189,11 +189,15 @@ public class P2HotBar : MonoBehaviour
     }
 
     void Drop()
-    {
+    {       
         GameObject obj = HotBars.HotBarListP2[HotBars.HotBarPositionP2].theObject;
-        Instantiate(obj, this.transform.position, new Quaternion(0, 0f, 0f, 0f));
+        Debug.Log("Should drop " + obj);
+        float xPos = this.transform.position.x;
+        float yPos = this.transform.position.y +5f;
+        float zPos = this.transform.position.z;
+        Instantiate(obj, new Vector3(xPos, yPos, zPos), new Quaternion(0, 0f, 0f, 0f));
         HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
-        HotBarSpritesP14[HotBars.HotBarPositionP2].GetComponent<Image>().sprite = BackgroundImage.GetComponent<Image>().sprite;
+        HotBarSpritesP1[HotBars.HotBarPositionP2].GetComponent<Image>().sprite = BackgroundImage.GetComponent<Image>().sprite;
     }
 
 
