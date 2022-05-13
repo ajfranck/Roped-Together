@@ -193,6 +193,14 @@ public class HotBar : MonoBehaviour
         promptDisplayed = false;
     }
 
+    void Drop()
+    {      
+        GameObject obj = HotBars.HotBarListP1[HotBars.HotBarPositionP1].theObject;
+        Instantiate(obj, this.transform.position, new Quaternion(0,0f,0f,0f));
+        HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
+        HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = BackgroundImage.GetComponent<Image>().sprite;
+    }
+
     private void OnTriggerExit(Collider other)
         {
 
@@ -277,6 +285,7 @@ public class HotBar : MonoBehaviour
             }
 
         }
+
 
         private void DisplayPrompt(Item TheItem)
         {
@@ -475,6 +484,12 @@ public class HotBar : MonoBehaviour
                 {
                     HotBars.HotBarListP1[HotBars.HotBarPositionP1].CallFunction();
                 }
+            }
+
+
+            if (Input.GetKeyDown("c"))
+            {
+                Drop();
             }
 
 

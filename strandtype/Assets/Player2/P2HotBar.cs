@@ -187,7 +187,16 @@ public class P2HotBar : MonoBehaviour
         promptDisplayed = false;
         hasGrabbed = false;
     }
-   
+
+    void Drop()
+    {
+        GameObject obj = HotBars.HotBarListP2[HotBars.HotBarPositionP2].theObject;
+        Instantiate(obj, this.transform.position, new Quaternion(0, 0f, 0f, 0f));
+        HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;
+        HotBarSpritesP14[HotBars.HotBarPositionP2].GetComponent<Image>().sprite = BackgroundImage.GetComponent<Image>().sprite;
+    }
+
+
     private void OnTriggerExit(Collider other)
         {
 
@@ -435,6 +444,12 @@ public class P2HotBar : MonoBehaviour
                     HotBars.HotBarListP2[HotBars.HotBarPositionP2].CallFunction();
                 }
             }
+
+            if (Input.GetKeyDown("[9]"))
+            {
+                Drop();
+            }
+
 
 
     }

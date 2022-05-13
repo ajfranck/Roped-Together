@@ -15,14 +15,10 @@ public class Item : ScriptableObject
 
 
     public UnityEvent TheFunction;
+    public GameObject theObject;
 
     public void CallFunction()
     {
         TheFunction.Invoke();
     }
-
-
-
-
-
 }

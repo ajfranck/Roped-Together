@@ -31,3 +31,4 @@ MonoBehaviour:
           m_StringArgument: TestItemFunction
           m_BoolArgument: 0
         m_CallState: 2
+  theObject: {fileID: 1395335744113280912, guid: 996d4d49c36277b40a97636f0627d034, type: 3}

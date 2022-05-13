@@ -31,3 +31,4 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  theObject: {fileID: 6036855294131660618, guid: 0021b8dbc3a392e4abd5d9645cc8f5a3, type: 3}
