@@ -171,21 +171,24 @@ public class P2HotBar : MonoBehaviour
 
     IEnumerator PickUp(Item item, Collider other)
     {
-        hasGrabbed = true;
-        HidePrompt(item);
-        GrabPrompt();
-        isGrabbing = true;
-        animator.SetTrigger("Grab");
-        yield return new WaitForSeconds(1.5f);
-        PickUpItem(item);
-        //other.gameObject.SetActive(false);
-        HideGrabPrompt();
-        HidePrompt(item);
-        if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
-        isGrabbing = false;
-        pickedUp = false;
-        promptDisplayed = false;
-        hasGrabbed = false;
+        if (HotBars.HotBarListP2[HotBars.HotBarPositionP2] == null)
+        {
+            hasGrabbed = true;
+            HidePrompt(item);
+            GrabPrompt();
+            isGrabbing = true;
+            animator.SetTrigger("Grab");
+            yield return new WaitForSeconds(1.5f);
+            PickUpItem(item);
+            //other.gameObject.SetActive(false);
+            HideGrabPrompt();
+            HidePrompt(item);
+            if (other.gameObject.tag.Contains("Pickaxe") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
+            isGrabbing = false;
+            pickedUp = false;
+            promptDisplayed = false;
+            hasGrabbed = false;
+        }
     }
 
     void Drop()
@@ -193,7 +196,7 @@ public class P2HotBar : MonoBehaviour
         GameObject obj = HotBars.HotBarListP2[HotBars.HotBarPositionP2].theObject;
         Debug.Log("Should drop " + obj);
         float xPos = this.transform.position.x;
-        float yPos = this.transform.position.y +5f;
+        float yPos = this.transform.position.y +1f;
         float zPos = this.transform.position.z;
         Instantiate(obj, new Vector3(xPos, yPos, zPos), new Quaternion(0, 0f, 0f, 0f));
         HotBars.HotBarListP2[HotBars.HotBarPositionP2] = null;

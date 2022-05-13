@@ -125,6 +125,8 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKey("e") && !pickedUp)
             {
+
+                
                 StartCoroutine(PickUp(CubeItem, other));
             }
 
@@ -141,6 +143,7 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKey("e") && !pickedUp)
             {
+               
                 StartCoroutine(PickUp(BowlItem, other));
             }
 
@@ -155,6 +158,7 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKey("e") && !pickedUp)
             {
+                
                 StartCoroutine(PickUp(StaminaItem, other));
             }
 
@@ -169,6 +173,7 @@ public class HotBar : MonoBehaviour
 
             if (Input.GetKey("e") && !pickedUp)
             {
+               
                 StartCoroutine(PickUp(LadderItem, other));
             }
 
@@ -177,26 +182,34 @@ public class HotBar : MonoBehaviour
 
     IEnumerator PickUp(Item item, Collider other)
     {
-        hasGrabbed = true;
-        HidePrompt(item);
-        GrabPrompt();
-        isGrabbing = true;
-        animator.SetTrigger("Grab");
-        yield return new WaitForSeconds(1.5f);
-        PickUpItem(item);
-        //other.gameObject.SetActive(false);
-        HideGrabPrompt();
-        HidePrompt(item);
-        if (other.gameObject.CompareTag("CubeItem") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
-        isGrabbing = false;
-        pickedUp = false;
-        promptDisplayed = false;
+        if (HotBars.HotBarListP1[HotBars.HotBarPositionP1]== null)
+        {
+            Debug.Log("picked up " + item.name);
+            hasGrabbed = true;
+            HidePrompt(item);
+            GrabPrompt();
+            isGrabbing = true;
+            animator.SetTrigger("Grab");
+            yield return new WaitForSeconds(1.5f);
+
+            PickUpItem(item);
+            //other.gameObject.SetActive(false);
+            HideGrabPrompt();
+            HidePrompt(item);
+            if (other.gameObject.CompareTag("CubeItem") || other.gameObject.tag.Contains("Bowl") || other.gameObject.CompareTag("LadderItem")) other.gameObject.SetActive(false);
+            isGrabbing = false;
+            pickedUp = false;
+            promptDisplayed = false;
+        }
     }
 
     void Drop()
     {      
         GameObject obj = HotBars.HotBarListP1[HotBars.HotBarPositionP1].theObject;
-        Instantiate(obj, this.transform.position, new Quaternion(0,0f,0f,0f));
+        float xPos = this.transform.position.x;
+        float yPos = this.transform.position.y + 1f; ;
+        float zPos = this.transform.position.z;
+        Instantiate(obj, new Vector3(xPos, yPos, zPos), new Quaternion(0,0f,0f,0f));
         HotBars.HotBarListP1[HotBars.HotBarPositionP1] = null;
         HotBarSpritesP1[HotBars.HotBarPositionP1].GetComponent<Image>().sprite = BackgroundImage.GetComponent<Image>().sprite;
     }
@@ -313,7 +326,6 @@ public class HotBar : MonoBehaviour
 
         private void PickUpItem(Item TheItem)
         {
-
             HotBars.HotBarListP1[HotBars.HotBarPositionP1] = TheItem;
             pickedUp = true;
             Debug.Log("Hotbar Item at Position " + HotBars.HotBarPositionP1 + "is: " + HotBars.HotBarListP1[HotBars.HotBarPositionP1].name);
