@@ -39,6 +39,7 @@ public class WallBar : MonoBehaviour
     public bool hitAnchorFollower = false;
     public bool onLedge = false;
     public bool fallIfNoAnchors = false;
+    public bool onRough = false;
 
     public List<Anchor> anchors = new List<Anchor>();
 
@@ -75,7 +76,10 @@ public class WallBar : MonoBehaviour
                 {
                     loseStamina(.02f);
                 }
-                grip += 0.7f;
+                if (!onRough)
+                {
+                    grip += 0.7f;
+                }
             }
 
             if (P1currentStamina <= 0f || grip <= 0f)
@@ -104,6 +108,10 @@ public class WallBar : MonoBehaviour
 
         }
 
+        if (onRough)
+        {
+            grip -= .4f;
+        }
 
 
        
@@ -223,22 +231,23 @@ public class WallBar : MonoBehaviour
 
 
         }
-    }
 
-
-
-
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("wallLeader") && Input.GetKey("v"))
+        if (other.gameObject.CompareTag("RoughTerrain"))
         {
-            ClimbRope = true;           
+            onRough = true;
         }
 
     }
 
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("RoughTerrain"))
+        {
+            onRough = false;
+        }
+    }
 
+  
     
 }
 

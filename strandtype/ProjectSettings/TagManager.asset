@@ -46,6 +46,7 @@ TagManager:
   - ladderCliff2
   - ladderBridge4
   - endLevel1
+  - RoughTerrain
   layers:
   - Default
   - TransparentFX

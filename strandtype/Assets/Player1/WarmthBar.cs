@@ -127,12 +127,12 @@ public class WarmthBar : MonoBehaviour
                 {
                     p1Interact.SetActive(true);
                 }
-                if(Input.GetKey("space") && player1)
+                if(Input.GetKey("e") && player1)
                 {
                     isInteracting = true;
                     p1Interact.SetActive(false);
                 }
-                if(Input.GetKey("[0]") && !player1)
+                if(Input.GetKey("44") && !player1)
                 {
                     p2isInteracting = true;
                     p1Interact.SetActive(false);
