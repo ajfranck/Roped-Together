@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
+    public HotBar hotbar;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
 
@@ -51,6 +52,14 @@ public class PauseMenu : MonoBehaviour
     }
     public void RestartLevel()
     {
+        //hotbar.ClearInventory();
+        
+        for (int i = 0; i < 2; i++)
+        {
+            HotBars.HotBarListP1[i] = null;
+            HotBars.HotBarListP2[i] = null;
+        }
+        
         if(sceneName == "Tutorial") SceneManager.LoadScene("Tutorial");
         if(sceneName == "Level") SceneManager.LoadScene("Level");
         Resume();

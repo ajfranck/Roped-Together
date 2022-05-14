@@ -264,10 +264,12 @@ public class HotBar : MonoBehaviour
 
     }
 
-        private void ClearInventory()
+        public void ClearInventory()
         {
             for (int i = 0; i < 2; i++)
             {
+                
+
                 HotBars.HotBarListP1.Add(null);
                 HotBars.HotBarBackgroundsListP1.Add(null);
                 HotBars.HotBarListP2.Add(null);

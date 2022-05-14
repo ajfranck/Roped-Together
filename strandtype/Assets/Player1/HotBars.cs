@@ -14,8 +14,6 @@ public static class HotBars
     public static List<Item> HotBarListP2 = new List<Item>();
     public static List<GameObject> HotBarBackgroundsListP2 = new List<GameObject>(); 
     public static int HotBarPositionP2 = 0;
-
-
    
 
     
