@@ -407,12 +407,12 @@ public class HotBar : MonoBehaviour
             }
 
 
-            if (Input.GetKey("e") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
+            if (Input.GetKey("x") && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && StaticBackPack.BackpackList[BackpackPosition] == null)
             {
                 HotBarToBackpack();
                 Debug.Log("runs f");
             }
-            if (Input.GetKey("f") && StaticBackPack.BackpackList[BackpackPosition] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
+            if (Input.GetKey("z") && StaticBackPack.BackpackList[BackpackPosition] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)
             {
                 BackpackToHotbar();
                 Debug.Log("runs g");
@@ -485,7 +485,7 @@ public class HotBar : MonoBehaviour
 
 
 
-            if (Input.GetKeyDown("e"))
+            if (Input.GetKeyDown("f"))
             {
 
                 if (HotBars.HotBarListP1[HotBars.HotBarPositionP1] == null)

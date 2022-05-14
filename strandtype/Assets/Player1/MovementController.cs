@@ -183,10 +183,10 @@ public class MovementController : MonoBehaviour
         currentMovement.z = 0f;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
-        if((Input.GetKey("e") || Input.GetKey("[4]")) && characterController.isGrounded)
-        {
-            wallbar.ClimbRope = false;
-        }
+        //if((Input.GetKey("e") || Input.GetKey("[4]")) && characterController.isGrounded)
+        //{
+        //    wallbar.ClimbRope = false;
+        //}
     }
 
     void FollowRopeMove(InputAction.CallbackContext context)
@@ -198,10 +198,10 @@ public class MovementController : MonoBehaviour
         currentMovement.z = 0f;
         movementPressed = currentMovement.x != 0 || currentMovementInput.y != 0;
 
-        if ((Input.GetKey("e") || Input.GetKey("[4]")) && characterController.isGrounded)
-        {
-            wallbar.ClimbRope = false;
-        }
+        //if ((Input.GetKey("e") || Input.GetKey("[4]")) && characterController.isGrounded)
+        //{
+        //    wallbar.ClimbRope = false;
+        //}
     }
 
     void Gravity(float gravity)
@@ -308,7 +308,7 @@ public class MovementController : MonoBehaviour
             climbPrompt.SetActive(true);
             if (isPlayer1)
             {
-                if (Input.GetKey("e") && !wallbar.ClimbRope && wallbar.P1currentStamina>0f)
+                if (Input.GetKey("x") && !wallbar.ClimbRope && wallbar.P1currentStamina>0f)
                 {
 
                     Debug.Log("starts leading");
@@ -329,7 +329,7 @@ public class MovementController : MonoBehaviour
 
             else
             {
-                if (Input.GetKey("4") && !wallbar.ClimbRope && wallbar.P1currentStamina > 0f)
+                if (Input.GetKey("[2]") && !wallbar.ClimbRope && wallbar.P1currentStamina > 0f)
                 {
 
                     Debug.Log("starts leading");
@@ -357,7 +357,7 @@ public class MovementController : MonoBehaviour
             if (isPlayer1)
             {
                 climbPrompt.SetActive(true);
-                if ((Input.GetKey("e")) && !wallbar.FollowRope)
+                if ((Input.GetKey("x")) && !wallbar.FollowRope)
                 {
                     Debug.Log("Starts following");
                     wallbar.FollowRope = true;
@@ -373,7 +373,7 @@ public class MovementController : MonoBehaviour
             else
             {
                 climbPrompt.SetActive(true);
-                if ((Input.GetKey("4")) && !wallbar.FollowRope)
+                if ((Input.GetKey("[2]")) && !wallbar.FollowRope)
                 {
                     Debug.Log("Starts following");
                     wallbar.FollowRope = true;
@@ -394,7 +394,7 @@ public class MovementController : MonoBehaviour
             if (isPlayer1)
             {
                 endClimbPrompt.SetActive(true);
-                if ((Input.GetKey("f")) && (wallbar.ClimbRope || wallbar.FollowRope))
+                if ((Input.GetKey("z")) && (wallbar.ClimbRope || wallbar.FollowRope))
                 {
                     characterController.enabled = false;
                     wallbar.ClimbRope = false;
@@ -415,7 +415,7 @@ public class MovementController : MonoBehaviour
             else
             {
                 endClimbPrompt.SetActive(true);
-                if ((Input.GetKey("5")) && (wallbar.ClimbRope || wallbar.FollowRope))
+                if ((Input.GetKey("[3]")) && (wallbar.ClimbRope || wallbar.FollowRope))
                 {
                     characterController.enabled = false;
                     wallbar.ClimbRope = false;

@@ -38,7 +38,7 @@ public class TimeLeft : MonoBehaviour
         }*/
         if(startLoss) 
         {
-            loseWarmth(0.005f);
+            loseWarmth(0.003f);
         }
         else if(level1StartLoss)
         {

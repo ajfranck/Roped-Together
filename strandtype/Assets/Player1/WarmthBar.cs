@@ -91,6 +91,13 @@ public class WarmthBar : MonoBehaviour
 
         if (other.gameObject.tag.Contains("Fire")) 
         {
+            if(P1currentWarmth <= P1MaxWarmth)
+            {
+                P1currentWarmth += .75f;
+            }
+            P1HealthBar.P1SetWarmth(P1currentWarmth);
+            SavePlayer();
+
             contactingFire = true;
             if(other.gameObject.CompareTag("Fire1"))
             {
@@ -132,7 +139,7 @@ public class WarmthBar : MonoBehaviour
                     isInteracting = true;
                     p1Interact.SetActive(false);
                 }
-                if(Input.GetKey("44") && !player1)
+                if(Input.GetKey("[4]") && !player1)
                 {
                     p2isInteracting = true;
                     p1Interact.SetActive(false);
@@ -146,12 +153,7 @@ public class WarmthBar : MonoBehaviour
                     p2isInteracting = false;
                 }
             }
-            if(P1currentWarmth <= P1MaxWarmth)
-            {
-                P1currentWarmth += .75f;
-            }
-            P1HealthBar.P1SetWarmth(P1currentWarmth);
-            SavePlayer();
+            
         }
     }
     private void OnTriggerExit(Collider other)

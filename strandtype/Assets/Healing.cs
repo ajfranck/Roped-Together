@@ -21,19 +21,19 @@ public class Healing : MonoBehaviour
 
     void Update()
     {
-        if (player1 && (Input.GetKey("e") || Input.GetKey("[4]")) && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "BowlItem" && !mining.isMining && !warmthbar.isInteracting)
+        if (player1 && (Input.GetKey("f")) && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "BowlItem" && !mining.isMining && !warmthbar.isInteracting)
         {
             StartCoroutine(UseIt(player1));
         }
-        else if(!player1 && (Input.GetKey("e") || Input.GetKey("[4]")) && HotBars.HotBarListP2[HotBars.HotBarPositionP2] != null && HotBars.HotBarListP2[HotBars.HotBarPositionP2].name == "BowlItem" && !mining.isMining && !warmthbar.isInteracting)
+        else if(!player1 && (Input.GetKey("[5]")) && HotBars.HotBarListP2[HotBars.HotBarPositionP2] != null && HotBars.HotBarListP2[HotBars.HotBarPositionP2].name == "BowlItem" && !mining.isMining && !warmthbar.isInteracting)
         {
             StartCoroutine(UseIt(player1));
         }
-        if (player1 && (Input.GetKey("e") || Input.GetKey("[4]")) && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "StaminaItem" && !mining.isMining && !warmthbar.isInteracting)
+        if (player1 && (Input.GetKey("f")) && HotBars.HotBarListP1[HotBars.HotBarPositionP1] != null && HotBars.HotBarListP1[HotBars.HotBarPositionP1].name == "StaminaItem" && !mining.isMining && !warmthbar.isInteracting)
         {
             StartCoroutine(UseIt2(player1));
         }
-        else if(!player1 && (Input.GetKey("e") || Input.GetKey("[4]")) && HotBars.HotBarListP2[HotBars.HotBarPositionP2] != null && HotBars.HotBarListP2[HotBars.HotBarPositionP2].name == "StaminaItem" && !mining.isMining && !warmthbar.isInteracting)
+        else if(!player1 && (Input.GetKey("[5]")) && HotBars.HotBarListP2[HotBars.HotBarPositionP2] != null && HotBars.HotBarListP2[HotBars.HotBarPositionP2].name == "StaminaItem" && !mining.isMining && !warmthbar.isInteracting)
         {
             StartCoroutine(UseIt2(player1));
         }

@@ -76,7 +76,7 @@ public class levelend : MonoBehaviour
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(1f);
         //AsyncOperation operation = SceneManager.LoadSceneAsync("next level");
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene("Level");
     }
 
     IEnumerator EndGame()
