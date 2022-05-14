@@ -325,7 +325,7 @@ public class RopeOther : MonoBehaviour
 			//ledgePrompt.SetActive(true);
 			//p2ledgePrompt.SetActive(true);
 
-            if (Input.GetKeyDown("g"))
+            if (Input.GetKeyDown("q") || Input.GetKeyDown("[6]"))
             {
 				UnravelAll();
 				UnravelIndex = ResetUnravelIndexTo;
@@ -333,6 +333,18 @@ public class RopeOther : MonoBehaviour
 				wallbar.theAnchor = null;
 			}
 		}
+
+		if(wallbar.atStart && wallbarFollower.atStart)
+        {
+			if (Input.GetKeyDown("q") || Input.GetKeyDown("[6]"))
+			{
+				UnravelAll();
+				UnravelIndex = ResetUnravelIndexTo;
+				SwitchClimberAndFollower();
+				wallbar.theAnchor = null;
+			}
+		}
+
 	}
 	private bool ShouldReset()
 	{

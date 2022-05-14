@@ -11,6 +11,7 @@ public class WallBar : MonoBehaviour
     public bool isLeader;
     public bool isFollower;
     public bool toAnchor;
+    public bool atStart = false;
     // Start is called before the first frame update
 
     public P1HealthBar P1HealthBar;
@@ -237,6 +238,11 @@ public class WallBar : MonoBehaviour
             onRough = true;
         }
 
+        if (other.gameObject.CompareTag("atStart"))
+        {
+            atStart = true;
+        }
+
     }
 
     void OnTriggerExit(Collider other)
@@ -245,7 +251,14 @@ public class WallBar : MonoBehaviour
         {
             onRough = false;
         }
+        if (other.gameObject.CompareTag("atStart"))
+        {          
+            atStart = false;
+        }
     }
+
+
+    
 
   
     

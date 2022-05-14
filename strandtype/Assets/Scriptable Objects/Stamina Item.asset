@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stamina Item
   m_EditorClassIdentifier: 
   name: StaminaItem
-  description: Stamina Drink for Stamina
+  description: A small soda. Can be drank to regain stamina
   artwork: {fileID: 21300000, guid: 90f0c917800bbba41b665726794cde09, type: 3}
   image: {fileID: 21300000, guid: 90f0c917800bbba41b665726794cde09, type: 3}
   TheFunction:

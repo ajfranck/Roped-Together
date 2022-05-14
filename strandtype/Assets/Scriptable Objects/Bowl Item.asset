@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bowl Item
   m_EditorClassIdentifier: 
   name: BowlItem
-  description: Bowl item  for warmth
+  description: A bowl of soup. Can be consumed to gain warmth.
   artwork: {fileID: 21300000, guid: 1906242ab5c16094ebb2f2b65dc96bdd, type: 3}
   image: {fileID: 21300000, guid: 1906242ab5c16094ebb2f2b65dc96bdd, type: 3}
   TheFunction:
