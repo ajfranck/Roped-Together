@@ -16,11 +16,11 @@ public class EmoteScript : MonoBehaviour
     {
         if(!wallbar.isFalling && !wallbar.ClimbRope && !warmthbar.isInteracting)
         {
-            if(Input.GetKeyDown("q") && movementcontroller.isPlayer1)
+            if(Input.GetKeyDown("tab") && movementcontroller.isPlayer1)
             {
                 StartCoroutine(Animation());
             }
-            else if(Input.GetKeyDown("4") && !movementcontroller.isPlayer1)
+            else if(Input.GetKeyDown("[9]") && !movementcontroller.isPlayer1)
             {
                 StartCoroutine(Animation());
             }
