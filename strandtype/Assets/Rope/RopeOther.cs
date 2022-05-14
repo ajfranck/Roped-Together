@@ -144,7 +144,12 @@ public class RopeOther : MonoBehaviour
 
 		DrawSticks();
 		if (pickedUp)
-		{			
+		{
+			if (!wallbar.ClimbRope && !wallbar.onLedge && wallbarFollower.FollowRope && !wallbar.isFalling)
+			{
+				ResetClimb();
+			}
+
 			HandleClimbing();
 			HandleFollowing();
 			CheckInFront();

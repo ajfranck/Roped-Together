@@ -407,6 +407,10 @@ public class MovementController : MonoBehaviour
                     endClimbPrompt.SetActive(false);
                     characterController.enabled = true;
                 }
+                if (wallbar.onLedge)
+                {
+                    endClimbPrompt.SetActive(false);
+                }
             }
             else
             {
@@ -423,6 +427,10 @@ public class MovementController : MonoBehaviour
                     Debug.Log("Should be transported to " + endClimber.transform.position);
                     endClimbPrompt.SetActive(false);
                     characterController.enabled = true;
+                }
+                if (wallbar.onLedge)
+                {
+                    endClimbPrompt.SetActive(false);
                 }
             }
             
@@ -451,6 +459,11 @@ public class MovementController : MonoBehaviour
         if (other.gameObject.tag.Contains("ParentLadder"))
         {
             characterController.slopeLimit = 45f;
+        }
+
+        if (other.gameObject.CompareTag("climbEnd"))
+        {
+            endClimbPrompt.SetActive(false);
         }
     }
 

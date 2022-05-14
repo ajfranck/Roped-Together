@@ -64,7 +64,7 @@ public class Healing : MonoBehaviour
         else warmthStart += 0.5f;
         while(warmthbar.P1currentWarmth < warmthStart)
         {
-            warmthbar.gainWarmth(0.5f);
+            warmthbar.gainWarmth(100f);
         }
         hotbar.isGrabbing = false;
     }
