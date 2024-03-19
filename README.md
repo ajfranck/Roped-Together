@@ -4,6 +4,8 @@ In this couch co-op adventure, Kristof and Bartholomew are twin brothers attempt
 
 Immerse yourself in the world as the brothers attempt to manage the freezing cold, their strength, and storage. Will this expedition be one of excitement and success, or terror and anxiety? Will Kristof and Bartholomew even survive to tell the tale?
 
+# Trailer
+https://www.youtube.com/watch?v=cZ8O7uAnTFI
 
 # Instructions
 
